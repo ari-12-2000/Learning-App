@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { use, useEffect, useState } from "react"
-import Loading from "../../loading"
-
+import Loading from "./loading"
+import ReactMarkdown from "react-markdown"
+import TopicResourceRenderer from "@/components/TopicResourceRenderer"
 
 
 export default function TopicPage({ params }: { params: Promise<{ programId: string, moduleId: string, topicId: string }> }) {
@@ -32,7 +33,7 @@ export default function TopicPage({ params }: { params: Promise<{ programId: str
                     topicRes.json(),
                     moduleRes.json(),
                 ]);
-                
+
                 setCurrentTopic(topicData?.data)
                 const sorted = moduleData?.data?.moduleTopics?.sort((a: { topicId: number, position: number }, b: { topicId: number, position: number }) => a.position - b.position);
                 setSortedTopics(sorted?.map((ele: { topicId: number, position: number }) => ele.topicId));
@@ -57,20 +58,20 @@ export default function TopicPage({ params }: { params: Promise<{ programId: str
         return <Loading />
     }
 
-     if (!currentTopic) {
-    return (
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Topic Not Found</h1>
-          <p className="text-gray-600 mb-6">The topic you're looking for doesn't exist or couldn't be loaded.</p>
-          <Link href="/student/courses" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-            <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to courses
-          </Link>
-        </div>
-      </div>
-    )
-  }
+    if (!currentTopic) {
+        return (
+            <div className="max-w-6xl mx-auto px-4 py-8">
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Topic Not Found</h1>
+                    <p className="text-gray-600 mb-6">The topic you're looking for doesn't exist or couldn't be loaded.</p>
+                    <Link href="/student/courses" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                        <ArrowLeft className="h-4 w-4 mr-1" />
+                        Back to courses
+                    </Link>
+                </div>
+            </div>
+        )
+    }
     return (
         <div className="max-w-4xl mx-auto p-6">
             {/* Header */}
@@ -108,16 +109,17 @@ export default function TopicPage({ params }: { params: Promise<{ programId: str
 
             {/* Content */}
             <Card className="mb-6">
-                <CardContent className="p-6">
-                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: currentTopic.content }} />
+                <CardContent className="p-6 space-y-6">
+                    {currentTopic.topicResources?.map((prop: any, index: number) => <TopicResourceRenderer key={index} resource={prop.resource} />)}
                 </CardContent>
             </Card>
+
 
             {/* Navigation */}
             <div className="flex items-center justify-between">
                 <div>
                     {typeof moduleTopics.get(Number(topicId)) === "number" && (moduleTopics.get(Number(topicId))! - 1 >= 0) && (
-                        <Button variant="outline" onClick={() => router.push(`/courses/${programId}/${moduleId}/${sortedTopics[moduleTopics.get(Number(topicId))! + 1]}`)} className="flex items-center">
+                        <Button variant="outline" onClick={() => router.push(`/courses/${programId}/${moduleId}/${sortedTopics[moduleTopics.get(Number(topicId))! - 1]}`)} className="flex items-center">
                             <ArrowLeft className="h-4 w-4 mr-2" />
                             Previous Topic
                         </Button>

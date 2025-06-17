@@ -69,11 +69,9 @@ export default function CourseDetail({ params }: { params: Promise<{ programId: 
     )
   }
 
-  const resourceType = courseData?.resources?.[0]?.resource?.resourceType
   const courseModules =
     courseData?.programModules?.map((resource: any) => resource.module) || []
-
-    console.log(courseModules);
+  console.log(courseModules);
   return (
     <div className="max-w-6xl mx-auto px-4">
       {/* Hero Section with Cover Image */}
@@ -125,7 +123,10 @@ export default function CourseDetail({ params }: { params: Promise<{ programId: 
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="text-sm text-gray-500 mb-1">Total Topics</div>
-                <div className="text-xl font-semibold">{courseData.resources?.length || 0}</div>
+                <div className="text-xl font-semibold">{courseModules.reduce(
+                  (acc: Number, prop: any) => acc + prop.moduleTopics.length,
+                  0
+                ) || 0}</div>
               </div>
             </div>
           </div>
@@ -144,56 +145,56 @@ export default function CourseDetail({ params }: { params: Promise<{ programId: 
               >
                 {courseModules.map((module: any, index: number) => (
                   <AccordionItem
-                  key={module.id}
-                  value={module.id}
-                  className="border border-gray-200 rounded-lg mb-4 overflow-hidden"
-                >
-                  <AccordionTrigger className="hover:bg-gray-50 px-4 py-4 rounded-t-lg data-[state=open]:border-b data-[state=open]:border-gray-200">
-                    <div className="flex items-center justify-between w-full pr-4">
-                      <div className="flex items-center">
-                        <div className="bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-gray-700">
-                          {index + 1}
+                    key={module.id}
+                    value={module.id}
+                    className="border border-gray-200 rounded-lg mb-4 overflow-hidden"
+                  >
+                    <AccordionTrigger className="hover:bg-gray-50 px-4 py-4 rounded-t-lg data-[state=open]:border-b data-[state=open]:border-gray-200">
+                      <div className="flex items-center justify-between w-full pr-4">
+                        <div className="flex items-center">
+                          <div className="bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-gray-700">
+                            {index + 1}
+                          </div>
+                          <span className="font-medium">{module.title}</span>
                         </div>
-                        <span className="font-medium">{module.title}</span>
-                      </div>
-                      {/* <Badge
+                        {/* <Badge
                         variant={module.progress === 100 ? "success" : "outline"}
                         className={`ml-2 ${module.progress === 100 ? "bg-green-100 text-green-800" : ""}`}
                       >
                         {module.progress}%
                       </Badge> */}
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-4 py-3 bg-gray-50">
-                    <div className="space-y-3">
-                      {module.moduleTopics.map((resource: any) => (
-                        <Link href={`/courses/${courseData.id}/${module.id}/${resource.topic.id}`}> <Card
-                          key={resource.topic.id}
-                          className={`p-3 hover:bg-white transition-colors cursor-pointer border ${resource.topic.completed ? "border-green-200 bg-green-50/30" : "border-gray-200"
-                            }`}
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 py-3 bg-gray-50">
+                      <div className="space-y-3">
+                        {module.moduleTopics.map((prop: any) => (
+                          <Link href={`/courses/${courseData.id}/${module.id}/${prop.topic.id}`}> <Card
+                            key={prop.topic.id}
+                            className={`p-3 hover:bg-white transition-colors cursor-pointer border ${prop.topic.completed ? "border-green-200 bg-green-50/30" : "border-gray-200"
+                              }`}
 
-                        >
-                          <CardContent className="p-0">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center">
-                                {resourceType === "doc" ? (
-                                  <FileText className="h-4 w-4 mr-2 text-gray-500" />
-                                ) : (
-                                  <Clock className="h-4 w-4 mr-2 text-gray-500" />
-                                )}
-                                <span className="text-sm font-medium">{resource.topic.title}</span>
+                          >
+                            <CardContent className="p-0">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center">
+                                  {prop.topic.topicResources[0].resource.resourceType === "document" ? (
+                                    <FileText className="h-4 w-4 mr-2 text-gray-500" />
+                                  ) : (
+                                    <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                                  )}
+                                  <span className="text-sm font-medium">{prop.topic.title}</span>
+                                </div>
+                                <div className="flex items-center">
+                                  {/* <span className="text-xs text-gray-500 mr-2">{topic.duration}</span> */}
+                                  {/* {topic.completed && <CheckCircle className="h-4 w-4 text-green-500" />} */}
+                                </div>
                               </div>
-                              <div className="flex items-center">
-                                {/* <span className="text-xs text-gray-500 mr-2">{topic.duration}</span> */}
-                                {/* {topic.completed && <CheckCircle className="h-4 w-4 text-green-500" />} */}
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card></Link>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                            </CardContent>
+                          </Card></Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
               </Accordion>
             ) : (

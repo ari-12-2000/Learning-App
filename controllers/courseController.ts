@@ -9,19 +9,21 @@ export class CourseController {
     try {
       const courses = await prisma.program.findMany({
         include: {
-          
-          programModules:{
-            select:{
-              moduleId:true
+
+          programModules: {
+            include: {
+              module: {
+                include: {
+                  moduleTopics: {
+                    select: {
+                      topicId: true
+                    }
+                  }
+                }
+              }
             }
           },
 
-          resources: {
-            select: { //include keyword is used to include related tables and select keyword is used to select specific fields
-              topicId: true,
-              
-            }
-          },
           enrollments: {
             select: {
               learnerId: true,
@@ -44,25 +46,32 @@ export class CourseController {
       const program = await prisma.program.findUnique({
         where: { id: Number((await params).programId) },
         include: {
-          programModules:{
-            include:{
-              module:{
-                include:{
-                  moduleTopics:{
-                    include:{
-                      topic:true
+          programModules: {
+            include: {
+              module: {
+                include: {
+                  moduleTopics: {
+                    include: {
+                      topic: {
+                        include:{
+                          topicResources:{
+                            include:{
+                              resource:{
+                                select:{
+                                  resourceType:true
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          resources: {
-            select: { //include keyword is used to include related tables and select keyword is used to select specific fields
-              topicId: true,
-              
-            }
-          },
+
           enrollments: {
             select: {
               learnerId: true,
@@ -129,7 +138,7 @@ export class CourseController {
             select: {
               id: true,
               first_name: true,
-              last_name:true,
+              last_name: true,
               email: true,
               profile_image: true,
             },
@@ -157,36 +166,36 @@ export class CourseController {
   }
 
   //Map programs with modules
-  static async mapProgramsandmodules(req:NextRequest,{ params }: { params: Promise<{ programId: string, moduleId:string }> }){
-     try{
-       const { programId, moduleId}= await params;
-       const {position}= await req.json();
-       const mapping= await prisma.programModule.create({
-        data: { programId: Number(programId), moduleId: Number(moduleId), position:Number(position)},
-       });
-
-       return NextResponse.json({ success: true, data: mapping });
-     }catch(error){
-        console.error("Map modules and programs error:", error); // LOG FULL ERROR
-      return NextResponse.json({ error: 'Failed to map modules and programs' }, { status: 500 });
-     }
-  }
-
-  // Map modules and resources
-  static async mapModulesAndResources(req: NextRequest, { params }: { params: Promise<{ programId: string, resourceId: string, moduleId: string, topicId: string }> }) {
+  static async mapProgramsandmodules(req: NextRequest, { params }: { params: Promise<{ programId: string, moduleId: string }> }) {
     try {
-      const { programId, resourceId, moduleId, topicId } = await params;
-
-      const mapping = await prisma.resourceMapping.create({
-        data: { programId: Number(programId), moduleId: Number(moduleId), resourceId: Number(resourceId), topicId: Number(topicId) },
+      const { programId, moduleId } = await params;
+      const { position } = await req.json();
+      const mapping = await prisma.programModule.create({
+        data: { programId: Number(programId), moduleId: Number(moduleId), position: Number(position) },
       });
 
       return NextResponse.json({ success: true, data: mapping });
     } catch (error) {
-      console.error("Map modules and resources error:", error); // LOG FULL ERROR
-      return NextResponse.json({ error: 'Failed to map modules and resources' }, { status: 500 });
+      console.error("Map modules and programs error:", error); // LOG FULL ERROR
+      return NextResponse.json({ error: 'Failed to map modules and programs' }, { status: 500 });
     }
   }
+
+  // // Map modules and resources
+  // static async mapModulesAndResources(req: NextRequest, { params }: { params: Promise<{ programId: string, resourceId: string, moduleId: string, topicId: string }> }) {
+  //   try {
+  //     const { programId, resourceId, moduleId, topicId } = await params;
+
+  //     const mapping = await prisma.resourceMapping.create({
+  //       data: { programId: Number(programId), moduleId: Number(moduleId), resourceId: Number(resourceId), topicId: Number(topicId) },
+  //     });
+
+  //     return NextResponse.json({ success: true, data: mapping });
+  //   } catch (error) {
+  //     console.error("Map modules and resources error:", error); // LOG FULL ERROR
+  //     return NextResponse.json({ error: 'Failed to map modules and resources' }, { status: 500 });
+  //   }
+  // }
 
 
 

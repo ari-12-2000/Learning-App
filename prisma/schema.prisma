@@ -24,7 +24,7 @@ enum AdminType {
 model Admin {
   id            Int       @id @default(autoincrement())
   first_name    String    @db.VarChar(255)
-  last_name     String    @db.VarChar(255) 
+  last_name     String    @db.VarChar(255)
   email         String    @unique @db.VarChar(255)
   password      String    @db.VarChar(255)
   adminType     AdminType @map("admin_type")
@@ -53,8 +53,8 @@ model Admin {
 
 model Learner {
   id                 Int               @id @default(autoincrement())
-  first_name         String           @db.VarChar(255) 
-  last_name          String           @db.VarChar(255) 
+  first_name         String            @db.VarChar(255)
+  last_name          String            @db.VarChar(255)
   gender             String?           @db.VarChar(50)
   dob                DateTime?         @map("date_of_birth") @db.Date
   email              String            @unique @db.VarChar(255)
@@ -102,7 +102,7 @@ enum ProgramType {
 }
 
 model Program {
-  id               Int            @id @default(autoincrement())
+  id               Int               @id @default(autoincrement())
   authorId         Int               @map("author_id")
   //author         Admin      @relation("ProgramAuthor", fields: [authorId], references: [id], onDelete: Cascade)
   title            String            @db.VarChar(255)
@@ -172,7 +172,7 @@ model Module {
 model Enrollment {
   id         Int      @id @default(autoincrement())
   learnerId  Int      @map("learner_id")
-  programId  Int   @map("program_id")
+  programId  Int      @map("program_id")
   enrolledAt DateTime @default(now()) @map("enrolled_at") @db.Timestamptz //# Enrollment time
 
   // Relations
@@ -189,11 +189,12 @@ model Enrollment {
 model ProgramModule {
   programId Int
   moduleId  Int
-  position Int
-  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
-  module  Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-  @@unique([programId,position])
+  position  Int
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  module    Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
   @@id([programId, moduleId])
+  @@unique([programId, position])
   @@map("program_modules")
 }
 
@@ -222,11 +223,11 @@ model ModuleTopic {
   moduleId Int
   topicId  Int
   position Int
-  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-  topic  Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  topic    Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([moduleId, topicId])
-  @@unique([moduleId,position])
+  @@unique([moduleId, position])
   @@map("module_topics")
 }
 
@@ -234,6 +235,7 @@ enum ResourceType {
   video
   document
   image
+  other
 }
 
 model Resource {
@@ -252,6 +254,18 @@ model Resource {
   topicResources  TopicResource[] // Opposite relation for TopicResource
 
   @@map("resources")
+}
+
+model TopicResource {
+  topicId    Int
+  resourceId Int
+  position   Int
+  topic      Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@id([topicId, resourceId])
+  @@unique([topicId,position])
+  @@map("topic_resources")
 }
 
 model ResourceMapping {
@@ -355,7 +369,7 @@ model QuizPaperQuestion {
 model QuizAssignment {
   id              Int             @id @default(autoincrement())
   quizPaperId     Int             @map("quiz_paper_id")
-  programId       Int?         @map("program_id")
+  programId       Int?            @map("program_id")
   startAt         DateTime?       @map("start_at") @db.Timestamptz
   endAt           DateTime?       @map("end_at") @db.Timestamptz
   uniqueLinkToken String          @unique @default(uuid()) @map("unique_link_token") @db.Uuid
@@ -431,7 +445,7 @@ model MeasureProgress {
   completedAt  DateTime @map("completed_at") @db.Timestamptz
   progressType String   @map("progress_type") @db.VarChar(20)
   status       String   @db.VarChar(20)
-  programId    Int?  @map("program_id")
+  programId    Int?     @map("program_id")
   moduleId     Int?     @map("module_id")
   resourceId   Int?     @map("resource_id")
 
@@ -447,7 +461,7 @@ model MeasureProgress {
 }
 
 model Leaderboard {
-  programId     Int    @map("program_id")
+  programId     Int       @map("program_id")
   learnerId     Int       @map("learner_id")
   totalScore    Decimal   @map("total_score") @db.Decimal(6, 2)
   lastAttemptAt DateTime? @map("last_attempt_at") @db.Timestamptz
@@ -458,15 +472,4 @@ model Leaderboard {
 
   @@id([programId, learnerId])
   @@map("leaderboard")
-}
-
-model TopicResource {
-  topicId    Int
-  resourceId Int
-
-  topic    Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
-
-  @@id([topicId, resourceId])
-  @@map("topic_resources")
 }

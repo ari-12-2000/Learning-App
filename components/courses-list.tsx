@@ -24,11 +24,11 @@ export function CoursesList({ courses }: { courses: any[] }) {
   const { toast } = useToast()
   const enrolledCourses = new Set(user!.enrolledCourseIDs || []);
   const visited = new Set();
-  
+
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses.map((course) => (
-        
+
         <Card
           key={course.id}
           className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
@@ -74,7 +74,12 @@ export function CoursesList({ courses }: { courses: any[] }) {
               </div>
               <div className="flex items-center">
                 <Users className="h-4 w-4 mr-1" />
-                <span>{course.resources.length} topics</span>
+                <span>
+                  {course.programModules.reduce(
+                    (acc:Number, prop:any) => acc + prop.module.moduleTopics.length,
+                    0
+                  )} topics
+                </span>
               </div>
             </div>
 

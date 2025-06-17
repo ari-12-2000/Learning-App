@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { usePathname, useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { SidebarItem } from "@/components/sidebar-item"
+import { GlobalVariables } from "@/globalVariables"
 
 interface SidebarProps {
   isOpen: boolean
@@ -13,7 +14,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
-  const { logout } = useAuth()
+  const {user, logout } = useAuth()
   const pathname = usePathname()
   const router = useRouter()
   // Add state for client-side rendering
@@ -62,8 +63,8 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
           <div className="flex items-center">
             <div className="h-10 w-10 rounded-full bg-gray-200"></div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-900">Alex Johnson</p>
-              <p className="text-xs text-gray-500">Student</p>
+              <p className="text-sm font-medium text-gray-900">{user!.first_name} {user!.last_name}</p>
+              <p className="text-xs text-gray-500">{GlobalVariables.non_admin}</p>
             </div>
           </div>
         </div>

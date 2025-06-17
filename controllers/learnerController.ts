@@ -12,20 +12,28 @@ export class LearnerController {
         include: {
           program: {
             include: {
-              resources: {
-                select: { //include keyword is used to include related tables and select keyword is used to select specific fields
-                  moduleId: true,
-                  topicId: true,
-                  
+
+              programModules: {
+                include: {
+                  module: {
+                    include: {
+                      moduleTopics: {
+                        select: {
+                          topicId: true
+                        }
+                      }
+                    }
+                  }
                 }
               },
+
               enrollments: {
                 select: {
                   learnerId: true,
                 }
               }
             },
-            
+
           }, // Include the program details         
         },
       });

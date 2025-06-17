@@ -27,17 +27,19 @@ export class AuthController {
                 include: {
 
                   programModules: {
-                    select: {
-                      moduleId: true
+                    include: {
+                      module: {
+                        include: {
+                          moduleTopics: {
+                            select: {
+                              topicId: true
+                            }
+                          }
+                        }
+                      }
                     }
                   },
 
-                  resources: {
-                    select: { //include keyword is used to include related tables and select keyword is used to select specific fields
-                      topicId: true,
-
-                    }
-                  },
                   enrollments: {
                     select: {
                       learnerId: true,
@@ -96,6 +98,7 @@ export class AuthController {
         id: user!.id,
         email: user!.email,
         first_name: user!.first_name,
+        last_name: user!.last_name,
         profile_image: user!.profile_image || "",
         role: userType,
         adminType: userType === `${GlobalVariables.admin}` ? (user as Admin).adminType : undefined,
@@ -164,7 +167,8 @@ export class AuthController {
 
       const userData = {
         id: newUser.id,
-        name: newUser.first_name,
+        first_name: newUser.first_name,
+        last_name: newUser!.last_name,
         email: newUser.email,
         role,
         adminType: role === `${GlobalVariables.admin}` ? (newUser as Admin).adminType : undefined,
