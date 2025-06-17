@@ -16,7 +16,7 @@ export default function DashboardPage() {
 
       {user!.enrolledCourses.length > 0 ? (<>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Welcome back, {user!.name}!</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Welcome back, {user!.first_name}!</h1>
           <p className="text-gray-600">Continue your learning journey. You've been making great progress!</p>
         </div>
         <ProgressCards />
@@ -44,7 +44,7 @@ export default function DashboardPage() {
       </div> */}
       </>) : (<>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Welcome {user!.name}!</h1>
+          <h1 className="text-2xl font-bold text-gray-800">Welcome {user!.first_name}!</h1>
           <p className="text-gray-600">Start your learning journey.</p>
         </div>
         <div className="text-center mt-20">

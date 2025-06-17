@@ -138,7 +138,7 @@ export default function LoginPage() {
                   <Input
                     id="signup-name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="John"
                     value={signupData.first_name}
                     onChange={(e) => setSignupData({ ...signupData, first_name: e.target.value })}
                     required
@@ -150,7 +150,7 @@ export default function LoginPage() {
                   <Input
                     id="signup-name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Doe"
                     value={signupData.last_name}
                     onChange={(e) => setSignupData({ ...signupData, last_name: e.target.value })}
                     required
@@ -190,8 +190,8 @@ export default function LoginPage() {
                       <SelectValue placeholder="Select account type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="student">{GlobalVariables.non_admin}</SelectItem>
-                      <SelectItem value="admin">{GlobalVariables.admin}</SelectItem>
+                      <SelectItem value={GlobalVariables.non_admin}>{GlobalVariables.non_admin}</SelectItem>
+                      <SelectItem value={GlobalVariables.admin}>{GlobalVariables.admin}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
