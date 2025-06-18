@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Search, Bell, MessageSquare, Menu, ArrowLeft } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 interface HeaderProps {
   toggleSidebar: () => void
@@ -14,9 +15,13 @@ interface HeaderProps {
 export function Header({ toggleSidebar }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchValue, setSearchValue] = useState("")
-
+  const router=useRouter();
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value)
+    let value=e.target.value;
+    setSearchValue(value)
+    if (value.trim()) {
+      router.push(`/courses/search?q=${encodeURIComponent(value.trim())}`)
+    }
   }
 
   return (

@@ -147,7 +147,6 @@ model Module {
   id                   Int       @id @default(autoincrement())
   title                String    @db.VarChar(255)
   description          String?   @db.Text
-  position             Int?
   prerequisiteModuleId Int?      @map("prerequisite_module_id")
   status               Int?      @db.SmallInt
   isDeleted            Boolean   @default(false) @map("is_deleted")
@@ -200,7 +199,6 @@ model Topic {
   id                  Int               @id @default(autoincrement())
   title               String            @db.VarChar(255)
   content             String?           @db.Text
-  position            Int?
   prerequisiteTopicId Int?              @map("prerequisite_topic_id")
   status              Int?              @db.SmallInt
   isDeleted           Boolean           @default(false) @map("is_deleted")

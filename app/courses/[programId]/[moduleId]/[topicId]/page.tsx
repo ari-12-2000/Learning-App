@@ -8,7 +8,6 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { use, useEffect, useState } from "react"
 import Loading from "./loading"
-import ReactMarkdown from "react-markdown"
 import TopicResourceRenderer from "@/components/TopicResourceRenderer"
 
 
@@ -110,7 +109,7 @@ export default function TopicPage({ params }: { params: Promise<{ programId: str
             {/* Content */}
             <Card className="mb-6">
                 <CardContent className="p-6 space-y-6">
-                    {currentTopic.topicResources?.map((prop: any, index: number) => <TopicResourceRenderer key={index} resource={prop.resource} />)}
+                    {currentTopic.topicResources.sort((a: any, b: any) => a.position - b.position).map((prop: any, index: number) => <TopicResourceRenderer key={index} resource={prop.resource} />)}
                 </CardContent>
             </Card>
 

@@ -68,9 +68,10 @@ export default function CourseDetail({ params }: { params: Promise<{ programId: 
       </div>
     )
   }
-
+  courseData.programModules.sort((a: any, b: any) => a.position - b.position);
   const courseModules =
-    courseData?.programModules?.map((resource: any) => resource.module) || []
+    courseData.programModules.map((prop: any) => prop.module)
+
   console.log(courseModules);
   return (
     <div className="max-w-6xl mx-auto px-4">
@@ -167,7 +168,7 @@ export default function CourseDetail({ params }: { params: Promise<{ programId: 
                     </AccordionTrigger>
                     <AccordionContent className="px-4 py-3 bg-gray-50">
                       <div className="space-y-3">
-                        {module.moduleTopics.map((prop: any) => (
+                        {module.moduleTopics.sort((a: any, b: any) => a.position - b.position).map((prop: any) => (
                           <Link href={`/courses/${courseData.id}/${module.id}/${prop.topic.id}`}> <Card
                             key={prop.topic.id}
                             className={`p-3 hover:bg-white transition-colors cursor-pointer border ${prop.topic.completed ? "border-green-200 bg-green-50/30" : "border-gray-200"

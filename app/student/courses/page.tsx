@@ -11,8 +11,8 @@ export default function CoursesPage() {
   const { user } = useAuth()
   const hasCourses = user!.enrolledCourses.length > 0
 
-  return (<div className="max-w-7xl mx-auto">
-     <div className="mb-10 text-center">
+  return (<div className="max-w-7xl mx-auto text-center">
+     <div className="mb-10">
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
             My Enrolled Courses
           </h1>
