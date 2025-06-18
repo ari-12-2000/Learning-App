@@ -136,7 +136,6 @@ model Program {
   //author           Admin             @relation("ProgramAuthor", fields: [authorId], references: [id], onDelete: Cascade)
   enrollments      Enrollment[]      @relation("ProgramEnrollments")
   quizAssignments  QuizAssignment[]
-  resources        ResourceMapping[]
   measureProgress  MeasureProgress[] // Opposite relation for MeasureProgress
   leaderboards     Leaderboard[] // Opposite relation for Leaderboard
   programModules   ProgramModule[] // Opposite relation for ProgramModule
@@ -161,7 +160,6 @@ model Module {
   // Relations
   prerequisiteModule Module?           @relation("ModulePrerequisite", fields: [prerequisiteModuleId], references: [id], onDelete: SetNull)
   dependentModules   Module[]          @relation("ModulePrerequisite")
-  resources          ResourceMapping[]
   measureProgress    MeasureProgress[]
   programModules     ProgramModule[] // Opposite relation for ProgramModule
   moduleTopics       ModuleTopic[] // Opposite relation for ModuleTopic
@@ -211,7 +209,6 @@ model Topic {
   updatedAt           DateTime          @updatedAt @map("updated_at") @db.Timestamptz
   prerequisiteTopic   Topic?            @relation("TopicPrerequisite", fields: [prerequisiteTopicId], references: [id], onDelete: SetNull)
   dependentTopics     Topic[]           @relation("TopicPrerequisite")
-  resources           ResourceMapping[]
   measureProgress     MeasureProgress[]
   moduleTopics        ModuleTopic[] // Opposite relation for ModuleTopic
   topicResources      TopicResource[] // Opposite relation for TopicResource
@@ -248,7 +245,6 @@ model Resource {
   isDeleted       Boolean           @default(false) @map("is_deleted")
   deletedAt       DateTime?         @map("deleted_at") @db.Timestamptz
   createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz
-  mappings        ResourceMapping[]
   resourceViews   ResourceView[]
   measureProgress MeasureProgress[]
   topicResources  TopicResource[] // Opposite relation for TopicResource
@@ -266,22 +262,6 @@ model TopicResource {
   @@id([topicId, resourceId])
   @@unique([topicId,position])
   @@map("topic_resources")
-}
-
-model ResourceMapping {
-  resourceId Int
-  programId  Int
-  moduleId   Int? // nullable
-  topicId    Int? // nullable
-
-  resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
-  program  Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
-  module   Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-  topic    Topic?   @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  @@id([resourceId, programId])
-  @@unique([resourceId, programId, moduleId, topicId])
-  @@map("resource_mapping")
 }
 
 enum QuestionType {
