@@ -18,7 +18,7 @@ import { Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
   const [loginData, setLoginData] = useState({ email: "", password: "" })
-  const [signupData, setSignupData] = useState({ first_name: "", last_name: "", email: "", password: "", role: `${GlobalVariables.non_admin}` })
+  const [signupData, setSignupData] = useState({ first_name: "", last_name: "", email: "", password: "", role: `${GlobalVariables.non_admin.role1}` })
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -33,8 +33,8 @@ export default function LoginPage() {
 
     const result = await login(loginData.email, loginData.password)
     if (result.success) {
-      // Get the user role and redirect accordingly
       const storedUser = localStorage.getItem("eduportal-user")
+   
       if (storedUser) {
         const user = JSON.parse(storedUser)
         if (user.role === "admin") {
@@ -53,19 +53,39 @@ export default function LoginPage() {
     setError("")
     setSuccess("")
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/
+    const { first_name, last_name, email, password, role } = signupData
 
-    if (!passwordRegex.test(signupData.password)) {
+    if (
+      !first_name.trim() ||
+      !last_name.trim() ||
+      !email.trim() 
+    ) {
+      setError("All fields are required.")
+      return
+    }
+    
+    if(!password.trim() && role===`${GlobalVariables.non_admin.role1}`){
+      setError("Password is required.")
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/
+    if (!passwordRegex.test(password)) {
       setError("Password must be at least 8 characters long and include uppercase, lowercase, and a special character.")
       return
     }
 
-    const result = await signup(signupData.first_name, signupData.last_name, signupData.email, signupData.password, signupData.role)
+    const result = await signup(
+      first_name.trim(),
+      last_name.trim(),
+      email.trim(),
+      password.trim(),
+      signupData.role
+    )
     if (result.success) {
       setSuccess(result.message || "Account created successfully")
       // Redirect based on role
-      if (signupData.role === "admin") {
-        router.push("/admin")
+      if (signupData.role === `${GlobalVariables.non_admin.role2}`) {
+        router.push("/guest")
       } else {
         router.push("/student")
       }
@@ -180,28 +200,30 @@ export default function LoginPage() {
                     required
                   />
                 </div>
-                <div className="space-y-2 relative">
-                  <Label htmlFor="signup-password">Password</Label>
-                  <p className="text-xs text-muted-foreground mb-1">
-                    i) At least 8 characters<br />
-                    ii) Include uppercase, lowercase, and a special character
-                  </p>
-                  <Input
-                    id="signup-password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={signupData.password}
-                    onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-[4.7rem] text-gray-500 hover:text-gray-800"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                </div>
+
+                {signupData.password === `${GlobalVariables.non_admin.role1}` &&
+                  (<div className="space-y-2 relative">
+                    <Label htmlFor="signup-password">Password</Label>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      i) At least 8 characters<br />
+                      ii) Include uppercase, lowercase, and a special character
+                    </p>
+                    <Input
+                      id="signup-password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={signupData.password}
+                      onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-[4.7rem] text-gray-500 hover:text-gray-800"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>)}
                 <div className="space-y-2">
                   <Label htmlFor="signup-role">Account Type</Label>
                   <Select
@@ -212,8 +234,8 @@ export default function LoginPage() {
                       <SelectValue placeholder="Select account type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={GlobalVariables.non_admin}>{GlobalVariables.non_admin}</SelectItem>
-                      <SelectItem value={GlobalVariables.admin}>{GlobalVariables.admin}</SelectItem>
+                      <SelectItem value={GlobalVariables.non_admin.role1}>{GlobalVariables.non_admin.role1}</SelectItem>
+                      <SelectItem value={GlobalVariables.non_admin.role2}>{GlobalVariables.non_admin.role2}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

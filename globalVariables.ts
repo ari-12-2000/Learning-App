@@ -1,4 +1,4 @@
-export class GlobalVariables{
-    static non_admin:string= "Learner";
-    static admin:string= "admin";
+export class GlobalVariables {
+    static non_admin = { role1: "Learner", role2: "Guest" };
+    static admin: string = "admin";
 }

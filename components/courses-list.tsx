@@ -83,7 +83,7 @@ export function CoursesList({ courses }: { courses: any[] }) {
               </div>
             </div>
 
-            {user!.role === `${GlobalVariables.non_admin}` && enrolledCourses.has(course.id) ? (
+            {user!.role === `${GlobalVariables.non_admin.role1}` && enrolledCourses.has(course.id) ? (
               <div className="mb-4">
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-gray-600">Progress</span>

@@ -31,7 +31,7 @@ const layout = ({children}:{children:ReactNode}) => {
         setSidebarOpen(prev => !prev);
       }
   return (
-    <ProtectedRoute requiredRole={GlobalVariables.non_admin}> 
+    <ProtectedRoute requiredRole={GlobalVariables.non_admin.role1}> 
        <div className="flex h-screen bg-gray-50">
           <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
           <div className="flex-1 flex flex-col overflow-hidden">

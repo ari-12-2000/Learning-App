@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const signup = async (first_name: string, last_name: string, email: string, password: string, role = `${GlobalVariables.non_admin}`) => {
+  const signup = async (first_name: string, last_name: string, email: string, password: string, role = `${GlobalVariables.non_admin.role1}`) => {
     setIsLoading(true)
 
     try {
