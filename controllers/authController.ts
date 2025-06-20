@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import { prisma } from '@/lib/prisma';
-import { Admin, Learner } from "@/lib/generated/prisma";
+import { Admin} from "@/lib/generated/prisma";
 import { GlobalVariables } from "@/globalVariables";
 
 const JWT_SECRET = process.env.JWT_SECRET!
