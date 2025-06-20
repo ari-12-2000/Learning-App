@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { Admin, Learner } from "@/lib/generated/prisma";
 import { GlobalVariables } from "@/globalVariables";
 
-const JWT_SECRET = process.env.JWT_SECRET || "123456"
+const JWT_SECRET = process.env.JWT_SECRET!
 
 export class AuthController {
   static async login(req: NextRequest) {
