@@ -155,7 +155,7 @@ ${message}
               contains: extracted.courseName,
               mode: "insensitive"
             },
-          },
+          }
 
         });
     }

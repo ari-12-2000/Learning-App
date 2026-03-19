@@ -11,7 +11,8 @@ export default function RouteChangeHandler() {
   const { filterCategory, loading, setFilterCategory, setLoading } = useCourses()
 
   useEffect(() => {
-    if (!prevPathname) return
+    if (!prevPathname) 
+      return
 
        if (prevPathname?.startsWith("/courses/search") && filterCategory) {
       setFilterCategory("");
