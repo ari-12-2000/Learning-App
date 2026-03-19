@@ -19,13 +19,14 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
   const { user, logout, setUser, isLoading } = useAuth()
+  const { status } = useSession();
   const pathname = usePathname()
   const router = useRouter()
   // Add state for client-side rendering
   const [isPhotoUploadOpen, setIsPhotoUploadOpen] = useState(false)
   const profilePhoto = user?.profile_image ?? ""
 
- const isActive = (path: string) => {
+  const isActive = (path: string) => {
     return pathname === path
   }
 
@@ -116,7 +117,7 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
         </div>
         <div className="pt-5 pb-4 overflow-y-auto">
           <div className="px-4 mb-6  flex justify-center">
-            {isLoading ? (<div className="inline-flex flex-col items-center animate-pulse p-2 rounded-lg">
+            {isLoading || status === 'loading' ? (<div className="inline-flex flex-col items-center animate-pulse p-2 rounded-lg">
               {/* Profile photo skeleton */}
               <div className="h-14 w-14 rounded-full bg-gray-200 mb-2" />
 

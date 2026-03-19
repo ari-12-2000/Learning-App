@@ -143,11 +143,11 @@ export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]
 
 export const QuestionType: {
   mcq_single: 'mcq_single',
-  mcq_multiple: 'mcq_multiple',
   true_false: 'true_false',
   fill_blank: 'fill_blank',
   slider: 'slider',
-  text: 'text'
+  text: 'text',
+  mcq_multiple: 'mcq_multiple'
 };
 
 export type QuestionType = (typeof QuestionType)[keyof typeof QuestionType]
@@ -2643,21 +2643,21 @@ export namespace Prisma {
    */
 
   export type LearnerCountOutputType = {
+    passwordResets: number
     enrollments: number
     leaderboards: number
     createdLearners: number
     measureProgress: number
     quizAttempts: number
-    passwordResets: number
   }
 
   export type LearnerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    passwordResets?: boolean | LearnerCountOutputTypeCountPasswordResetsArgs
     enrollments?: boolean | LearnerCountOutputTypeCountEnrollmentsArgs
     leaderboards?: boolean | LearnerCountOutputTypeCountLeaderboardsArgs
     createdLearners?: boolean | LearnerCountOutputTypeCountCreatedLearnersArgs
     measureProgress?: boolean | LearnerCountOutputTypeCountMeasureProgressArgs
     quizAttempts?: boolean | LearnerCountOutputTypeCountQuizAttemptsArgs
-    passwordResets?: boolean | LearnerCountOutputTypeCountPasswordResetsArgs
   }
 
   // Custom InputTypes
@@ -2669,6 +2669,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the LearnerCountOutputType
      */
     select?: LearnerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LearnerCountOutputType without action
+   */
+  export type LearnerCountOutputTypeCountPasswordResetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PasswordResetWhereInput
   }
 
   /**
@@ -2706,32 +2713,25 @@ export namespace Prisma {
     where?: QuizAttemptWhereInput
   }
 
-  /**
-   * LearnerCountOutputType without action
-   */
-  export type LearnerCountOutputTypeCountPasswordResetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PasswordResetWhereInput
-  }
-
 
   /**
    * Count Type ProgramCountOutputType
    */
 
   export type ProgramCountOutputType = {
-    quizzes: number
     enrollments: number
     leaderboards: number
     measureProgress: number
     programModules: number
+    quizzes: number
   }
 
   export type ProgramCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quizzes?: boolean | ProgramCountOutputTypeCountQuizzesArgs
     enrollments?: boolean | ProgramCountOutputTypeCountEnrollmentsArgs
     leaderboards?: boolean | ProgramCountOutputTypeCountLeaderboardsArgs
     measureProgress?: boolean | ProgramCountOutputTypeCountMeasureProgressArgs
     programModules?: boolean | ProgramCountOutputTypeCountProgramModulesArgs
+    quizzes?: boolean | ProgramCountOutputTypeCountQuizzesArgs
   }
 
   // Custom InputTypes
@@ -2743,13 +2743,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the ProgramCountOutputType
      */
     select?: ProgramCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * ProgramCountOutputType without action
-   */
-  export type ProgramCountOutputTypeCountQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuizAssignmentWhereInput
   }
 
   /**
@@ -2778,6 +2771,13 @@ export namespace Prisma {
    */
   export type ProgramCountOutputTypeCountProgramModulesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProgramModuleWhereInput
+  }
+
+  /**
+   * ProgramCountOutputType without action
+   */
+  export type ProgramCountOutputTypeCountQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuizAssignmentWhereInput
   }
 
 
@@ -4465,10 +4465,9 @@ export namespace Prisma {
     dob: Date | null
     email: string | null
     phone: Uint8Array | null
-    communicationEmail: Uint8Array | null
+    communication_email: Uint8Array | null
     password: string | null
     profile_image: string | null
-    image_id: string | null
     organisation: string | null
     designation: string | null
     department: string | null
@@ -4488,6 +4487,7 @@ export namespace Prisma {
     extraConfig: string | null
     metaData: string | null
     role: string | null
+    image_id: string | null
   }
 
   export type LearnerMaxAggregateOutputType = {
@@ -4498,10 +4498,9 @@ export namespace Prisma {
     dob: Date | null
     email: string | null
     phone: Uint8Array | null
-    communicationEmail: Uint8Array | null
+    communication_email: Uint8Array | null
     password: string | null
     profile_image: string | null
-    image_id: string | null
     organisation: string | null
     designation: string | null
     department: string | null
@@ -4521,6 +4520,7 @@ export namespace Prisma {
     extraConfig: string | null
     metaData: string | null
     role: string | null
+    image_id: string | null
   }
 
   export type LearnerCountAggregateOutputType = {
@@ -4531,10 +4531,9 @@ export namespace Prisma {
     dob: number
     email: number
     phone: number
-    communicationEmail: number
+    communication_email: number
     password: number
     profile_image: number
-    image_id: number
     organisation: number
     designation: number
     department: number
@@ -4554,6 +4553,7 @@ export namespace Prisma {
     extraConfig: number
     metaData: number
     role: number
+    image_id: number
     _all: number
   }
 
@@ -4580,10 +4580,9 @@ export namespace Prisma {
     dob?: true
     email?: true
     phone?: true
-    communicationEmail?: true
+    communication_email?: true
     password?: true
     profile_image?: true
-    image_id?: true
     organisation?: true
     designation?: true
     department?: true
@@ -4603,6 +4602,7 @@ export namespace Prisma {
     extraConfig?: true
     metaData?: true
     role?: true
+    image_id?: true
   }
 
   export type LearnerMaxAggregateInputType = {
@@ -4613,10 +4613,9 @@ export namespace Prisma {
     dob?: true
     email?: true
     phone?: true
-    communicationEmail?: true
+    communication_email?: true
     password?: true
     profile_image?: true
-    image_id?: true
     organisation?: true
     designation?: true
     department?: true
@@ -4636,6 +4635,7 @@ export namespace Prisma {
     extraConfig?: true
     metaData?: true
     role?: true
+    image_id?: true
   }
 
   export type LearnerCountAggregateInputType = {
@@ -4646,10 +4646,9 @@ export namespace Prisma {
     dob?: true
     email?: true
     phone?: true
-    communicationEmail?: true
+    communication_email?: true
     password?: true
     profile_image?: true
-    image_id?: true
     organisation?: true
     designation?: true
     department?: true
@@ -4669,6 +4668,7 @@ export namespace Prisma {
     extraConfig?: true
     metaData?: true
     role?: true
+    image_id?: true
     _all?: true
   }
 
@@ -4766,10 +4766,9 @@ export namespace Prisma {
     dob: Date | null
     email: string
     phone: Uint8Array | null
-    communicationEmail: Uint8Array | null
+    communication_email: Uint8Array | null
     password: string | null
     profile_image: string | null
-    image_id: string | null
     organisation: string | null
     designation: string | null
     department: string | null
@@ -4789,6 +4788,7 @@ export namespace Prisma {
     extraConfig: string | null
     metaData: string | null
     role: string
+    image_id: string | null
     _count: LearnerCountAggregateOutputType | null
     _avg: LearnerAvgAggregateOutputType | null
     _sum: LearnerSumAggregateOutputType | null
@@ -4818,10 +4818,9 @@ export namespace Prisma {
     dob?: boolean
     email?: boolean
     phone?: boolean
-    communicationEmail?: boolean
+    communication_email?: boolean
     password?: boolean
     profile_image?: boolean
-    image_id?: boolean
     organisation?: boolean
     designation?: boolean
     department?: boolean
@@ -4841,13 +4840,14 @@ export namespace Prisma {
     extraConfig?: boolean
     metaData?: boolean
     role?: boolean
+    image_id?: boolean
+    passwordResets?: boolean | Learner$passwordResetsArgs<ExtArgs>
     enrollments?: boolean | Learner$enrollmentsArgs<ExtArgs>
     leaderboards?: boolean | Learner$leaderboardsArgs<ExtArgs>
     creator?: boolean | Learner$creatorArgs<ExtArgs>
     createdLearners?: boolean | Learner$createdLearnersArgs<ExtArgs>
     measureProgress?: boolean | Learner$measureProgressArgs<ExtArgs>
     quizAttempts?: boolean | Learner$quizAttemptsArgs<ExtArgs>
-    passwordResets?: boolean | Learner$passwordResetsArgs<ExtArgs>
     _count?: boolean | LearnerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["learner"]>
 
@@ -4859,10 +4859,9 @@ export namespace Prisma {
     dob?: boolean
     email?: boolean
     phone?: boolean
-    communicationEmail?: boolean
+    communication_email?: boolean
     password?: boolean
     profile_image?: boolean
-    image_id?: boolean
     organisation?: boolean
     designation?: boolean
     department?: boolean
@@ -4882,6 +4881,7 @@ export namespace Prisma {
     extraConfig?: boolean
     metaData?: boolean
     role?: boolean
+    image_id?: boolean
     creator?: boolean | Learner$creatorArgs<ExtArgs>
   }, ExtArgs["result"]["learner"]>
 
@@ -4893,10 +4893,9 @@ export namespace Prisma {
     dob?: boolean
     email?: boolean
     phone?: boolean
-    communicationEmail?: boolean
+    communication_email?: boolean
     password?: boolean
     profile_image?: boolean
-    image_id?: boolean
     organisation?: boolean
     designation?: boolean
     department?: boolean
@@ -4916,6 +4915,7 @@ export namespace Prisma {
     extraConfig?: boolean
     metaData?: boolean
     role?: boolean
+    image_id?: boolean
     creator?: boolean | Learner$creatorArgs<ExtArgs>
   }, ExtArgs["result"]["learner"]>
 
@@ -4927,10 +4927,9 @@ export namespace Prisma {
     dob?: boolean
     email?: boolean
     phone?: boolean
-    communicationEmail?: boolean
+    communication_email?: boolean
     password?: boolean
     profile_image?: boolean
-    image_id?: boolean
     organisation?: boolean
     designation?: boolean
     department?: boolean
@@ -4950,17 +4949,18 @@ export namespace Prisma {
     extraConfig?: boolean
     metaData?: boolean
     role?: boolean
+    image_id?: boolean
   }
 
-  export type LearnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "gender" | "dob" | "email" | "phone" | "communicationEmail" | "password" | "profile_image" | "image_id" | "organisation" | "designation" | "department" | "location" | "hierarchy_level" | "totalPoints" | "isActive" | "isDeleted" | "deletedAt" | "isVerified" | "lastLogin" | "createdBy" | "createdAt" | "updatedAt" | "uniqueHash" | "status" | "extraConfig" | "metaData" | "role", ExtArgs["result"]["learner"]>
+  export type LearnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "gender" | "dob" | "email" | "phone" | "communication_email" | "password" | "profile_image" | "organisation" | "designation" | "department" | "location" | "hierarchy_level" | "totalPoints" | "isActive" | "isDeleted" | "deletedAt" | "isVerified" | "lastLogin" | "createdBy" | "createdAt" | "updatedAt" | "uniqueHash" | "status" | "extraConfig" | "metaData" | "role" | "image_id", ExtArgs["result"]["learner"]>
   export type LearnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    passwordResets?: boolean | Learner$passwordResetsArgs<ExtArgs>
     enrollments?: boolean | Learner$enrollmentsArgs<ExtArgs>
     leaderboards?: boolean | Learner$leaderboardsArgs<ExtArgs>
     creator?: boolean | Learner$creatorArgs<ExtArgs>
     createdLearners?: boolean | Learner$createdLearnersArgs<ExtArgs>
     measureProgress?: boolean | Learner$measureProgressArgs<ExtArgs>
     quizAttempts?: boolean | Learner$quizAttemptsArgs<ExtArgs>
-    passwordResets?: boolean | Learner$passwordResetsArgs<ExtArgs>
     _count?: boolean | LearnerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LearnerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4973,13 +4973,13 @@ export namespace Prisma {
   export type $LearnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Learner"
     objects: {
+      passwordResets: Prisma.$PasswordResetPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
       leaderboards: Prisma.$LeaderboardPayload<ExtArgs>[]
       creator: Prisma.$LearnerPayload<ExtArgs> | null
       createdLearners: Prisma.$LearnerPayload<ExtArgs>[]
       measureProgress: Prisma.$MeasureProgressPayload<ExtArgs>[]
       quizAttempts: Prisma.$QuizAttemptPayload<ExtArgs>[]
-      passwordResets: Prisma.$PasswordResetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4989,10 +4989,9 @@ export namespace Prisma {
       dob: Date | null
       email: string
       phone: Uint8Array | null
-      communicationEmail: Uint8Array | null
+      communication_email: Uint8Array | null
       password: string | null
       profile_image: string | null
-      image_id: string | null
       organisation: string | null
       designation: string | null
       department: string | null
@@ -5012,6 +5011,7 @@ export namespace Prisma {
       extraConfig: string | null
       metaData: string | null
       role: string
+      image_id: string | null
     }, ExtArgs["result"]["learner"]>
     composites: {}
   }
@@ -5406,13 +5406,13 @@ export namespace Prisma {
    */
   export interface Prisma__LearnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    passwordResets<T extends Learner$passwordResetsArgs<ExtArgs> = {}>(args?: Subset<T, Learner$passwordResetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Learner$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Learner$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     leaderboards<T extends Learner$leaderboardsArgs<ExtArgs> = {}>(args?: Subset<T, Learner$leaderboardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaderboardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     creator<T extends Learner$creatorArgs<ExtArgs> = {}>(args?: Subset<T, Learner$creatorArgs<ExtArgs>>): Prisma__LearnerClient<$Result.GetResult<Prisma.$LearnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     createdLearners<T extends Learner$createdLearnersArgs<ExtArgs> = {}>(args?: Subset<T, Learner$createdLearnersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LearnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     measureProgress<T extends Learner$measureProgressArgs<ExtArgs> = {}>(args?: Subset<T, Learner$measureProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeasureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quizAttempts<T extends Learner$quizAttemptsArgs<ExtArgs> = {}>(args?: Subset<T, Learner$quizAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    passwordResets<T extends Learner$passwordResetsArgs<ExtArgs> = {}>(args?: Subset<T, Learner$passwordResetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5449,10 +5449,9 @@ export namespace Prisma {
     readonly dob: FieldRef<"Learner", 'DateTime'>
     readonly email: FieldRef<"Learner", 'String'>
     readonly phone: FieldRef<"Learner", 'Bytes'>
-    readonly communicationEmail: FieldRef<"Learner", 'Bytes'>
+    readonly communication_email: FieldRef<"Learner", 'Bytes'>
     readonly password: FieldRef<"Learner", 'String'>
     readonly profile_image: FieldRef<"Learner", 'String'>
-    readonly image_id: FieldRef<"Learner", 'String'>
     readonly organisation: FieldRef<"Learner", 'String'>
     readonly designation: FieldRef<"Learner", 'String'>
     readonly department: FieldRef<"Learner", 'String'>
@@ -5472,6 +5471,7 @@ export namespace Prisma {
     readonly extraConfig: FieldRef<"Learner", 'String'>
     readonly metaData: FieldRef<"Learner", 'String'>
     readonly role: FieldRef<"Learner", 'String'>
+    readonly image_id: FieldRef<"Learner", 'String'>
   }
     
 
@@ -5868,6 +5868,30 @@ export namespace Prisma {
   }
 
   /**
+   * Learner.passwordResets
+   */
+  export type Learner$passwordResetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordReset
+     */
+    select?: PasswordResetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordReset
+     */
+    omit?: PasswordResetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordResetInclude<ExtArgs> | null
+    where?: PasswordResetWhereInput
+    orderBy?: PasswordResetOrderByWithRelationInput | PasswordResetOrderByWithRelationInput[]
+    cursor?: PasswordResetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PasswordResetScalarFieldEnum | PasswordResetScalarFieldEnum[]
+  }
+
+  /**
    * Learner.enrollments
    */
   export type Learner$enrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6004,30 +6028,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QuizAttemptScalarFieldEnum | QuizAttemptScalarFieldEnum[]
-  }
-
-  /**
-   * Learner.passwordResets
-   */
-  export type Learner$passwordResetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PasswordReset
-     */
-    select?: PasswordResetSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PasswordReset
-     */
-    omit?: PasswordResetOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PasswordResetInclude<ExtArgs> | null
-    where?: PasswordResetWhereInput
-    orderBy?: PasswordResetOrderByWithRelationInput | PasswordResetOrderByWithRelationInput[]
-    cursor?: PasswordResetWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PasswordResetScalarFieldEnum | PasswordResetScalarFieldEnum[]
   }
 
   /**
@@ -6471,12 +6471,12 @@ export namespace Prisma {
     updatedAt?: boolean
     deletedAt?: boolean
     maxParticipants?: boolean
-    quizzes?: boolean | Program$quizzesArgs<ExtArgs>
     enrollments?: boolean | Program$enrollmentsArgs<ExtArgs>
     leaderboards?: boolean | Program$leaderboardsArgs<ExtArgs>
     measureProgress?: boolean | Program$measureProgressArgs<ExtArgs>
     programModules?: boolean | Program$programModulesArgs<ExtArgs>
     author?: boolean | AdminDefaultArgs<ExtArgs>
+    quizzes?: boolean | Program$quizzesArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["program"]>
 
@@ -6580,12 +6580,12 @@ export namespace Prisma {
 
   export type ProgramOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "title" | "description" | "category" | "instructor" | "instructorAvatar" | "image" | "rating" | "level" | "price" | "type" | "totalTimeLimit" | "status" | "uniqueHash" | "startDate" | "endDate" | "surveyStartDate" | "surveyEndDate" | "passingScore" | "studySettings" | "clientId" | "packageId" | "isActive" | "isDeleted" | "createdAt" | "updatedAt" | "deletedAt" | "maxParticipants", ExtArgs["result"]["program"]>
   export type ProgramInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    quizzes?: boolean | Program$quizzesArgs<ExtArgs>
     enrollments?: boolean | Program$enrollmentsArgs<ExtArgs>
     leaderboards?: boolean | Program$leaderboardsArgs<ExtArgs>
     measureProgress?: boolean | Program$measureProgressArgs<ExtArgs>
     programModules?: boolean | Program$programModulesArgs<ExtArgs>
     author?: boolean | AdminDefaultArgs<ExtArgs>
+    quizzes?: boolean | Program$quizzesArgs<ExtArgs>
     _count?: boolean | ProgramCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProgramIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6598,12 +6598,12 @@ export namespace Prisma {
   export type $ProgramPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Program"
     objects: {
-      quizzes: Prisma.$QuizAssignmentPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
       leaderboards: Prisma.$LeaderboardPayload<ExtArgs>[]
       measureProgress: Prisma.$MeasureProgressPayload<ExtArgs>[]
       programModules: Prisma.$ProgramModulePayload<ExtArgs>[]
       author: Prisma.$AdminPayload<ExtArgs>
+      quizzes: Prisma.$QuizAssignmentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7029,12 +7029,12 @@ export namespace Prisma {
    */
   export interface Prisma__ProgramClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    quizzes<T extends Program$quizzesArgs<ExtArgs> = {}>(args?: Subset<T, Program$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Program$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Program$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     leaderboards<T extends Program$leaderboardsArgs<ExtArgs> = {}>(args?: Subset<T, Program$leaderboardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeaderboardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     measureProgress<T extends Program$measureProgressArgs<ExtArgs> = {}>(args?: Subset<T, Program$measureProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeasureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programModules<T extends Program$programModulesArgs<ExtArgs> = {}>(args?: Subset<T, Program$programModulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     author<T extends AdminDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdminDefaultArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    quizzes<T extends Program$quizzesArgs<ExtArgs> = {}>(args?: Subset<T, Program$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7489,30 +7489,6 @@ export namespace Prisma {
   }
 
   /**
-   * Program.quizzes
-   */
-  export type Program$quizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the QuizAssignment
-     */
-    select?: QuizAssignmentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the QuizAssignment
-     */
-    omit?: QuizAssignmentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuizAssignmentInclude<ExtArgs> | null
-    where?: QuizAssignmentWhereInput
-    orderBy?: QuizAssignmentOrderByWithRelationInput | QuizAssignmentOrderByWithRelationInput[]
-    cursor?: QuizAssignmentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuizAssignmentScalarFieldEnum | QuizAssignmentScalarFieldEnum[]
-  }
-
-  /**
    * Program.enrollments
    */
   export type Program$enrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7606,6 +7582,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProgramModuleScalarFieldEnum | ProgramModuleScalarFieldEnum[]
+  }
+
+  /**
+   * Program.quizzes
+   */
+  export type Program$quizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizAssignment
+     */
+    select?: QuizAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizAssignment
+     */
+    omit?: QuizAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizAssignmentInclude<ExtArgs> | null
+    where?: QuizAssignmentWhereInput
+    orderBy?: QuizAssignmentOrderByWithRelationInput | QuizAssignmentOrderByWithRelationInput[]
+    cursor?: QuizAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuizAssignmentScalarFieldEnum | QuizAssignmentScalarFieldEnum[]
   }
 
   /**
@@ -15794,9 +15794,9 @@ export namespace Prisma {
     option4: number
     option5: number
     option6: number
-    config: number
     answer: number
     createdAt: number
+    config: number
     _all: number
   }
 
@@ -15857,9 +15857,9 @@ export namespace Prisma {
     option4?: true
     option5?: true
     option6?: true
-    config?: true
     answer?: true
     createdAt?: true
+    config?: true
     _all?: true
   }
 
@@ -15961,9 +15961,9 @@ export namespace Prisma {
     option4: string | null
     option5: string | null
     option6: string | null
-    config: JsonValue | null
     answer: string | null
     createdAt: Date
+    config: JsonValue | null
     _count: QuestionPoolCountAggregateOutputType | null
     _avg: QuestionPoolAvgAggregateOutputType | null
     _sum: QuestionPoolSumAggregateOutputType | null
@@ -15997,11 +15997,11 @@ export namespace Prisma {
     option4?: boolean
     option5?: boolean
     option6?: boolean
-    config?: boolean
     answer?: boolean
     createdAt?: boolean
-    author?: boolean | AdminDefaultArgs<ExtArgs>
+    config?: boolean
     questionPapers?: boolean | QuestionPool$questionPapersArgs<ExtArgs>
+    author?: boolean | AdminDefaultArgs<ExtArgs>
     _count?: boolean | QuestionPoolCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["questionPool"]>
 
@@ -16017,9 +16017,9 @@ export namespace Prisma {
     option4?: boolean
     option5?: boolean
     option6?: boolean
-    config?: boolean
     answer?: boolean
     createdAt?: boolean
+    config?: boolean
     author?: boolean | AdminDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["questionPool"]>
 
@@ -16035,9 +16035,9 @@ export namespace Prisma {
     option4?: boolean
     option5?: boolean
     option6?: boolean
-    config?: boolean
     answer?: boolean
     createdAt?: boolean
+    config?: boolean
     author?: boolean | AdminDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["questionPool"]>
 
@@ -16053,15 +16053,15 @@ export namespace Prisma {
     option4?: boolean
     option5?: boolean
     option6?: boolean
-    config?: boolean
     answer?: boolean
     createdAt?: boolean
+    config?: boolean
   }
 
-  export type QuestionPoolOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "questionText" | "questionType" | "points" | "option1" | "option2" | "option3" | "option4" | "option5" | "option6" | "config" | "answer" | "createdAt", ExtArgs["result"]["questionPool"]>
+  export type QuestionPoolOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authorId" | "questionText" | "questionType" | "points" | "option1" | "option2" | "option3" | "option4" | "option5" | "option6" | "answer" | "createdAt" | "config", ExtArgs["result"]["questionPool"]>
   export type QuestionPoolInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | AdminDefaultArgs<ExtArgs>
     questionPapers?: boolean | QuestionPool$questionPapersArgs<ExtArgs>
+    author?: boolean | AdminDefaultArgs<ExtArgs>
     _count?: boolean | QuestionPoolCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QuestionPoolIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16074,8 +16074,8 @@ export namespace Prisma {
   export type $QuestionPoolPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "QuestionPool"
     objects: {
-      author: Prisma.$AdminPayload<ExtArgs>
       questionPapers: Prisma.$QuestionPaperQuestionPayload<ExtArgs>[]
+      author: Prisma.$AdminPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -16089,9 +16089,9 @@ export namespace Prisma {
       option4: string | null
       option5: string | null
       option6: string | null
-      config: Prisma.JsonValue | null
       answer: string | null
       createdAt: Date
+      config: Prisma.JsonValue | null
     }, ExtArgs["result"]["questionPool"]>
     composites: {}
   }
@@ -16486,8 +16486,8 @@ export namespace Prisma {
    */
   export interface Prisma__QuestionPoolClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    author<T extends AdminDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdminDefaultArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     questionPapers<T extends QuestionPool$questionPapersArgs<ExtArgs> = {}>(args?: Subset<T, QuestionPool$questionPapersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPaperQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    author<T extends AdminDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdminDefaultArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16528,9 +16528,9 @@ export namespace Prisma {
     readonly option4: FieldRef<"QuestionPool", 'String'>
     readonly option5: FieldRef<"QuestionPool", 'String'>
     readonly option6: FieldRef<"QuestionPool", 'String'>
-    readonly config: FieldRef<"QuestionPool", 'Json'>
     readonly answer: FieldRef<"QuestionPool", 'String'>
     readonly createdAt: FieldRef<"QuestionPool", 'DateTime'>
+    readonly config: FieldRef<"QuestionPool", 'Json'>
   }
     
 
@@ -16983,108 +16983,108 @@ export namespace Prisma {
 
   export type QuizAssignmentAvgAggregateOutputType = {
     id: number | null
-    questionPaperId: number | null
     programId: number | null
+    questionPaperId: number | null
   }
 
   export type QuizAssignmentSumAggregateOutputType = {
     id: number | null
-    questionPaperId: number | null
     programId: number | null
+    questionPaperId: number | null
   }
 
   export type QuizAssignmentMinAggregateOutputType = {
     id: number | null
-    questionPaperId: number | null
-    title: string | null
-    description: string | null
-    programId: number | null
     uniqueLinkToken: string | null
     enabled: boolean | null
     isDeleted: boolean | null
     deletedAt: Date | null
     createdAt: Date | null
+    programId: number | null
+    description: string | null
+    title: string | null
+    questionPaperId: number | null
   }
 
   export type QuizAssignmentMaxAggregateOutputType = {
     id: number | null
-    questionPaperId: number | null
-    title: string | null
-    description: string | null
-    programId: number | null
     uniqueLinkToken: string | null
     enabled: boolean | null
     isDeleted: boolean | null
     deletedAt: Date | null
     createdAt: Date | null
+    programId: number | null
+    description: string | null
+    title: string | null
+    questionPaperId: number | null
   }
 
   export type QuizAssignmentCountAggregateOutputType = {
     id: number
-    rules: number
-    questionPaperId: number
-    title: number
-    description: number
-    programId: number
     uniqueLinkToken: number
     enabled: number
     isDeleted: number
     deletedAt: number
     createdAt: number
+    rules: number
+    programId: number
+    description: number
+    title: number
+    questionPaperId: number
     _all: number
   }
 
 
   export type QuizAssignmentAvgAggregateInputType = {
     id?: true
-    questionPaperId?: true
     programId?: true
+    questionPaperId?: true
   }
 
   export type QuizAssignmentSumAggregateInputType = {
     id?: true
-    questionPaperId?: true
     programId?: true
+    questionPaperId?: true
   }
 
   export type QuizAssignmentMinAggregateInputType = {
     id?: true
-    questionPaperId?: true
-    title?: true
-    description?: true
-    programId?: true
     uniqueLinkToken?: true
     enabled?: true
     isDeleted?: true
     deletedAt?: true
     createdAt?: true
+    programId?: true
+    description?: true
+    title?: true
+    questionPaperId?: true
   }
 
   export type QuizAssignmentMaxAggregateInputType = {
     id?: true
-    questionPaperId?: true
-    title?: true
-    description?: true
-    programId?: true
     uniqueLinkToken?: true
     enabled?: true
     isDeleted?: true
     deletedAt?: true
     createdAt?: true
+    programId?: true
+    description?: true
+    title?: true
+    questionPaperId?: true
   }
 
   export type QuizAssignmentCountAggregateInputType = {
     id?: true
-    rules?: true
-    questionPaperId?: true
-    title?: true
-    description?: true
-    programId?: true
     uniqueLinkToken?: true
     enabled?: true
     isDeleted?: true
     deletedAt?: true
     createdAt?: true
+    rules?: true
+    programId?: true
+    description?: true
+    title?: true
+    questionPaperId?: true
     _all?: true
   }
 
@@ -17176,16 +17176,16 @@ export namespace Prisma {
 
   export type QuizAssignmentGroupByOutputType = {
     id: number
-    rules: JsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    programId: number | null
     uniqueLinkToken: string
     enabled: boolean
     isDeleted: boolean
     deletedAt: Date | null
     createdAt: Date
+    rules: JsonValue
+    programId: number | null
+    description: string
+    title: string
+    questionPaperId: number
     _count: QuizAssignmentCountAggregateOutputType | null
     _avg: QuizAssignmentAvgAggregateOutputType | null
     _sum: QuizAssignmentSumAggregateOutputType | null
@@ -17209,16 +17209,16 @@ export namespace Prisma {
 
   export type QuizAssignmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    rules?: boolean
-    questionPaperId?: boolean
-    title?: boolean
-    description?: boolean
-    programId?: boolean
     uniqueLinkToken?: boolean
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
     createdAt?: boolean
+    rules?: boolean
+    programId?: boolean
+    description?: boolean
+    title?: boolean
+    questionPaperId?: boolean
     program?: boolean | QuizAssignment$programArgs<ExtArgs>
     questionPaper?: boolean | QuestionPaperDefaultArgs<ExtArgs>
     quizAttempts?: boolean | QuizAssignment$quizAttemptsArgs<ExtArgs>
@@ -17227,51 +17227,51 @@ export namespace Prisma {
 
   export type QuizAssignmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    rules?: boolean
-    questionPaperId?: boolean
-    title?: boolean
-    description?: boolean
-    programId?: boolean
     uniqueLinkToken?: boolean
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
     createdAt?: boolean
+    rules?: boolean
+    programId?: boolean
+    description?: boolean
+    title?: boolean
+    questionPaperId?: boolean
     program?: boolean | QuizAssignment$programArgs<ExtArgs>
     questionPaper?: boolean | QuestionPaperDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAssignment"]>
 
   export type QuizAssignmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    rules?: boolean
-    questionPaperId?: boolean
-    title?: boolean
-    description?: boolean
-    programId?: boolean
     uniqueLinkToken?: boolean
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
     createdAt?: boolean
+    rules?: boolean
+    programId?: boolean
+    description?: boolean
+    title?: boolean
+    questionPaperId?: boolean
     program?: boolean | QuizAssignment$programArgs<ExtArgs>
     questionPaper?: boolean | QuestionPaperDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAssignment"]>
 
   export type QuizAssignmentSelectScalar = {
     id?: boolean
-    rules?: boolean
-    questionPaperId?: boolean
-    title?: boolean
-    description?: boolean
-    programId?: boolean
     uniqueLinkToken?: boolean
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: boolean
     createdAt?: boolean
+    rules?: boolean
+    programId?: boolean
+    description?: boolean
+    title?: boolean
+    questionPaperId?: boolean
   }
 
-  export type QuizAssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rules" | "questionPaperId" | "title" | "description" | "programId" | "uniqueLinkToken" | "enabled" | "isDeleted" | "deletedAt" | "createdAt", ExtArgs["result"]["quizAssignment"]>
+  export type QuizAssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "uniqueLinkToken" | "enabled" | "isDeleted" | "deletedAt" | "createdAt" | "rules" | "programId" | "description" | "title" | "questionPaperId", ExtArgs["result"]["quizAssignment"]>
   export type QuizAssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     program?: boolean | QuizAssignment$programArgs<ExtArgs>
     questionPaper?: boolean | QuestionPaperDefaultArgs<ExtArgs>
@@ -17296,16 +17296,16 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      rules: Prisma.JsonValue
-      questionPaperId: number
-      title: string
-      description: string
-      programId: number | null
       uniqueLinkToken: string
       enabled: boolean
       isDeleted: boolean
       deletedAt: Date | null
       createdAt: Date
+      rules: Prisma.JsonValue
+      programId: number | null
+      description: string
+      title: string
+      questionPaperId: number
     }, ExtArgs["result"]["quizAssignment"]>
     composites: {}
   }
@@ -17733,16 +17733,16 @@ export namespace Prisma {
    */
   interface QuizAssignmentFieldRefs {
     readonly id: FieldRef<"QuizAssignment", 'Int'>
-    readonly rules: FieldRef<"QuizAssignment", 'Json'>
-    readonly questionPaperId: FieldRef<"QuizAssignment", 'Int'>
-    readonly title: FieldRef<"QuizAssignment", 'String'>
-    readonly description: FieldRef<"QuizAssignment", 'String'>
-    readonly programId: FieldRef<"QuizAssignment", 'Int'>
     readonly uniqueLinkToken: FieldRef<"QuizAssignment", 'String'>
     readonly enabled: FieldRef<"QuizAssignment", 'Boolean'>
     readonly isDeleted: FieldRef<"QuizAssignment", 'Boolean'>
     readonly deletedAt: FieldRef<"QuizAssignment", 'DateTime'>
     readonly createdAt: FieldRef<"QuizAssignment", 'DateTime'>
+    readonly rules: FieldRef<"QuizAssignment", 'Json'>
+    readonly programId: FieldRef<"QuizAssignment", 'Int'>
+    readonly description: FieldRef<"QuizAssignment", 'String'>
+    readonly title: FieldRef<"QuizAssignment", 'String'>
+    readonly questionPaperId: FieldRef<"QuizAssignment", 'Int'>
   }
     
 
@@ -20417,13 +20417,13 @@ export namespace Prisma {
     assignmentId: number | null
     learnerId: number | null
     startedAt: Date | null
-    endedAt: Date | null
     submittedAt: Date | null
     totalTimeSpent: number | null
     score: Decimal | null
     passed: boolean | null
     status: string | null
     createdAt: Date | null
+    endedAt: Date | null
   }
 
   export type QuizAttemptMaxAggregateOutputType = {
@@ -20431,13 +20431,13 @@ export namespace Prisma {
     assignmentId: number | null
     learnerId: number | null
     startedAt: Date | null
-    endedAt: Date | null
     submittedAt: Date | null
     totalTimeSpent: number | null
     score: Decimal | null
     passed: boolean | null
     status: string | null
     createdAt: Date | null
+    endedAt: Date | null
   }
 
   export type QuizAttemptCountAggregateOutputType = {
@@ -20445,13 +20445,13 @@ export namespace Prisma {
     assignmentId: number
     learnerId: number
     startedAt: number
-    endedAt: number
     submittedAt: number
     totalTimeSpent: number
     score: number
     passed: number
     status: number
     createdAt: number
+    endedAt: number
     _all: number
   }
 
@@ -20477,13 +20477,13 @@ export namespace Prisma {
     assignmentId?: true
     learnerId?: true
     startedAt?: true
-    endedAt?: true
     submittedAt?: true
     totalTimeSpent?: true
     score?: true
     passed?: true
     status?: true
     createdAt?: true
+    endedAt?: true
   }
 
   export type QuizAttemptMaxAggregateInputType = {
@@ -20491,13 +20491,13 @@ export namespace Prisma {
     assignmentId?: true
     learnerId?: true
     startedAt?: true
-    endedAt?: true
     submittedAt?: true
     totalTimeSpent?: true
     score?: true
     passed?: true
     status?: true
     createdAt?: true
+    endedAt?: true
   }
 
   export type QuizAttemptCountAggregateInputType = {
@@ -20505,13 +20505,13 @@ export namespace Prisma {
     assignmentId?: true
     learnerId?: true
     startedAt?: true
-    endedAt?: true
     submittedAt?: true
     totalTimeSpent?: true
     score?: true
     passed?: true
     status?: true
     createdAt?: true
+    endedAt?: true
     _all?: true
   }
 
@@ -20606,13 +20606,13 @@ export namespace Prisma {
     assignmentId: number
     learnerId: number
     startedAt: Date
-    endedAt: Date | null
     submittedAt: Date | null
     totalTimeSpent: number | null
     score: Decimal | null
     passed: boolean | null
     status: string
     createdAt: Date
+    endedAt: Date | null
     _count: QuizAttemptCountAggregateOutputType | null
     _avg: QuizAttemptAvgAggregateOutputType | null
     _sum: QuizAttemptSumAggregateOutputType | null
@@ -20639,13 +20639,13 @@ export namespace Prisma {
     assignmentId?: boolean
     learnerId?: boolean
     startedAt?: boolean
-    endedAt?: boolean
     submittedAt?: boolean
     totalTimeSpent?: boolean
     score?: boolean
     passed?: boolean
     status?: boolean
     createdAt?: boolean
+    endedAt?: boolean
     questionAttempts?: boolean | QuizAttempt$questionAttemptsArgs<ExtArgs>
     assignment?: boolean | QuizAssignmentDefaultArgs<ExtArgs>
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
@@ -20657,13 +20657,13 @@ export namespace Prisma {
     assignmentId?: boolean
     learnerId?: boolean
     startedAt?: boolean
-    endedAt?: boolean
     submittedAt?: boolean
     totalTimeSpent?: boolean
     score?: boolean
     passed?: boolean
     status?: boolean
     createdAt?: boolean
+    endedAt?: boolean
     assignment?: boolean | QuizAssignmentDefaultArgs<ExtArgs>
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAttempt"]>
@@ -20673,13 +20673,13 @@ export namespace Prisma {
     assignmentId?: boolean
     learnerId?: boolean
     startedAt?: boolean
-    endedAt?: boolean
     submittedAt?: boolean
     totalTimeSpent?: boolean
     score?: boolean
     passed?: boolean
     status?: boolean
     createdAt?: boolean
+    endedAt?: boolean
     assignment?: boolean | QuizAssignmentDefaultArgs<ExtArgs>
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAttempt"]>
@@ -20689,16 +20689,16 @@ export namespace Prisma {
     assignmentId?: boolean
     learnerId?: boolean
     startedAt?: boolean
-    endedAt?: boolean
     submittedAt?: boolean
     totalTimeSpent?: boolean
     score?: boolean
     passed?: boolean
     status?: boolean
     createdAt?: boolean
+    endedAt?: boolean
   }
 
-  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "learnerId" | "startedAt" | "endedAt" | "submittedAt" | "totalTimeSpent" | "score" | "passed" | "status" | "createdAt", ExtArgs["result"]["quizAttempt"]>
+  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assignmentId" | "learnerId" | "startedAt" | "submittedAt" | "totalTimeSpent" | "score" | "passed" | "status" | "createdAt" | "endedAt", ExtArgs["result"]["quizAttempt"]>
   export type QuizAttemptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questionAttempts?: boolean | QuizAttempt$questionAttemptsArgs<ExtArgs>
     assignment?: boolean | QuizAssignmentDefaultArgs<ExtArgs>
@@ -20726,13 +20726,13 @@ export namespace Prisma {
       assignmentId: number
       learnerId: number
       startedAt: Date
-      endedAt: Date | null
       submittedAt: Date | null
       totalTimeSpent: number | null
       score: Prisma.Decimal | null
       passed: boolean | null
       status: string
       createdAt: Date
+      endedAt: Date | null
     }, ExtArgs["result"]["quizAttempt"]>
     composites: {}
   }
@@ -21163,13 +21163,13 @@ export namespace Prisma {
     readonly assignmentId: FieldRef<"QuizAttempt", 'Int'>
     readonly learnerId: FieldRef<"QuizAttempt", 'Int'>
     readonly startedAt: FieldRef<"QuizAttempt", 'DateTime'>
-    readonly endedAt: FieldRef<"QuizAttempt", 'DateTime'>
     readonly submittedAt: FieldRef<"QuizAttempt", 'DateTime'>
     readonly totalTimeSpent: FieldRef<"QuizAttempt", 'Int'>
     readonly score: FieldRef<"QuizAttempt", 'Decimal'>
     readonly passed: FieldRef<"QuizAttempt", 'Boolean'>
     readonly status: FieldRef<"QuizAttempt", 'String'>
     readonly createdAt: FieldRef<"QuizAttempt", 'DateTime'>
+    readonly endedAt: FieldRef<"QuizAttempt", 'DateTime'>
   }
     
 
@@ -22721,123 +22721,123 @@ export namespace Prisma {
   }
 
   export type MeasureProgressAvgAggregateOutputType = {
-    id: number | null
     learnerId: number | null
     topicId: number | null
     programId: number | null
     moduleId: number | null
-    quizId: number | null
     resourceId: number | null
+    id: number | null
+    quizId: number | null
   }
 
   export type MeasureProgressSumAggregateOutputType = {
-    id: number | null
     learnerId: number | null
     topicId: number | null
     programId: number | null
     moduleId: number | null
-    quizId: number | null
     resourceId: number | null
+    id: number | null
+    quizId: number | null
   }
 
   export type MeasureProgressMinAggregateOutputType = {
-    id: number | null
     learnerId: number | null
     topicId: number | null
     completedAt: Date | null
     status: string | null
-    progressType: string | null
     programId: number | null
     moduleId: number | null
-    quizId: number | null
     resourceId: number | null
+    progressType: string | null
+    id: number | null
+    quizId: number | null
   }
 
   export type MeasureProgressMaxAggregateOutputType = {
-    id: number | null
     learnerId: number | null
     topicId: number | null
     completedAt: Date | null
     status: string | null
-    progressType: string | null
     programId: number | null
     moduleId: number | null
-    quizId: number | null
     resourceId: number | null
+    progressType: string | null
+    id: number | null
+    quizId: number | null
   }
 
   export type MeasureProgressCountAggregateOutputType = {
-    id: number
     learnerId: number
     topicId: number
     completedAt: number
     status: number
-    progressType: number
     programId: number
     moduleId: number
-    quizId: number
     resourceId: number
+    progressType: number
+    id: number
+    quizId: number
     _all: number
   }
 
 
   export type MeasureProgressAvgAggregateInputType = {
-    id?: true
     learnerId?: true
     topicId?: true
     programId?: true
     moduleId?: true
-    quizId?: true
     resourceId?: true
+    id?: true
+    quizId?: true
   }
 
   export type MeasureProgressSumAggregateInputType = {
-    id?: true
     learnerId?: true
     topicId?: true
     programId?: true
     moduleId?: true
-    quizId?: true
     resourceId?: true
+    id?: true
+    quizId?: true
   }
 
   export type MeasureProgressMinAggregateInputType = {
-    id?: true
     learnerId?: true
     topicId?: true
     completedAt?: true
     status?: true
-    progressType?: true
     programId?: true
     moduleId?: true
-    quizId?: true
     resourceId?: true
+    progressType?: true
+    id?: true
+    quizId?: true
   }
 
   export type MeasureProgressMaxAggregateInputType = {
-    id?: true
     learnerId?: true
     topicId?: true
     completedAt?: true
     status?: true
-    progressType?: true
     programId?: true
     moduleId?: true
-    quizId?: true
     resourceId?: true
+    progressType?: true
+    id?: true
+    quizId?: true
   }
 
   export type MeasureProgressCountAggregateInputType = {
-    id?: true
     learnerId?: true
     topicId?: true
     completedAt?: true
     status?: true
-    progressType?: true
     programId?: true
     moduleId?: true
-    quizId?: true
     resourceId?: true
+    progressType?: true
+    id?: true
+    quizId?: true
     _all?: true
   }
 
@@ -22928,16 +22928,16 @@ export namespace Prisma {
   }
 
   export type MeasureProgressGroupByOutputType = {
-    id: number
     learnerId: number
     topicId: number | null
     completedAt: Date
     status: string
-    progressType: string
     programId: number | null
     moduleId: number | null
-    quizId: number | null
     resourceId: number | null
+    progressType: string
+    id: number
+    quizId: number | null
     _count: MeasureProgressCountAggregateOutputType | null
     _avg: MeasureProgressAvgAggregateOutputType | null
     _sum: MeasureProgressSumAggregateOutputType | null
@@ -22960,16 +22960,16 @@ export namespace Prisma {
 
 
   export type MeasureProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     learnerId?: boolean
     topicId?: boolean
     completedAt?: boolean
     status?: boolean
-    progressType?: boolean
     programId?: boolean
     moduleId?: boolean
-    quizId?: boolean
     resourceId?: boolean
+    progressType?: boolean
+    id?: boolean
+    quizId?: boolean
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
     module?: boolean | MeasureProgress$moduleArgs<ExtArgs>
     program?: boolean | MeasureProgress$programArgs<ExtArgs>
@@ -22978,16 +22978,16 @@ export namespace Prisma {
   }, ExtArgs["result"]["measureProgress"]>
 
   export type MeasureProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     learnerId?: boolean
     topicId?: boolean
     completedAt?: boolean
     status?: boolean
-    progressType?: boolean
     programId?: boolean
     moduleId?: boolean
-    quizId?: boolean
     resourceId?: boolean
+    progressType?: boolean
+    id?: boolean
+    quizId?: boolean
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
     module?: boolean | MeasureProgress$moduleArgs<ExtArgs>
     program?: boolean | MeasureProgress$programArgs<ExtArgs>
@@ -22996,16 +22996,16 @@ export namespace Prisma {
   }, ExtArgs["result"]["measureProgress"]>
 
   export type MeasureProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     learnerId?: boolean
     topicId?: boolean
     completedAt?: boolean
     status?: boolean
-    progressType?: boolean
     programId?: boolean
     moduleId?: boolean
-    quizId?: boolean
     resourceId?: boolean
+    progressType?: boolean
+    id?: boolean
+    quizId?: boolean
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
     module?: boolean | MeasureProgress$moduleArgs<ExtArgs>
     program?: boolean | MeasureProgress$programArgs<ExtArgs>
@@ -23014,19 +23014,19 @@ export namespace Prisma {
   }, ExtArgs["result"]["measureProgress"]>
 
   export type MeasureProgressSelectScalar = {
-    id?: boolean
     learnerId?: boolean
     topicId?: boolean
     completedAt?: boolean
     status?: boolean
-    progressType?: boolean
     programId?: boolean
     moduleId?: boolean
-    quizId?: boolean
     resourceId?: boolean
+    progressType?: boolean
+    id?: boolean
+    quizId?: boolean
   }
 
-  export type MeasureProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "learnerId" | "topicId" | "completedAt" | "status" | "progressType" | "programId" | "moduleId" | "quizId" | "resourceId", ExtArgs["result"]["measureProgress"]>
+  export type MeasureProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"learnerId" | "topicId" | "completedAt" | "status" | "programId" | "moduleId" | "resourceId" | "progressType" | "id" | "quizId", ExtArgs["result"]["measureProgress"]>
   export type MeasureProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     learner?: boolean | LearnerDefaultArgs<ExtArgs>
     module?: boolean | MeasureProgress$moduleArgs<ExtArgs>
@@ -23059,16 +23059,16 @@ export namespace Prisma {
       topic: Prisma.$TopicPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
       learnerId: number
       topicId: number | null
       completedAt: Date
       status: string
-      progressType: string
       programId: number | null
       moduleId: number | null
-      quizId: number | null
       resourceId: number | null
+      progressType: string
+      id: number
+      quizId: number | null
     }, ExtArgs["result"]["measureProgress"]>
     composites: {}
   }
@@ -23152,8 +23152,8 @@ export namespace Prisma {
      * // Get first 10 MeasureProgresses
      * const measureProgresses = await prisma.measureProgress.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const measureProgressWithIdOnly = await prisma.measureProgress.findMany({ select: { id: true } })
+     * // Only select the `learnerId`
+     * const measureProgressWithLearnerIdOnly = await prisma.measureProgress.findMany({ select: { learnerId: true } })
      * 
      */
     findMany<T extends MeasureProgressFindManyArgs>(args?: SelectSubset<T, MeasureProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeasureProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -23197,9 +23197,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many MeasureProgresses and only return the `id`
-     * const measureProgressWithIdOnly = await prisma.measureProgress.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many MeasureProgresses and only return the `learnerId`
+     * const measureProgressWithLearnerIdOnly = await prisma.measureProgress.createManyAndReturn({
+     *   select: { learnerId: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -23288,9 +23288,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more MeasureProgresses and only return the `id`
-     * const measureProgressWithIdOnly = await prisma.measureProgress.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more MeasureProgresses and only return the `learnerId`
+     * const measureProgressWithLearnerIdOnly = await prisma.measureProgress.updateManyAndReturn({
+     *   select: { learnerId: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -23497,16 +23497,16 @@ export namespace Prisma {
    * Fields of the MeasureProgress model
    */
   interface MeasureProgressFieldRefs {
-    readonly id: FieldRef<"MeasureProgress", 'Int'>
     readonly learnerId: FieldRef<"MeasureProgress", 'Int'>
     readonly topicId: FieldRef<"MeasureProgress", 'Int'>
     readonly completedAt: FieldRef<"MeasureProgress", 'DateTime'>
     readonly status: FieldRef<"MeasureProgress", 'String'>
-    readonly progressType: FieldRef<"MeasureProgress", 'String'>
     readonly programId: FieldRef<"MeasureProgress", 'Int'>
     readonly moduleId: FieldRef<"MeasureProgress", 'Int'>
-    readonly quizId: FieldRef<"MeasureProgress", 'Int'>
     readonly resourceId: FieldRef<"MeasureProgress", 'Int'>
+    readonly progressType: FieldRef<"MeasureProgress", 'String'>
+    readonly id: FieldRef<"MeasureProgress", 'Int'>
+    readonly quizId: FieldRef<"MeasureProgress", 'Int'>
   }
     
 
@@ -26229,10 +26229,9 @@ export namespace Prisma {
     dob: 'dob',
     email: 'email',
     phone: 'phone',
-    communicationEmail: 'communicationEmail',
+    communication_email: 'communication_email',
     password: 'password',
     profile_image: 'profile_image',
-    image_id: 'image_id',
     organisation: 'organisation',
     designation: 'designation',
     department: 'department',
@@ -26251,7 +26250,8 @@ export namespace Prisma {
     status: 'status',
     extraConfig: 'extraConfig',
     metaData: 'metaData',
-    role: 'role'
+    role: 'role',
+    image_id: 'image_id'
   };
 
   export type LearnerScalarFieldEnum = (typeof LearnerScalarFieldEnum)[keyof typeof LearnerScalarFieldEnum]
@@ -26386,9 +26386,9 @@ export namespace Prisma {
     option4: 'option4',
     option5: 'option5',
     option6: 'option6',
-    config: 'config',
     answer: 'answer',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    config: 'config'
   };
 
   export type QuestionPoolScalarFieldEnum = (typeof QuestionPoolScalarFieldEnum)[keyof typeof QuestionPoolScalarFieldEnum]
@@ -26396,16 +26396,16 @@ export namespace Prisma {
 
   export const QuizAssignmentScalarFieldEnum: {
     id: 'id',
-    rules: 'rules',
-    questionPaperId: 'questionPaperId',
-    title: 'title',
-    description: 'description',
-    programId: 'programId',
     uniqueLinkToken: 'uniqueLinkToken',
     enabled: 'enabled',
     isDeleted: 'isDeleted',
     deletedAt: 'deletedAt',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    rules: 'rules',
+    programId: 'programId',
+    description: 'description',
+    title: 'title',
+    questionPaperId: 'questionPaperId'
   };
 
   export type QuizAssignmentScalarFieldEnum = (typeof QuizAssignmentScalarFieldEnum)[keyof typeof QuizAssignmentScalarFieldEnum]
@@ -26434,13 +26434,13 @@ export namespace Prisma {
     assignmentId: 'assignmentId',
     learnerId: 'learnerId',
     startedAt: 'startedAt',
-    endedAt: 'endedAt',
     submittedAt: 'submittedAt',
     totalTimeSpent: 'totalTimeSpent',
     score: 'score',
     passed: 'passed',
     status: 'status',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    endedAt: 'endedAt'
   };
 
   export type QuizAttemptScalarFieldEnum = (typeof QuizAttemptScalarFieldEnum)[keyof typeof QuizAttemptScalarFieldEnum]
@@ -26458,16 +26458,16 @@ export namespace Prisma {
 
 
   export const MeasureProgressScalarFieldEnum: {
-    id: 'id',
     learnerId: 'learnerId',
     topicId: 'topicId',
     completedAt: 'completedAt',
     status: 'status',
-    progressType: 'progressType',
     programId: 'programId',
     moduleId: 'moduleId',
-    quizId: 'quizId',
-    resourceId: 'resourceId'
+    resourceId: 'resourceId',
+    progressType: 'progressType',
+    id: 'id',
+    quizId: 'quizId'
   };
 
   export type MeasureProgressScalarFieldEnum = (typeof MeasureProgressScalarFieldEnum)[keyof typeof MeasureProgressScalarFieldEnum]
@@ -26848,10 +26848,9 @@ export namespace Prisma {
     dob?: DateTimeNullableFilter<"Learner"> | Date | string | null
     email?: StringFilter<"Learner"> | string
     phone?: BytesNullableFilter<"Learner"> | Uint8Array | null
-    communicationEmail?: BytesNullableFilter<"Learner"> | Uint8Array | null
+    communication_email?: BytesNullableFilter<"Learner"> | Uint8Array | null
     password?: StringNullableFilter<"Learner"> | string | null
     profile_image?: StringNullableFilter<"Learner"> | string | null
-    image_id?: StringNullableFilter<"Learner"> | string | null
     organisation?: StringNullableFilter<"Learner"> | string | null
     designation?: StringNullableFilter<"Learner"> | string | null
     department?: StringNullableFilter<"Learner"> | string | null
@@ -26871,13 +26870,14 @@ export namespace Prisma {
     extraConfig?: StringNullableFilter<"Learner"> | string | null
     metaData?: StringNullableFilter<"Learner"> | string | null
     role?: StringFilter<"Learner"> | string
+    image_id?: StringNullableFilter<"Learner"> | string | null
+    passwordResets?: PasswordResetListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     leaderboards?: LeaderboardListRelationFilter
     creator?: XOR<LearnerNullableScalarRelationFilter, LearnerWhereInput> | null
     createdLearners?: LearnerListRelationFilter
     measureProgress?: MeasureProgressListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
-    passwordResets?: PasswordResetListRelationFilter
   }
 
   export type LearnerOrderByWithRelationInput = {
@@ -26888,10 +26888,9 @@ export namespace Prisma {
     dob?: SortOrderInput | SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    communicationEmail?: SortOrderInput | SortOrder
+    communication_email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     profile_image?: SortOrderInput | SortOrder
-    image_id?: SortOrderInput | SortOrder
     organisation?: SortOrderInput | SortOrder
     designation?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
@@ -26911,13 +26910,14 @@ export namespace Prisma {
     extraConfig?: SortOrderInput | SortOrder
     metaData?: SortOrderInput | SortOrder
     role?: SortOrder
+    image_id?: SortOrderInput | SortOrder
+    passwordResets?: PasswordResetOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
     leaderboards?: LeaderboardOrderByRelationAggregateInput
     creator?: LearnerOrderByWithRelationInput
     createdLearners?: LearnerOrderByRelationAggregateInput
     measureProgress?: MeasureProgressOrderByRelationAggregateInput
     quizAttempts?: QuizAttemptOrderByRelationAggregateInput
-    passwordResets?: PasswordResetOrderByRelationAggregateInput
   }
 
   export type LearnerWhereUniqueInput = Prisma.AtLeast<{
@@ -26931,10 +26931,9 @@ export namespace Prisma {
     gender?: StringNullableFilter<"Learner"> | string | null
     dob?: DateTimeNullableFilter<"Learner"> | Date | string | null
     phone?: BytesNullableFilter<"Learner"> | Uint8Array | null
-    communicationEmail?: BytesNullableFilter<"Learner"> | Uint8Array | null
+    communication_email?: BytesNullableFilter<"Learner"> | Uint8Array | null
     password?: StringNullableFilter<"Learner"> | string | null
     profile_image?: StringNullableFilter<"Learner"> | string | null
-    image_id?: StringNullableFilter<"Learner"> | string | null
     organisation?: StringNullableFilter<"Learner"> | string | null
     designation?: StringNullableFilter<"Learner"> | string | null
     department?: StringNullableFilter<"Learner"> | string | null
@@ -26954,13 +26953,14 @@ export namespace Prisma {
     extraConfig?: StringNullableFilter<"Learner"> | string | null
     metaData?: StringNullableFilter<"Learner"> | string | null
     role?: StringFilter<"Learner"> | string
+    image_id?: StringNullableFilter<"Learner"> | string | null
+    passwordResets?: PasswordResetListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     leaderboards?: LeaderboardListRelationFilter
     creator?: XOR<LearnerNullableScalarRelationFilter, LearnerWhereInput> | null
     createdLearners?: LearnerListRelationFilter
     measureProgress?: MeasureProgressListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
-    passwordResets?: PasswordResetListRelationFilter
   }, "id" | "email">
 
   export type LearnerOrderByWithAggregationInput = {
@@ -26971,10 +26971,9 @@ export namespace Prisma {
     dob?: SortOrderInput | SortOrder
     email?: SortOrder
     phone?: SortOrderInput | SortOrder
-    communicationEmail?: SortOrderInput | SortOrder
+    communication_email?: SortOrderInput | SortOrder
     password?: SortOrderInput | SortOrder
     profile_image?: SortOrderInput | SortOrder
-    image_id?: SortOrderInput | SortOrder
     organisation?: SortOrderInput | SortOrder
     designation?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
@@ -26994,6 +26993,7 @@ export namespace Prisma {
     extraConfig?: SortOrderInput | SortOrder
     metaData?: SortOrderInput | SortOrder
     role?: SortOrder
+    image_id?: SortOrderInput | SortOrder
     _count?: LearnerCountOrderByAggregateInput
     _avg?: LearnerAvgOrderByAggregateInput
     _max?: LearnerMaxOrderByAggregateInput
@@ -27012,10 +27012,9 @@ export namespace Prisma {
     dob?: DateTimeNullableWithAggregatesFilter<"Learner"> | Date | string | null
     email?: StringWithAggregatesFilter<"Learner"> | string
     phone?: BytesNullableWithAggregatesFilter<"Learner"> | Uint8Array | null
-    communicationEmail?: BytesNullableWithAggregatesFilter<"Learner"> | Uint8Array | null
+    communication_email?: BytesNullableWithAggregatesFilter<"Learner"> | Uint8Array | null
     password?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     profile_image?: StringNullableWithAggregatesFilter<"Learner"> | string | null
-    image_id?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     organisation?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     designation?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     department?: StringNullableWithAggregatesFilter<"Learner"> | string | null
@@ -27035,6 +27034,7 @@ export namespace Prisma {
     extraConfig?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     metaData?: StringNullableWithAggregatesFilter<"Learner"> | string | null
     role?: StringWithAggregatesFilter<"Learner"> | string
+    image_id?: StringNullableWithAggregatesFilter<"Learner"> | string | null
   }
 
   export type ProgramWhereInput = {
@@ -27070,12 +27070,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Program"> | Date | string | null
     maxParticipants?: IntNullableFilter<"Program"> | number | null
-    quizzes?: QuizAssignmentListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     leaderboards?: LeaderboardListRelationFilter
     measureProgress?: MeasureProgressListRelationFilter
     programModules?: ProgramModuleListRelationFilter
     author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
+    quizzes?: QuizAssignmentListRelationFilter
   }
 
   export type ProgramOrderByWithRelationInput = {
@@ -27108,12 +27108,12 @@ export namespace Prisma {
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     maxParticipants?: SortOrderInput | SortOrder
-    quizzes?: QuizAssignmentOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
     leaderboards?: LeaderboardOrderByRelationAggregateInput
     measureProgress?: MeasureProgressOrderByRelationAggregateInput
     programModules?: ProgramModuleOrderByRelationAggregateInput
     author?: AdminOrderByWithRelationInput
+    quizzes?: QuizAssignmentOrderByRelationAggregateInput
   }
 
   export type ProgramWhereUniqueInput = Prisma.AtLeast<{
@@ -27149,12 +27149,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Program"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Program"> | Date | string | null
     maxParticipants?: IntNullableFilter<"Program"> | number | null
-    quizzes?: QuizAssignmentListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     leaderboards?: LeaderboardListRelationFilter
     measureProgress?: MeasureProgressListRelationFilter
     programModules?: ProgramModuleListRelationFilter
     author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
+    quizzes?: QuizAssignmentListRelationFilter
   }, "id">
 
   export type ProgramOrderByWithAggregationInput = {
@@ -27714,11 +27714,11 @@ export namespace Prisma {
     option4?: StringNullableFilter<"QuestionPool"> | string | null
     option5?: StringNullableFilter<"QuestionPool"> | string | null
     option6?: StringNullableFilter<"QuestionPool"> | string | null
-    config?: JsonNullableFilter<"QuestionPool">
     answer?: StringNullableFilter<"QuestionPool"> | string | null
     createdAt?: DateTimeFilter<"QuestionPool"> | Date | string
-    author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
+    config?: JsonNullableFilter<"QuestionPool">
     questionPapers?: QuestionPaperQuestionListRelationFilter
+    author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
   }
 
   export type QuestionPoolOrderByWithRelationInput = {
@@ -27733,11 +27733,11 @@ export namespace Prisma {
     option4?: SortOrderInput | SortOrder
     option5?: SortOrderInput | SortOrder
     option6?: SortOrderInput | SortOrder
-    config?: SortOrderInput | SortOrder
     answer?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    author?: AdminOrderByWithRelationInput
+    config?: SortOrderInput | SortOrder
     questionPapers?: QuestionPaperQuestionOrderByRelationAggregateInput
+    author?: AdminOrderByWithRelationInput
   }
 
   export type QuestionPoolWhereUniqueInput = Prisma.AtLeast<{
@@ -27755,11 +27755,11 @@ export namespace Prisma {
     option4?: StringNullableFilter<"QuestionPool"> | string | null
     option5?: StringNullableFilter<"QuestionPool"> | string | null
     option6?: StringNullableFilter<"QuestionPool"> | string | null
-    config?: JsonNullableFilter<"QuestionPool">
     answer?: StringNullableFilter<"QuestionPool"> | string | null
     createdAt?: DateTimeFilter<"QuestionPool"> | Date | string
-    author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
+    config?: JsonNullableFilter<"QuestionPool">
     questionPapers?: QuestionPaperQuestionListRelationFilter
+    author?: XOR<AdminScalarRelationFilter, AdminWhereInput>
   }, "id">
 
   export type QuestionPoolOrderByWithAggregationInput = {
@@ -27774,9 +27774,9 @@ export namespace Prisma {
     option4?: SortOrderInput | SortOrder
     option5?: SortOrderInput | SortOrder
     option6?: SortOrderInput | SortOrder
-    config?: SortOrderInput | SortOrder
     answer?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    config?: SortOrderInput | SortOrder
     _count?: QuestionPoolCountOrderByAggregateInput
     _avg?: QuestionPoolAvgOrderByAggregateInput
     _max?: QuestionPoolMaxOrderByAggregateInput
@@ -27799,9 +27799,9 @@ export namespace Prisma {
     option4?: StringNullableWithAggregatesFilter<"QuestionPool"> | string | null
     option5?: StringNullableWithAggregatesFilter<"QuestionPool"> | string | null
     option6?: StringNullableWithAggregatesFilter<"QuestionPool"> | string | null
-    config?: JsonNullableWithAggregatesFilter<"QuestionPool">
     answer?: StringNullableWithAggregatesFilter<"QuestionPool"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"QuestionPool"> | Date | string
+    config?: JsonNullableWithAggregatesFilter<"QuestionPool">
   }
 
   export type QuizAssignmentWhereInput = {
@@ -27809,16 +27809,16 @@ export namespace Prisma {
     OR?: QuizAssignmentWhereInput[]
     NOT?: QuizAssignmentWhereInput | QuizAssignmentWhereInput[]
     id?: IntFilter<"QuizAssignment"> | number
-    rules?: JsonFilter<"QuizAssignment">
-    questionPaperId?: IntFilter<"QuizAssignment"> | number
-    title?: StringFilter<"QuizAssignment"> | string
-    description?: StringFilter<"QuizAssignment"> | string
-    programId?: IntNullableFilter<"QuizAssignment"> | number | null
     uniqueLinkToken?: UuidFilter<"QuizAssignment"> | string
     enabled?: BoolFilter<"QuizAssignment"> | boolean
     isDeleted?: BoolFilter<"QuizAssignment"> | boolean
     deletedAt?: DateTimeNullableFilter<"QuizAssignment"> | Date | string | null
     createdAt?: DateTimeFilter<"QuizAssignment"> | Date | string
+    rules?: JsonFilter<"QuizAssignment">
+    programId?: IntNullableFilter<"QuizAssignment"> | number | null
+    description?: StringFilter<"QuizAssignment"> | string
+    title?: StringFilter<"QuizAssignment"> | string
+    questionPaperId?: IntFilter<"QuizAssignment"> | number
     program?: XOR<ProgramNullableScalarRelationFilter, ProgramWhereInput> | null
     questionPaper?: XOR<QuestionPaperScalarRelationFilter, QuestionPaperWhereInput>
     quizAttempts?: QuizAttemptListRelationFilter
@@ -27826,16 +27826,16 @@ export namespace Prisma {
 
   export type QuizAssignmentOrderByWithRelationInput = {
     id?: SortOrder
-    rules?: SortOrder
-    questionPaperId?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    programId?: SortOrderInput | SortOrder
     uniqueLinkToken?: SortOrder
     enabled?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    rules?: SortOrder
+    programId?: SortOrderInput | SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    questionPaperId?: SortOrder
     program?: ProgramOrderByWithRelationInput
     questionPaper?: QuestionPaperOrderByWithRelationInput
     quizAttempts?: QuizAttemptOrderByRelationAggregateInput
@@ -27847,15 +27847,15 @@ export namespace Prisma {
     AND?: QuizAssignmentWhereInput | QuizAssignmentWhereInput[]
     OR?: QuizAssignmentWhereInput[]
     NOT?: QuizAssignmentWhereInput | QuizAssignmentWhereInput[]
-    rules?: JsonFilter<"QuizAssignment">
-    questionPaperId?: IntFilter<"QuizAssignment"> | number
-    title?: StringFilter<"QuizAssignment"> | string
-    description?: StringFilter<"QuizAssignment"> | string
-    programId?: IntNullableFilter<"QuizAssignment"> | number | null
     enabled?: BoolFilter<"QuizAssignment"> | boolean
     isDeleted?: BoolFilter<"QuizAssignment"> | boolean
     deletedAt?: DateTimeNullableFilter<"QuizAssignment"> | Date | string | null
     createdAt?: DateTimeFilter<"QuizAssignment"> | Date | string
+    rules?: JsonFilter<"QuizAssignment">
+    programId?: IntNullableFilter<"QuizAssignment"> | number | null
+    description?: StringFilter<"QuizAssignment"> | string
+    title?: StringFilter<"QuizAssignment"> | string
+    questionPaperId?: IntFilter<"QuizAssignment"> | number
     program?: XOR<ProgramNullableScalarRelationFilter, ProgramWhereInput> | null
     questionPaper?: XOR<QuestionPaperScalarRelationFilter, QuestionPaperWhereInput>
     quizAttempts?: QuizAttemptListRelationFilter
@@ -27863,16 +27863,16 @@ export namespace Prisma {
 
   export type QuizAssignmentOrderByWithAggregationInput = {
     id?: SortOrder
-    rules?: SortOrder
-    questionPaperId?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    programId?: SortOrderInput | SortOrder
     uniqueLinkToken?: SortOrder
     enabled?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    rules?: SortOrder
+    programId?: SortOrderInput | SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    questionPaperId?: SortOrder
     _count?: QuizAssignmentCountOrderByAggregateInput
     _avg?: QuizAssignmentAvgOrderByAggregateInput
     _max?: QuizAssignmentMaxOrderByAggregateInput
@@ -27885,16 +27885,16 @@ export namespace Prisma {
     OR?: QuizAssignmentScalarWhereWithAggregatesInput[]
     NOT?: QuizAssignmentScalarWhereWithAggregatesInput | QuizAssignmentScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"QuizAssignment"> | number
-    rules?: JsonWithAggregatesFilter<"QuizAssignment">
-    questionPaperId?: IntWithAggregatesFilter<"QuizAssignment"> | number
-    title?: StringWithAggregatesFilter<"QuizAssignment"> | string
-    description?: StringWithAggregatesFilter<"QuizAssignment"> | string
-    programId?: IntNullableWithAggregatesFilter<"QuizAssignment"> | number | null
     uniqueLinkToken?: UuidWithAggregatesFilter<"QuizAssignment"> | string
     enabled?: BoolWithAggregatesFilter<"QuizAssignment"> | boolean
     isDeleted?: BoolWithAggregatesFilter<"QuizAssignment"> | boolean
     deletedAt?: DateTimeNullableWithAggregatesFilter<"QuizAssignment"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"QuizAssignment"> | Date | string
+    rules?: JsonWithAggregatesFilter<"QuizAssignment">
+    programId?: IntNullableWithAggregatesFilter<"QuizAssignment"> | number | null
+    description?: StringWithAggregatesFilter<"QuizAssignment"> | string
+    title?: StringWithAggregatesFilter<"QuizAssignment"> | string
+    questionPaperId?: IntWithAggregatesFilter<"QuizAssignment"> | number
   }
 
   export type QuestionPaperWhereInput = {
@@ -28006,13 +28006,13 @@ export namespace Prisma {
     assignmentId?: IntFilter<"QuizAttempt"> | number
     learnerId?: IntFilter<"QuizAttempt"> | number
     startedAt?: DateTimeFilter<"QuizAttempt"> | Date | string
-    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     submittedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     totalTimeSpent?: IntNullableFilter<"QuizAttempt"> | number | null
     score?: DecimalNullableFilter<"QuizAttempt"> | Decimal | DecimalJsLike | number | string | null
     passed?: BoolNullableFilter<"QuizAttempt"> | boolean | null
     status?: StringFilter<"QuizAttempt"> | string
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
+    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     questionAttempts?: QuestionAttemptListRelationFilter
     assignment?: XOR<QuizAssignmentScalarRelationFilter, QuizAssignmentWhereInput>
     learner?: XOR<LearnerScalarRelationFilter, LearnerWhereInput>
@@ -28023,13 +28023,13 @@ export namespace Prisma {
     assignmentId?: SortOrder
     learnerId?: SortOrder
     startedAt?: SortOrder
-    endedAt?: SortOrderInput | SortOrder
     submittedAt?: SortOrderInput | SortOrder
     totalTimeSpent?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     passed?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
     questionAttempts?: QuestionAttemptOrderByRelationAggregateInput
     assignment?: QuizAssignmentOrderByWithRelationInput
     learner?: LearnerOrderByWithRelationInput
@@ -28043,13 +28043,13 @@ export namespace Prisma {
     assignmentId?: IntFilter<"QuizAttempt"> | number
     learnerId?: IntFilter<"QuizAttempt"> | number
     startedAt?: DateTimeFilter<"QuizAttempt"> | Date | string
-    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     submittedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     totalTimeSpent?: IntNullableFilter<"QuizAttempt"> | number | null
     score?: DecimalNullableFilter<"QuizAttempt"> | Decimal | DecimalJsLike | number | string | null
     passed?: BoolNullableFilter<"QuizAttempt"> | boolean | null
     status?: StringFilter<"QuizAttempt"> | string
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
+    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     questionAttempts?: QuestionAttemptListRelationFilter
     assignment?: XOR<QuizAssignmentScalarRelationFilter, QuizAssignmentWhereInput>
     learner?: XOR<LearnerScalarRelationFilter, LearnerWhereInput>
@@ -28060,13 +28060,13 @@ export namespace Prisma {
     assignmentId?: SortOrder
     learnerId?: SortOrder
     startedAt?: SortOrder
-    endedAt?: SortOrderInput | SortOrder
     submittedAt?: SortOrderInput | SortOrder
     totalTimeSpent?: SortOrderInput | SortOrder
     score?: SortOrderInput | SortOrder
     passed?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
     _count?: QuizAttemptCountOrderByAggregateInput
     _avg?: QuizAttemptAvgOrderByAggregateInput
     _max?: QuizAttemptMaxOrderByAggregateInput
@@ -28082,13 +28082,13 @@ export namespace Prisma {
     assignmentId?: IntWithAggregatesFilter<"QuizAttempt"> | number
     learnerId?: IntWithAggregatesFilter<"QuizAttempt"> | number
     startedAt?: DateTimeWithAggregatesFilter<"QuizAttempt"> | Date | string
-    endedAt?: DateTimeNullableWithAggregatesFilter<"QuizAttempt"> | Date | string | null
     submittedAt?: DateTimeNullableWithAggregatesFilter<"QuizAttempt"> | Date | string | null
     totalTimeSpent?: IntNullableWithAggregatesFilter<"QuizAttempt"> | number | null
     score?: DecimalNullableWithAggregatesFilter<"QuizAttempt"> | Decimal | DecimalJsLike | number | string | null
     passed?: BoolNullableWithAggregatesFilter<"QuizAttempt"> | boolean | null
     status?: StringWithAggregatesFilter<"QuizAttempt"> | string
     createdAt?: DateTimeWithAggregatesFilter<"QuizAttempt"> | Date | string
+    endedAt?: DateTimeNullableWithAggregatesFilter<"QuizAttempt"> | Date | string | null
   }
 
   export type QuestionAttemptWhereInput = {
@@ -28153,16 +28153,16 @@ export namespace Prisma {
     AND?: MeasureProgressWhereInput | MeasureProgressWhereInput[]
     OR?: MeasureProgressWhereInput[]
     NOT?: MeasureProgressWhereInput | MeasureProgressWhereInput[]
-    id?: IntFilter<"MeasureProgress"> | number
     learnerId?: IntFilter<"MeasureProgress"> | number
     topicId?: IntNullableFilter<"MeasureProgress"> | number | null
     completedAt?: DateTimeFilter<"MeasureProgress"> | Date | string
     status?: StringFilter<"MeasureProgress"> | string
-    progressType?: StringFilter<"MeasureProgress"> | string
     programId?: IntNullableFilter<"MeasureProgress"> | number | null
     moduleId?: IntNullableFilter<"MeasureProgress"> | number | null
-    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
     resourceId?: IntNullableFilter<"MeasureProgress"> | number | null
+    progressType?: StringFilter<"MeasureProgress"> | string
+    id?: IntFilter<"MeasureProgress"> | number
+    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
     learner?: XOR<LearnerScalarRelationFilter, LearnerWhereInput>
     module?: XOR<ModuleNullableScalarRelationFilter, ModuleWhereInput> | null
     program?: XOR<ProgramNullableScalarRelationFilter, ProgramWhereInput> | null
@@ -28171,16 +28171,16 @@ export namespace Prisma {
   }
 
   export type MeasureProgressOrderByWithRelationInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrderInput | SortOrder
     completedAt?: SortOrder
     status?: SortOrder
-    progressType?: SortOrder
     programId?: SortOrderInput | SortOrder
     moduleId?: SortOrderInput | SortOrder
-    quizId?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
+    progressType?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrderInput | SortOrder
     learner?: LearnerOrderByWithRelationInput
     module?: ModuleOrderByWithRelationInput
     program?: ProgramOrderByWithRelationInput
@@ -28197,11 +28197,11 @@ export namespace Prisma {
     topicId?: IntNullableFilter<"MeasureProgress"> | number | null
     completedAt?: DateTimeFilter<"MeasureProgress"> | Date | string
     status?: StringFilter<"MeasureProgress"> | string
-    progressType?: StringFilter<"MeasureProgress"> | string
     programId?: IntNullableFilter<"MeasureProgress"> | number | null
     moduleId?: IntNullableFilter<"MeasureProgress"> | number | null
-    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
     resourceId?: IntNullableFilter<"MeasureProgress"> | number | null
+    progressType?: StringFilter<"MeasureProgress"> | string
+    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
     learner?: XOR<LearnerScalarRelationFilter, LearnerWhereInput>
     module?: XOR<ModuleNullableScalarRelationFilter, ModuleWhereInput> | null
     program?: XOR<ProgramNullableScalarRelationFilter, ProgramWhereInput> | null
@@ -28210,16 +28210,16 @@ export namespace Prisma {
   }, "id">
 
   export type MeasureProgressOrderByWithAggregationInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrderInput | SortOrder
     completedAt?: SortOrder
     status?: SortOrder
-    progressType?: SortOrder
     programId?: SortOrderInput | SortOrder
     moduleId?: SortOrderInput | SortOrder
-    quizId?: SortOrderInput | SortOrder
     resourceId?: SortOrderInput | SortOrder
+    progressType?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrderInput | SortOrder
     _count?: MeasureProgressCountOrderByAggregateInput
     _avg?: MeasureProgressAvgOrderByAggregateInput
     _max?: MeasureProgressMaxOrderByAggregateInput
@@ -28231,16 +28231,16 @@ export namespace Prisma {
     AND?: MeasureProgressScalarWhereWithAggregatesInput | MeasureProgressScalarWhereWithAggregatesInput[]
     OR?: MeasureProgressScalarWhereWithAggregatesInput[]
     NOT?: MeasureProgressScalarWhereWithAggregatesInput | MeasureProgressScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"MeasureProgress"> | number
     learnerId?: IntWithAggregatesFilter<"MeasureProgress"> | number
     topicId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
     completedAt?: DateTimeWithAggregatesFilter<"MeasureProgress"> | Date | string
     status?: StringWithAggregatesFilter<"MeasureProgress"> | string
-    progressType?: StringWithAggregatesFilter<"MeasureProgress"> | string
     programId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
     moduleId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
-    quizId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
     resourceId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
+    progressType?: StringWithAggregatesFilter<"MeasureProgress"> | string
+    id?: IntWithAggregatesFilter<"MeasureProgress"> | number
+    quizId?: IntNullableWithAggregatesFilter<"MeasureProgress"> | number | null
   }
 
   export type LeaderboardWhereInput = {
@@ -28511,10 +28511,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -28533,13 +28532,14 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateInput = {
@@ -28550,10 +28550,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -28573,12 +28572,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUpdateInput = {
@@ -28588,10 +28588,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28610,13 +28609,14 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateInput = {
@@ -28627,10 +28627,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28650,12 +28649,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerCreateManyInput = {
@@ -28666,10 +28666,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -28689,6 +28688,7 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
   }
 
   export type LearnerUpdateManyMutationInput = {
@@ -28698,10 +28698,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28720,6 +28719,7 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LearnerUncheckedUpdateManyInput = {
@@ -28730,10 +28730,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -28753,6 +28752,7 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProgramCreateInput = {
@@ -28783,12 +28783,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleCreateNestedManyWithoutProgramInput
     author: AdminCreateNestedOneWithoutProgramsInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateInput = {
@@ -28821,11 +28821,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUpdateInput = {
@@ -28856,12 +28856,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUpdateManyWithoutProgramNestedInput
     author?: AdminUpdateOneRequiredWithoutProgramsNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateInput = {
@@ -28894,11 +28894,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramCreateManyInput = {
@@ -29450,11 +29450,11 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
-    author: AdminCreateNestedOneWithoutQuestionsInput
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionCreateNestedManyWithoutQuestionInput
+    author: AdminCreateNestedOneWithoutQuestionsInput
   }
 
   export type QuestionPoolUncheckedCreateInput = {
@@ -29469,9 +29469,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUncheckedCreateNestedManyWithoutQuestionInput
   }
 
@@ -29485,11 +29485,11 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: AdminUpdateOneRequiredWithoutQuestionsNestedInput
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUpdateManyWithoutQuestionNestedInput
+    author?: AdminUpdateOneRequiredWithoutQuestionsNestedInput
   }
 
   export type QuestionPoolUncheckedUpdateInput = {
@@ -29504,9 +29504,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
@@ -29522,9 +29522,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type QuestionPoolUpdateManyMutationInput = {
@@ -29537,9 +29537,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type QuestionPoolUncheckedUpdateManyInput = {
@@ -29554,20 +29554,20 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type QuizAssignmentCreateInput = {
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
     program?: ProgramCreateNestedOneWithoutQuizzesInput
     questionPaper: QuestionPaperCreateNestedOneWithoutQuizAssignmentsInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutAssignmentInput
@@ -29575,28 +29575,28 @@ export namespace Prisma {
 
   export type QuizAssignmentUncheckedCreateInput = {
     id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    programId?: number | null
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    programId?: number | null
+    description: string
+    title: string
+    questionPaperId: number
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutAssignmentInput
   }
 
   export type QuizAssignmentUpdateInput = {
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     program?: ProgramUpdateOneWithoutQuizzesNestedInput
     questionPaper?: QuestionPaperUpdateOneRequiredWithoutQuizAssignmentsNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutAssignmentNestedInput
@@ -29604,56 +29604,56 @@ export namespace Prisma {
 
   export type QuizAssignmentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    questionPaperId?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    programId?: NullableIntFieldUpdateOperationsInput | number | null
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    programId?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaperId?: IntFieldUpdateOperationsInput | number
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutAssignmentNestedInput
   }
 
   export type QuizAssignmentCreateManyInput = {
     id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    programId?: number | null
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    programId?: number | null
+    description: string
+    title: string
+    questionPaperId: number
   }
 
   export type QuizAssignmentUpdateManyMutationInput = {
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuizAssignmentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    questionPaperId?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    programId?: NullableIntFieldUpdateOperationsInput | number | null
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    programId?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaperId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuestionPaperCreateInput = {
@@ -29745,13 +29745,13 @@ export namespace Prisma {
 
   export type QuizAttemptCreateInput = {
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptCreateNestedManyWithoutAttemptInput
     assignment: QuizAssignmentCreateNestedOneWithoutQuizAttemptsInput
     learner: LearnerCreateNestedOneWithoutQuizAttemptsInput
@@ -29762,25 +29762,25 @@ export namespace Prisma {
     assignmentId: number
     learnerId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptUncheckedCreateNestedManyWithoutAttemptInput
   }
 
   export type QuizAttemptUpdateInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUpdateManyWithoutAttemptNestedInput
     assignment?: QuizAssignmentUpdateOneRequiredWithoutQuizAttemptsNestedInput
     learner?: LearnerUpdateOneRequiredWithoutQuizAttemptsNestedInput
@@ -29791,13 +29791,13 @@ export namespace Prisma {
     assignmentId?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUncheckedUpdateManyWithoutAttemptNestedInput
   }
 
@@ -29806,24 +29806,24 @@ export namespace Prisma {
     assignmentId: number
     learnerId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
   }
 
   export type QuizAttemptUpdateManyMutationInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type QuizAttemptUncheckedUpdateManyInput = {
@@ -29831,13 +29831,13 @@ export namespace Prisma {
     assignmentId?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type QuestionAttemptCreateInput = {
@@ -29908,16 +29908,16 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressUpdateInput = {
@@ -29933,29 +29933,29 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressCreateManyInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressUpdateManyMutationInput = {
@@ -29966,16 +29966,16 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type LeaderboardCreateInput = {
@@ -30397,6 +30397,12 @@ export namespace Prisma {
     not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
   }
 
+  export type PasswordResetListRelationFilter = {
+    every?: PasswordResetWhereInput
+    some?: PasswordResetWhereInput
+    none?: PasswordResetWhereInput
+  }
+
   export type EnrollmentListRelationFilter = {
     every?: EnrollmentWhereInput
     some?: EnrollmentWhereInput
@@ -30432,10 +30438,8 @@ export namespace Prisma {
     none?: QuizAttemptWhereInput
   }
 
-  export type PasswordResetListRelationFilter = {
-    every?: PasswordResetWhereInput
-    some?: PasswordResetWhereInput
-    none?: PasswordResetWhereInput
+  export type PasswordResetOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type EnrollmentOrderByRelationAggregateInput = {
@@ -30458,10 +30462,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type PasswordResetOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type LearnerCountOrderByAggregateInput = {
     id?: SortOrder
     first_name?: SortOrder
@@ -30470,10 +30470,9 @@ export namespace Prisma {
     dob?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    communicationEmail?: SortOrder
+    communication_email?: SortOrder
     password?: SortOrder
     profile_image?: SortOrder
-    image_id?: SortOrder
     organisation?: SortOrder
     designation?: SortOrder
     department?: SortOrder
@@ -30493,6 +30492,7 @@ export namespace Prisma {
     extraConfig?: SortOrder
     metaData?: SortOrder
     role?: SortOrder
+    image_id?: SortOrder
   }
 
   export type LearnerAvgOrderByAggregateInput = {
@@ -30510,10 +30510,9 @@ export namespace Prisma {
     dob?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    communicationEmail?: SortOrder
+    communication_email?: SortOrder
     password?: SortOrder
     profile_image?: SortOrder
-    image_id?: SortOrder
     organisation?: SortOrder
     designation?: SortOrder
     department?: SortOrder
@@ -30533,6 +30532,7 @@ export namespace Prisma {
     extraConfig?: SortOrder
     metaData?: SortOrder
     role?: SortOrder
+    image_id?: SortOrder
   }
 
   export type LearnerMinOrderByAggregateInput = {
@@ -30543,10 +30543,9 @@ export namespace Prisma {
     dob?: SortOrder
     email?: SortOrder
     phone?: SortOrder
-    communicationEmail?: SortOrder
+    communication_email?: SortOrder
     password?: SortOrder
     profile_image?: SortOrder
-    image_id?: SortOrder
     organisation?: SortOrder
     designation?: SortOrder
     department?: SortOrder
@@ -30566,6 +30565,7 @@ export namespace Prisma {
     extraConfig?: SortOrder
     metaData?: SortOrder
     role?: SortOrder
+    image_id?: SortOrder
   }
 
   export type LearnerSumOrderByAggregateInput = {
@@ -30637,12 +30637,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type QuizAssignmentListRelationFilter = {
-    every?: QuizAssignmentWhereInput
-    some?: QuizAssignmentWhereInput
-    none?: QuizAssignmentWhereInput
-  }
-
   export type ProgramModuleListRelationFilter = {
     every?: ProgramModuleWhereInput
     some?: ProgramModuleWhereInput
@@ -30654,11 +30648,17 @@ export namespace Prisma {
     isNot?: AdminWhereInput
   }
 
-  export type QuizAssignmentOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type QuizAssignmentListRelationFilter = {
+    every?: QuizAssignmentWhereInput
+    some?: QuizAssignmentWhereInput
+    none?: QuizAssignmentWhereInput
   }
 
   export type ProgramModuleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuizAssignmentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -31271,9 +31271,9 @@ export namespace Prisma {
     option4?: SortOrder
     option5?: SortOrder
     option6?: SortOrder
-    config?: SortOrder
     answer?: SortOrder
     createdAt?: SortOrder
+    config?: SortOrder
   }
 
   export type QuestionPoolAvgOrderByAggregateInput = {
@@ -31329,6 +31329,18 @@ export namespace Prisma {
     _min?: NestedEnumQuestionTypeFilter<$PrismaModel>
     _max?: NestedEnumQuestionTypeFilter<$PrismaModel>
   }
+
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -31353,18 +31365,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type UuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidFilter<$PrismaModel> | string
-  }
-
   export type ProgramNullableScalarRelationFilter = {
     is?: ProgramWhereInput | null
     isNot?: ProgramWhereInput | null
@@ -31377,54 +31377,69 @@ export namespace Prisma {
 
   export type QuizAssignmentCountOrderByAggregateInput = {
     id?: SortOrder
-    rules?: SortOrder
-    questionPaperId?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    programId?: SortOrder
     uniqueLinkToken?: SortOrder
     enabled?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     createdAt?: SortOrder
+    rules?: SortOrder
+    programId?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    questionPaperId?: SortOrder
   }
 
   export type QuizAssignmentAvgOrderByAggregateInput = {
     id?: SortOrder
-    questionPaperId?: SortOrder
     programId?: SortOrder
+    questionPaperId?: SortOrder
   }
 
   export type QuizAssignmentMaxOrderByAggregateInput = {
     id?: SortOrder
-    questionPaperId?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    programId?: SortOrder
     uniqueLinkToken?: SortOrder
     enabled?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     createdAt?: SortOrder
+    programId?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    questionPaperId?: SortOrder
   }
 
   export type QuizAssignmentMinOrderByAggregateInput = {
     id?: SortOrder
-    questionPaperId?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    programId?: SortOrder
     uniqueLinkToken?: SortOrder
     enabled?: SortOrder
     isDeleted?: SortOrder
     deletedAt?: SortOrder
     createdAt?: SortOrder
+    programId?: SortOrder
+    description?: SortOrder
+    title?: SortOrder
+    questionPaperId?: SortOrder
   }
 
   export type QuizAssignmentSumOrderByAggregateInput = {
     id?: SortOrder
-    questionPaperId?: SortOrder
     programId?: SortOrder
+    questionPaperId?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -31451,21 +31466,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type QuestionPaperCountOrderByAggregateInput = {
@@ -31568,13 +31568,13 @@ export namespace Prisma {
     assignmentId?: SortOrder
     learnerId?: SortOrder
     startedAt?: SortOrder
-    endedAt?: SortOrder
     submittedAt?: SortOrder
     totalTimeSpent?: SortOrder
     score?: SortOrder
     passed?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    endedAt?: SortOrder
   }
 
   export type QuizAttemptAvgOrderByAggregateInput = {
@@ -31590,13 +31590,13 @@ export namespace Prisma {
     assignmentId?: SortOrder
     learnerId?: SortOrder
     startedAt?: SortOrder
-    endedAt?: SortOrder
     submittedAt?: SortOrder
     totalTimeSpent?: SortOrder
     score?: SortOrder
     passed?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    endedAt?: SortOrder
   }
 
   export type QuizAttemptMinOrderByAggregateInput = {
@@ -31604,13 +31604,13 @@ export namespace Prisma {
     assignmentId?: SortOrder
     learnerId?: SortOrder
     startedAt?: SortOrder
-    endedAt?: SortOrder
     submittedAt?: SortOrder
     totalTimeSpent?: SortOrder
     score?: SortOrder
     passed?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    endedAt?: SortOrder
   }
 
   export type QuizAttemptSumOrderByAggregateInput = {
@@ -31697,62 +31697,62 @@ export namespace Prisma {
   }
 
   export type MeasureProgressCountOrderByAggregateInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrder
     completedAt?: SortOrder
     status?: SortOrder
-    progressType?: SortOrder
     programId?: SortOrder
     moduleId?: SortOrder
-    quizId?: SortOrder
     resourceId?: SortOrder
+    progressType?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrder
   }
 
   export type MeasureProgressAvgOrderByAggregateInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrder
     programId?: SortOrder
     moduleId?: SortOrder
-    quizId?: SortOrder
     resourceId?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrder
   }
 
   export type MeasureProgressMaxOrderByAggregateInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrder
     completedAt?: SortOrder
     status?: SortOrder
-    progressType?: SortOrder
     programId?: SortOrder
     moduleId?: SortOrder
-    quizId?: SortOrder
     resourceId?: SortOrder
+    progressType?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrder
   }
 
   export type MeasureProgressMinOrderByAggregateInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrder
     completedAt?: SortOrder
     status?: SortOrder
-    progressType?: SortOrder
     programId?: SortOrder
     moduleId?: SortOrder
-    quizId?: SortOrder
     resourceId?: SortOrder
+    progressType?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrder
   }
 
   export type MeasureProgressSumOrderByAggregateInput = {
-    id?: SortOrder
     learnerId?: SortOrder
     topicId?: SortOrder
     programId?: SortOrder
     moduleId?: SortOrder
-    quizId?: SortOrder
     resourceId?: SortOrder
+    id?: SortOrder
+    quizId?: SortOrder
   }
 
   export type LeaderboardProgramIdLearnerIdCompoundUniqueInput = {
@@ -32007,6 +32007,13 @@ export namespace Prisma {
     deleteMany?: QuestionPoolScalarWhereInput | QuestionPoolScalarWhereInput[]
   }
 
+  export type PasswordResetCreateNestedManyWithoutLearnerInput = {
+    create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
+    connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
+    createMany?: PasswordResetCreateManyLearnerInputEnvelope
+    connect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
+  }
+
   export type EnrollmentCreateNestedManyWithoutLearnerInput = {
     create?: XOR<EnrollmentCreateWithoutLearnerInput, EnrollmentUncheckedCreateWithoutLearnerInput> | EnrollmentCreateWithoutLearnerInput[] | EnrollmentUncheckedCreateWithoutLearnerInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutLearnerInput | EnrollmentCreateOrConnectWithoutLearnerInput[]
@@ -32048,7 +32055,7 @@ export namespace Prisma {
     connect?: QuizAttemptWhereUniqueInput | QuizAttemptWhereUniqueInput[]
   }
 
-  export type PasswordResetCreateNestedManyWithoutLearnerInput = {
+  export type PasswordResetUncheckedCreateNestedManyWithoutLearnerInput = {
     create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
     connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
     createMany?: PasswordResetCreateManyLearnerInputEnvelope
@@ -32090,15 +32097,22 @@ export namespace Prisma {
     connect?: QuizAttemptWhereUniqueInput | QuizAttemptWhereUniqueInput[]
   }
 
-  export type PasswordResetUncheckedCreateNestedManyWithoutLearnerInput = {
-    create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
-    connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
-    createMany?: PasswordResetCreateManyLearnerInputEnvelope
-    connect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
-  }
-
   export type NullableBytesFieldUpdateOperationsInput = {
     set?: Uint8Array | null
+  }
+
+  export type PasswordResetUpdateManyWithoutLearnerNestedInput = {
+    create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
+    connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
+    upsert?: PasswordResetUpsertWithWhereUniqueWithoutLearnerInput | PasswordResetUpsertWithWhereUniqueWithoutLearnerInput[]
+    createMany?: PasswordResetCreateManyLearnerInputEnvelope
+    set?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
+    disconnect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
+    delete?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
+    connect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
+    update?: PasswordResetUpdateWithWhereUniqueWithoutLearnerInput | PasswordResetUpdateWithWhereUniqueWithoutLearnerInput[]
+    updateMany?: PasswordResetUpdateManyWithWhereWithoutLearnerInput | PasswordResetUpdateManyWithWhereWithoutLearnerInput[]
+    deleteMany?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
   }
 
   export type EnrollmentUpdateManyWithoutLearnerNestedInput = {
@@ -32181,7 +32195,7 @@ export namespace Prisma {
     deleteMany?: QuizAttemptScalarWhereInput | QuizAttemptScalarWhereInput[]
   }
 
-  export type PasswordResetUpdateManyWithoutLearnerNestedInput = {
+  export type PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput = {
     create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
     connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
     upsert?: PasswordResetUpsertWithWhereUniqueWithoutLearnerInput | PasswordResetUpsertWithWhereUniqueWithoutLearnerInput[]
@@ -32265,27 +32279,6 @@ export namespace Prisma {
     deleteMany?: QuizAttemptScalarWhereInput | QuizAttemptScalarWhereInput[]
   }
 
-  export type PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput = {
-    create?: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput> | PasswordResetCreateWithoutLearnerInput[] | PasswordResetUncheckedCreateWithoutLearnerInput[]
-    connectOrCreate?: PasswordResetCreateOrConnectWithoutLearnerInput | PasswordResetCreateOrConnectWithoutLearnerInput[]
-    upsert?: PasswordResetUpsertWithWhereUniqueWithoutLearnerInput | PasswordResetUpsertWithWhereUniqueWithoutLearnerInput[]
-    createMany?: PasswordResetCreateManyLearnerInputEnvelope
-    set?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
-    disconnect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
-    delete?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
-    connect?: PasswordResetWhereUniqueInput | PasswordResetWhereUniqueInput[]
-    update?: PasswordResetUpdateWithWhereUniqueWithoutLearnerInput | PasswordResetUpdateWithWhereUniqueWithoutLearnerInput[]
-    updateMany?: PasswordResetUpdateManyWithWhereWithoutLearnerInput | PasswordResetUpdateManyWithWhereWithoutLearnerInput[]
-    deleteMany?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
-  }
-
-  export type QuizAssignmentCreateNestedManyWithoutProgramInput = {
-    create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
-    connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
-    createMany?: QuizAssignmentCreateManyProgramInputEnvelope
-    connect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
-  }
-
   export type EnrollmentCreateNestedManyWithoutProgramInput = {
     create?: XOR<EnrollmentCreateWithoutProgramInput, EnrollmentUncheckedCreateWithoutProgramInput> | EnrollmentCreateWithoutProgramInput[] | EnrollmentUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutProgramInput | EnrollmentCreateOrConnectWithoutProgramInput[]
@@ -32320,7 +32313,7 @@ export namespace Prisma {
     connect?: AdminWhereUniqueInput
   }
 
-  export type QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput = {
+  export type QuizAssignmentCreateNestedManyWithoutProgramInput = {
     create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
     createMany?: QuizAssignmentCreateManyProgramInputEnvelope
@@ -32355,6 +32348,13 @@ export namespace Prisma {
     connect?: ProgramModuleWhereUniqueInput | ProgramModuleWhereUniqueInput[]
   }
 
+  export type QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput = {
+    create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
+    createMany?: QuizAssignmentCreateManyProgramInputEnvelope
+    connect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -32373,20 +32373,6 @@ export namespace Prisma {
 
   export type NullableEnumProgramTypeFieldUpdateOperationsInput = {
     set?: $Enums.ProgramType | null
-  }
-
-  export type QuizAssignmentUpdateManyWithoutProgramNestedInput = {
-    create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
-    connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
-    upsert?: QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput | QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput[]
-    createMany?: QuizAssignmentCreateManyProgramInputEnvelope
-    set?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
-    disconnect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
-    delete?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
-    connect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
-    update?: QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput | QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput[]
-    updateMany?: QuizAssignmentUpdateManyWithWhereWithoutProgramInput | QuizAssignmentUpdateManyWithWhereWithoutProgramInput[]
-    deleteMany?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
   }
 
   export type EnrollmentUpdateManyWithoutProgramNestedInput = {
@@ -32453,7 +32439,7 @@ export namespace Prisma {
     update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutProgramsInput, AdminUpdateWithoutProgramsInput>, AdminUncheckedUpdateWithoutProgramsInput>
   }
 
-  export type QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput = {
+  export type QuizAssignmentUpdateManyWithoutProgramNestedInput = {
     create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
     connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
     upsert?: QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput | QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput[]
@@ -32521,6 +32507,20 @@ export namespace Prisma {
     update?: ProgramModuleUpdateWithWhereUniqueWithoutProgramInput | ProgramModuleUpdateWithWhereUniqueWithoutProgramInput[]
     updateMany?: ProgramModuleUpdateManyWithWhereWithoutProgramInput | ProgramModuleUpdateManyWithWhereWithoutProgramInput[]
     deleteMany?: ProgramModuleScalarWhereInput | ProgramModuleScalarWhereInput[]
+  }
+
+  export type QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput> | QuizAssignmentCreateWithoutProgramInput[] | QuizAssignmentUncheckedCreateWithoutProgramInput[]
+    connectOrCreate?: QuizAssignmentCreateOrConnectWithoutProgramInput | QuizAssignmentCreateOrConnectWithoutProgramInput[]
+    upsert?: QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput | QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput[]
+    createMany?: QuizAssignmentCreateManyProgramInputEnvelope
+    set?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
+    disconnect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
+    delete?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
+    connect?: QuizAssignmentWhereUniqueInput | QuizAssignmentWhereUniqueInput[]
+    update?: QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput | QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput[]
+    updateMany?: QuizAssignmentUpdateManyWithWhereWithoutProgramInput | QuizAssignmentUpdateManyWithWhereWithoutProgramInput[]
+    deleteMany?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
   }
 
   export type MeasureProgressCreateNestedManyWithoutModuleInput = {
@@ -33091,17 +33091,17 @@ export namespace Prisma {
     update?: XOR<XOR<TopicUpdateToOneWithWhereWithoutTopicResourcesInput, TopicUpdateWithoutTopicResourcesInput>, TopicUncheckedUpdateWithoutTopicResourcesInput>
   }
 
-  export type AdminCreateNestedOneWithoutQuestionsInput = {
-    create?: XOR<AdminCreateWithoutQuestionsInput, AdminUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: AdminCreateOrConnectWithoutQuestionsInput
-    connect?: AdminWhereUniqueInput
-  }
-
   export type QuestionPaperQuestionCreateNestedManyWithoutQuestionInput = {
     create?: XOR<QuestionPaperQuestionCreateWithoutQuestionInput, QuestionPaperQuestionUncheckedCreateWithoutQuestionInput> | QuestionPaperQuestionCreateWithoutQuestionInput[] | QuestionPaperQuestionUncheckedCreateWithoutQuestionInput[]
     connectOrCreate?: QuestionPaperQuestionCreateOrConnectWithoutQuestionInput | QuestionPaperQuestionCreateOrConnectWithoutQuestionInput[]
     createMany?: QuestionPaperQuestionCreateManyQuestionInputEnvelope
     connect?: QuestionPaperQuestionWhereUniqueInput | QuestionPaperQuestionWhereUniqueInput[]
+  }
+
+  export type AdminCreateNestedOneWithoutQuestionsInput = {
+    create?: XOR<AdminCreateWithoutQuestionsInput, AdminUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutQuestionsInput
+    connect?: AdminWhereUniqueInput
   }
 
   export type QuestionPaperQuestionUncheckedCreateNestedManyWithoutQuestionInput = {
@@ -33113,14 +33113,6 @@ export namespace Prisma {
 
   export type EnumQuestionTypeFieldUpdateOperationsInput = {
     set?: $Enums.QuestionType
-  }
-
-  export type AdminUpdateOneRequiredWithoutQuestionsNestedInput = {
-    create?: XOR<AdminCreateWithoutQuestionsInput, AdminUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: AdminCreateOrConnectWithoutQuestionsInput
-    upsert?: AdminUpsertWithoutQuestionsInput
-    connect?: AdminWhereUniqueInput
-    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutQuestionsInput, AdminUpdateWithoutQuestionsInput>, AdminUncheckedUpdateWithoutQuestionsInput>
   }
 
   export type QuestionPaperQuestionUpdateManyWithoutQuestionNestedInput = {
@@ -33135,6 +33127,14 @@ export namespace Prisma {
     update?: QuestionPaperQuestionUpdateWithWhereUniqueWithoutQuestionInput | QuestionPaperQuestionUpdateWithWhereUniqueWithoutQuestionInput[]
     updateMany?: QuestionPaperQuestionUpdateManyWithWhereWithoutQuestionInput | QuestionPaperQuestionUpdateManyWithWhereWithoutQuestionInput[]
     deleteMany?: QuestionPaperQuestionScalarWhereInput | QuestionPaperQuestionScalarWhereInput[]
+  }
+
+  export type AdminUpdateOneRequiredWithoutQuestionsNestedInput = {
+    create?: XOR<AdminCreateWithoutQuestionsInput, AdminUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutQuestionsInput
+    upsert?: AdminUpsertWithoutQuestionsInput
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutQuestionsInput, AdminUpdateWithoutQuestionsInput>, AdminUncheckedUpdateWithoutQuestionsInput>
   }
 
   export type QuestionPaperQuestionUncheckedUpdateManyWithoutQuestionNestedInput = {
@@ -33913,6 +33913,20 @@ export namespace Prisma {
     gte?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedUuidFilter<$PrismaModel> | string
   }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -33935,20 +33949,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedDecimalNullableFilter<$PrismaModel = never> = {
@@ -34120,11 +34120,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutAuthorInput = {
@@ -34156,11 +34156,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutAuthorInput = {
@@ -34183,9 +34183,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionCreateNestedManyWithoutQuestionInput
   }
 
@@ -34200,9 +34200,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUncheckedCreateNestedManyWithoutQuestionInput
   }
 
@@ -34391,9 +34391,33 @@ export namespace Prisma {
     option4?: StringNullableFilter<"QuestionPool"> | string | null
     option5?: StringNullableFilter<"QuestionPool"> | string | null
     option6?: StringNullableFilter<"QuestionPool"> | string | null
-    config?: JsonNullableFilter<"QuestionPool">
     answer?: StringNullableFilter<"QuestionPool"> | string | null
     createdAt?: DateTimeFilter<"QuestionPool"> | Date | string
+    config?: JsonNullableFilter<"QuestionPool">
+  }
+
+  export type PasswordResetCreateWithoutLearnerInput = {
+    id?: string
+    token: string
+    expires: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PasswordResetUncheckedCreateWithoutLearnerInput = {
+    id?: string
+    token: string
+    expires: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PasswordResetCreateOrConnectWithoutLearnerInput = {
+    where: PasswordResetWhereUniqueInput
+    create: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput>
+  }
+
+  export type PasswordResetCreateManyLearnerInputEnvelope = {
+    data: PasswordResetCreateManyLearnerInput | PasswordResetCreateManyLearnerInput[]
+    skipDuplicates?: boolean
   }
 
   export type EnrollmentCreateWithoutLearnerInput = {
@@ -34446,10 +34470,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -34468,12 +34491,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutCreatedLearnersInput = {
@@ -34484,10 +34508,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -34507,11 +34530,12 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutCreatedLearnersInput = {
@@ -34526,10 +34550,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -34548,12 +34571,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutCreatorInput = {
@@ -34564,10 +34588,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -34586,12 +34609,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutCreatorInput = {
@@ -34616,15 +34640,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateWithoutLearnerInput = {
-    id?: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressCreateOrConnectWithoutLearnerInput = {
@@ -34639,13 +34663,13 @@ export namespace Prisma {
 
   export type QuizAttemptCreateWithoutLearnerInput = {
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptCreateNestedManyWithoutAttemptInput
     assignment: QuizAssignmentCreateNestedOneWithoutQuizAttemptsInput
   }
@@ -34654,13 +34678,13 @@ export namespace Prisma {
     id?: number
     assignmentId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptUncheckedCreateNestedManyWithoutAttemptInput
   }
 
@@ -34674,28 +34698,31 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PasswordResetCreateWithoutLearnerInput = {
-    id?: string
-    token: string
-    expires: Date | string
-    createdAt?: Date | string
-  }
-
-  export type PasswordResetUncheckedCreateWithoutLearnerInput = {
-    id?: string
-    token: string
-    expires: Date | string
-    createdAt?: Date | string
-  }
-
-  export type PasswordResetCreateOrConnectWithoutLearnerInput = {
+  export type PasswordResetUpsertWithWhereUniqueWithoutLearnerInput = {
     where: PasswordResetWhereUniqueInput
+    update: XOR<PasswordResetUpdateWithoutLearnerInput, PasswordResetUncheckedUpdateWithoutLearnerInput>
     create: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput>
   }
 
-  export type PasswordResetCreateManyLearnerInputEnvelope = {
-    data: PasswordResetCreateManyLearnerInput | PasswordResetCreateManyLearnerInput[]
-    skipDuplicates?: boolean
+  export type PasswordResetUpdateWithWhereUniqueWithoutLearnerInput = {
+    where: PasswordResetWhereUniqueInput
+    data: XOR<PasswordResetUpdateWithoutLearnerInput, PasswordResetUncheckedUpdateWithoutLearnerInput>
+  }
+
+  export type PasswordResetUpdateManyWithWhereWithoutLearnerInput = {
+    where: PasswordResetScalarWhereInput
+    data: XOR<PasswordResetUpdateManyMutationInput, PasswordResetUncheckedUpdateManyWithoutLearnerInput>
+  }
+
+  export type PasswordResetScalarWhereInput = {
+    AND?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
+    OR?: PasswordResetScalarWhereInput[]
+    NOT?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
+    id?: StringFilter<"PasswordReset"> | string
+    token?: StringFilter<"PasswordReset"> | string
+    expires?: DateTimeFilter<"PasswordReset"> | Date | string
+    learnerId?: IntFilter<"PasswordReset"> | number
+    createdAt?: DateTimeFilter<"PasswordReset"> | Date | string
   }
 
   export type EnrollmentUpsertWithWhereUniqueWithoutLearnerInput = {
@@ -34768,10 +34795,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34790,12 +34816,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutCreatedLearnersInput = {
@@ -34806,10 +34833,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34829,11 +34855,12 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUpsertWithWhereUniqueWithoutCreatorInput = {
@@ -34863,10 +34890,9 @@ export namespace Prisma {
     dob?: DateTimeNullableFilter<"Learner"> | Date | string | null
     email?: StringFilter<"Learner"> | string
     phone?: BytesNullableFilter<"Learner"> | Uint8Array | null
-    communicationEmail?: BytesNullableFilter<"Learner"> | Uint8Array | null
+    communication_email?: BytesNullableFilter<"Learner"> | Uint8Array | null
     password?: StringNullableFilter<"Learner"> | string | null
     profile_image?: StringNullableFilter<"Learner"> | string | null
-    image_id?: StringNullableFilter<"Learner"> | string | null
     organisation?: StringNullableFilter<"Learner"> | string | null
     designation?: StringNullableFilter<"Learner"> | string | null
     department?: StringNullableFilter<"Learner"> | string | null
@@ -34886,6 +34912,7 @@ export namespace Prisma {
     extraConfig?: StringNullableFilter<"Learner"> | string | null
     metaData?: StringNullableFilter<"Learner"> | string | null
     role?: StringFilter<"Learner"> | string
+    image_id?: StringNullableFilter<"Learner"> | string | null
   }
 
   export type MeasureProgressUpsertWithWhereUniqueWithoutLearnerInput = {
@@ -34908,16 +34935,16 @@ export namespace Prisma {
     AND?: MeasureProgressScalarWhereInput | MeasureProgressScalarWhereInput[]
     OR?: MeasureProgressScalarWhereInput[]
     NOT?: MeasureProgressScalarWhereInput | MeasureProgressScalarWhereInput[]
-    id?: IntFilter<"MeasureProgress"> | number
     learnerId?: IntFilter<"MeasureProgress"> | number
     topicId?: IntNullableFilter<"MeasureProgress"> | number | null
     completedAt?: DateTimeFilter<"MeasureProgress"> | Date | string
     status?: StringFilter<"MeasureProgress"> | string
-    progressType?: StringFilter<"MeasureProgress"> | string
     programId?: IntNullableFilter<"MeasureProgress"> | number | null
     moduleId?: IntNullableFilter<"MeasureProgress"> | number | null
-    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
     resourceId?: IntNullableFilter<"MeasureProgress"> | number | null
+    progressType?: StringFilter<"MeasureProgress"> | string
+    id?: IntFilter<"MeasureProgress"> | number
+    quizId?: IntNullableFilter<"MeasureProgress"> | number | null
   }
 
   export type QuizAttemptUpsertWithWhereUniqueWithoutLearnerInput = {
@@ -34944,77 +34971,13 @@ export namespace Prisma {
     assignmentId?: IntFilter<"QuizAttempt"> | number
     learnerId?: IntFilter<"QuizAttempt"> | number
     startedAt?: DateTimeFilter<"QuizAttempt"> | Date | string
-    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     submittedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
     totalTimeSpent?: IntNullableFilter<"QuizAttempt"> | number | null
     score?: DecimalNullableFilter<"QuizAttempt"> | Decimal | DecimalJsLike | number | string | null
     passed?: BoolNullableFilter<"QuizAttempt"> | boolean | null
     status?: StringFilter<"QuizAttempt"> | string
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
-  }
-
-  export type PasswordResetUpsertWithWhereUniqueWithoutLearnerInput = {
-    where: PasswordResetWhereUniqueInput
-    update: XOR<PasswordResetUpdateWithoutLearnerInput, PasswordResetUncheckedUpdateWithoutLearnerInput>
-    create: XOR<PasswordResetCreateWithoutLearnerInput, PasswordResetUncheckedCreateWithoutLearnerInput>
-  }
-
-  export type PasswordResetUpdateWithWhereUniqueWithoutLearnerInput = {
-    where: PasswordResetWhereUniqueInput
-    data: XOR<PasswordResetUpdateWithoutLearnerInput, PasswordResetUncheckedUpdateWithoutLearnerInput>
-  }
-
-  export type PasswordResetUpdateManyWithWhereWithoutLearnerInput = {
-    where: PasswordResetScalarWhereInput
-    data: XOR<PasswordResetUpdateManyMutationInput, PasswordResetUncheckedUpdateManyWithoutLearnerInput>
-  }
-
-  export type PasswordResetScalarWhereInput = {
-    AND?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
-    OR?: PasswordResetScalarWhereInput[]
-    NOT?: PasswordResetScalarWhereInput | PasswordResetScalarWhereInput[]
-    id?: StringFilter<"PasswordReset"> | string
-    token?: StringFilter<"PasswordReset"> | string
-    expires?: DateTimeFilter<"PasswordReset"> | Date | string
-    learnerId?: IntFilter<"PasswordReset"> | number
-    createdAt?: DateTimeFilter<"PasswordReset"> | Date | string
-  }
-
-  export type QuizAssignmentCreateWithoutProgramInput = {
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
-    uniqueLinkToken?: string
-    enabled?: boolean
-    isDeleted?: boolean
-    deletedAt?: Date | string | null
-    createdAt?: Date | string
-    questionPaper: QuestionPaperCreateNestedOneWithoutQuizAssignmentsInput
-    quizAttempts?: QuizAttemptCreateNestedManyWithoutAssignmentInput
-  }
-
-  export type QuizAssignmentUncheckedCreateWithoutProgramInput = {
-    id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    uniqueLinkToken?: string
-    enabled?: boolean
-    isDeleted?: boolean
-    deletedAt?: Date | string | null
-    createdAt?: Date | string
-    quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutAssignmentInput
-  }
-
-  export type QuizAssignmentCreateOrConnectWithoutProgramInput = {
-    where: QuizAssignmentWhereUniqueInput
-    create: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput>
-  }
-
-  export type QuizAssignmentCreateManyProgramInputEnvelope = {
-    data: QuizAssignmentCreateManyProgramInput | QuizAssignmentCreateManyProgramInput[]
-    skipDuplicates?: boolean
+    endedAt?: DateTimeNullableFilter<"QuizAttempt"> | Date | string | null
   }
 
   export type EnrollmentCreateWithoutProgramInput = {
@@ -35072,15 +35035,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateWithoutProgramInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressCreateOrConnectWithoutProgramInput = {
@@ -35161,37 +35124,41 @@ export namespace Prisma {
     create: XOR<AdminCreateWithoutProgramsInput, AdminUncheckedCreateWithoutProgramsInput>
   }
 
-  export type QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput = {
+  export type QuizAssignmentCreateWithoutProgramInput = {
+    uniqueLinkToken?: string
+    enabled?: boolean
+    isDeleted?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
+    questionPaper: QuestionPaperCreateNestedOneWithoutQuizAssignmentsInput
+    quizAttempts?: QuizAttemptCreateNestedManyWithoutAssignmentInput
+  }
+
+  export type QuizAssignmentUncheckedCreateWithoutProgramInput = {
+    id?: number
+    uniqueLinkToken?: string
+    enabled?: boolean
+    isDeleted?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
+    questionPaperId: number
+    quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutAssignmentInput
+  }
+
+  export type QuizAssignmentCreateOrConnectWithoutProgramInput = {
     where: QuizAssignmentWhereUniqueInput
-    update: XOR<QuizAssignmentUpdateWithoutProgramInput, QuizAssignmentUncheckedUpdateWithoutProgramInput>
     create: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput>
   }
 
-  export type QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput = {
-    where: QuizAssignmentWhereUniqueInput
-    data: XOR<QuizAssignmentUpdateWithoutProgramInput, QuizAssignmentUncheckedUpdateWithoutProgramInput>
-  }
-
-  export type QuizAssignmentUpdateManyWithWhereWithoutProgramInput = {
-    where: QuizAssignmentScalarWhereInput
-    data: XOR<QuizAssignmentUpdateManyMutationInput, QuizAssignmentUncheckedUpdateManyWithoutProgramInput>
-  }
-
-  export type QuizAssignmentScalarWhereInput = {
-    AND?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
-    OR?: QuizAssignmentScalarWhereInput[]
-    NOT?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
-    id?: IntFilter<"QuizAssignment"> | number
-    rules?: JsonFilter<"QuizAssignment">
-    questionPaperId?: IntFilter<"QuizAssignment"> | number
-    title?: StringFilter<"QuizAssignment"> | string
-    description?: StringFilter<"QuizAssignment"> | string
-    programId?: IntNullableFilter<"QuizAssignment"> | number | null
-    uniqueLinkToken?: UuidFilter<"QuizAssignment"> | string
-    enabled?: BoolFilter<"QuizAssignment"> | boolean
-    isDeleted?: BoolFilter<"QuizAssignment"> | boolean
-    deletedAt?: DateTimeNullableFilter<"QuizAssignment"> | Date | string | null
-    createdAt?: DateTimeFilter<"QuizAssignment"> | Date | string
+  export type QuizAssignmentCreateManyProgramInputEnvelope = {
+    data: QuizAssignmentCreateManyProgramInput | QuizAssignmentCreateManyProgramInput[]
+    skipDuplicates?: boolean
   }
 
   export type EnrollmentUpsertWithWhereUniqueWithoutProgramInput = {
@@ -35321,6 +35288,39 @@ export namespace Prisma {
     questions?: QuestionPoolUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
+  export type QuizAssignmentUpsertWithWhereUniqueWithoutProgramInput = {
+    where: QuizAssignmentWhereUniqueInput
+    update: XOR<QuizAssignmentUpdateWithoutProgramInput, QuizAssignmentUncheckedUpdateWithoutProgramInput>
+    create: XOR<QuizAssignmentCreateWithoutProgramInput, QuizAssignmentUncheckedCreateWithoutProgramInput>
+  }
+
+  export type QuizAssignmentUpdateWithWhereUniqueWithoutProgramInput = {
+    where: QuizAssignmentWhereUniqueInput
+    data: XOR<QuizAssignmentUpdateWithoutProgramInput, QuizAssignmentUncheckedUpdateWithoutProgramInput>
+  }
+
+  export type QuizAssignmentUpdateManyWithWhereWithoutProgramInput = {
+    where: QuizAssignmentScalarWhereInput
+    data: XOR<QuizAssignmentUpdateManyMutationInput, QuizAssignmentUncheckedUpdateManyWithoutProgramInput>
+  }
+
+  export type QuizAssignmentScalarWhereInput = {
+    AND?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
+    OR?: QuizAssignmentScalarWhereInput[]
+    NOT?: QuizAssignmentScalarWhereInput | QuizAssignmentScalarWhereInput[]
+    id?: IntFilter<"QuizAssignment"> | number
+    uniqueLinkToken?: UuidFilter<"QuizAssignment"> | string
+    enabled?: BoolFilter<"QuizAssignment"> | boolean
+    isDeleted?: BoolFilter<"QuizAssignment"> | boolean
+    deletedAt?: DateTimeNullableFilter<"QuizAssignment"> | Date | string | null
+    createdAt?: DateTimeFilter<"QuizAssignment"> | Date | string
+    rules?: JsonFilter<"QuizAssignment">
+    programId?: IntNullableFilter<"QuizAssignment"> | number | null
+    description?: StringFilter<"QuizAssignment"> | string
+    title?: StringFilter<"QuizAssignment"> | string
+    questionPaperId?: IntFilter<"QuizAssignment"> | number
+  }
+
   export type MeasureProgressCreateWithoutModuleInput = {
     completedAt?: Date | string
     status: string
@@ -35333,15 +35333,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateWithoutModuleInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressCreateOrConnectWithoutModuleInput = {
@@ -35602,10 +35602,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -35624,12 +35623,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutEnrollmentsInput = {
@@ -35640,10 +35640,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -35663,11 +35662,12 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutEnrollmentsInput = {
@@ -35703,11 +35703,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleCreateNestedManyWithoutProgramInput
     author: AdminCreateNestedOneWithoutProgramsInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutEnrollmentsInput = {
@@ -35740,10 +35740,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutEnrollmentsInput = {
@@ -35769,10 +35769,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35791,12 +35790,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutEnrollmentsInput = {
@@ -35807,10 +35807,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35830,11 +35829,12 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type ProgramUpsertWithoutEnrollmentsInput = {
@@ -35876,11 +35876,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUpdateManyWithoutProgramNestedInput
     author?: AdminUpdateOneRequiredWithoutProgramsNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutEnrollmentsInput = {
@@ -35913,10 +35913,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ModuleCreateWithoutProgramModulesInput = {
@@ -35981,11 +35981,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutProgramInput
     author: AdminCreateNestedOneWithoutProgramsInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutProgramModulesInput = {
@@ -36018,10 +36018,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutProgramModulesInput = {
@@ -36108,11 +36108,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutProgramNestedInput
     author?: AdminUpdateOneRequiredWithoutProgramsNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutProgramModulesInput = {
@@ -36145,10 +36145,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type MeasureProgressCreateWithoutTopicInput = {
@@ -36163,15 +36163,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateWithoutTopicInput = {
-    id?: number
     learnerId: number
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type MeasureProgressCreateOrConnectWithoutTopicInput = {
@@ -36585,14 +36585,14 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedCreateWithoutResourceInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
+    progressType: string
+    id?: number
     quizId?: number | null
   }
 
@@ -36798,6 +36798,26 @@ export namespace Prisma {
     dependentTopics?: TopicUncheckedUpdateManyWithoutPrerequisiteTopicNestedInput
   }
 
+  export type QuestionPaperQuestionCreateWithoutQuestionInput = {
+    createdAt?: Date | string
+    questionPaper: QuestionPaperCreateNestedOneWithoutQuestionsInput
+  }
+
+  export type QuestionPaperQuestionUncheckedCreateWithoutQuestionInput = {
+    questionPaperId: number
+    createdAt?: Date | string
+  }
+
+  export type QuestionPaperQuestionCreateOrConnectWithoutQuestionInput = {
+    where: QuestionPaperQuestionWhereUniqueInput
+    create: XOR<QuestionPaperQuestionCreateWithoutQuestionInput, QuestionPaperQuestionUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type QuestionPaperQuestionCreateManyQuestionInputEnvelope = {
+    data: QuestionPaperQuestionCreateManyQuestionInput | QuestionPaperQuestionCreateManyQuestionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AdminCreateWithoutQuestionsInput = {
     first_name: string
     last_name: string
@@ -36846,24 +36866,29 @@ export namespace Prisma {
     create: XOR<AdminCreateWithoutQuestionsInput, AdminUncheckedCreateWithoutQuestionsInput>
   }
 
-  export type QuestionPaperQuestionCreateWithoutQuestionInput = {
-    createdAt?: Date | string
-    questionPaper: QuestionPaperCreateNestedOneWithoutQuestionsInput
-  }
-
-  export type QuestionPaperQuestionUncheckedCreateWithoutQuestionInput = {
-    questionPaperId: number
-    createdAt?: Date | string
-  }
-
-  export type QuestionPaperQuestionCreateOrConnectWithoutQuestionInput = {
+  export type QuestionPaperQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
     where: QuestionPaperQuestionWhereUniqueInput
+    update: XOR<QuestionPaperQuestionUpdateWithoutQuestionInput, QuestionPaperQuestionUncheckedUpdateWithoutQuestionInput>
     create: XOR<QuestionPaperQuestionCreateWithoutQuestionInput, QuestionPaperQuestionUncheckedCreateWithoutQuestionInput>
   }
 
-  export type QuestionPaperQuestionCreateManyQuestionInputEnvelope = {
-    data: QuestionPaperQuestionCreateManyQuestionInput | QuestionPaperQuestionCreateManyQuestionInput[]
-    skipDuplicates?: boolean
+  export type QuestionPaperQuestionUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: QuestionPaperQuestionWhereUniqueInput
+    data: XOR<QuestionPaperQuestionUpdateWithoutQuestionInput, QuestionPaperQuestionUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type QuestionPaperQuestionUpdateManyWithWhereWithoutQuestionInput = {
+    where: QuestionPaperQuestionScalarWhereInput
+    data: XOR<QuestionPaperQuestionUpdateManyMutationInput, QuestionPaperQuestionUncheckedUpdateManyWithoutQuestionInput>
+  }
+
+  export type QuestionPaperQuestionScalarWhereInput = {
+    AND?: QuestionPaperQuestionScalarWhereInput | QuestionPaperQuestionScalarWhereInput[]
+    OR?: QuestionPaperQuestionScalarWhereInput[]
+    NOT?: QuestionPaperQuestionScalarWhereInput | QuestionPaperQuestionScalarWhereInput[]
+    questionId?: IntFilter<"QuestionPaperQuestion"> | number
+    questionPaperId?: IntFilter<"QuestionPaperQuestion"> | number
+    createdAt?: DateTimeFilter<"QuestionPaperQuestion"> | Date | string
   }
 
   export type AdminUpsertWithoutQuestionsInput = {
@@ -36918,31 +36943,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAdmins?: AdminUncheckedUpdateManyWithoutCreatorNestedInput
     programs?: ProgramUncheckedUpdateManyWithoutAuthorNestedInput
-  }
-
-  export type QuestionPaperQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
-    where: QuestionPaperQuestionWhereUniqueInput
-    update: XOR<QuestionPaperQuestionUpdateWithoutQuestionInput, QuestionPaperQuestionUncheckedUpdateWithoutQuestionInput>
-    create: XOR<QuestionPaperQuestionCreateWithoutQuestionInput, QuestionPaperQuestionUncheckedCreateWithoutQuestionInput>
-  }
-
-  export type QuestionPaperQuestionUpdateWithWhereUniqueWithoutQuestionInput = {
-    where: QuestionPaperQuestionWhereUniqueInput
-    data: XOR<QuestionPaperQuestionUpdateWithoutQuestionInput, QuestionPaperQuestionUncheckedUpdateWithoutQuestionInput>
-  }
-
-  export type QuestionPaperQuestionUpdateManyWithWhereWithoutQuestionInput = {
-    where: QuestionPaperQuestionScalarWhereInput
-    data: XOR<QuestionPaperQuestionUpdateManyMutationInput, QuestionPaperQuestionUncheckedUpdateManyWithoutQuestionInput>
-  }
-
-  export type QuestionPaperQuestionScalarWhereInput = {
-    AND?: QuestionPaperQuestionScalarWhereInput | QuestionPaperQuestionScalarWhereInput[]
-    OR?: QuestionPaperQuestionScalarWhereInput[]
-    NOT?: QuestionPaperQuestionScalarWhereInput | QuestionPaperQuestionScalarWhereInput[]
-    questionId?: IntFilter<"QuestionPaperQuestion"> | number
-    questionPaperId?: IntFilter<"QuestionPaperQuestion"> | number
-    createdAt?: DateTimeFilter<"QuestionPaperQuestion"> | Date | string
   }
 
   export type ProgramCreateWithoutQuizzesInput = {
@@ -37041,13 +37041,13 @@ export namespace Prisma {
 
   export type QuizAttemptCreateWithoutAssignmentInput = {
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptCreateNestedManyWithoutAttemptInput
     learner: LearnerCreateNestedOneWithoutQuizAttemptsInput
   }
@@ -37056,13 +37056,13 @@ export namespace Prisma {
     id?: number
     learnerId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     questionAttempts?: QuestionAttemptUncheckedCreateNestedManyWithoutAttemptInput
   }
 
@@ -37219,29 +37219,29 @@ export namespace Prisma {
   }
 
   export type QuizAssignmentCreateWithoutQuestionPaperInput = {
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
     program?: ProgramCreateNestedOneWithoutQuizzesInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutAssignmentInput
   }
 
   export type QuizAssignmentUncheckedCreateWithoutQuestionPaperInput = {
     id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
-    programId?: number | null
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    programId?: number | null
+    description: string
+    title: string
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutAssignmentInput
   }
 
@@ -37297,9 +37297,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     author: AdminCreateNestedOneWithoutQuestionsInput
   }
 
@@ -37315,9 +37315,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type QuestionPoolCreateOrConnectWithoutQuestionPapersInput = {
@@ -37364,9 +37364,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     author?: AdminUpdateOneRequiredWithoutQuestionsNestedInput
   }
 
@@ -37382,9 +37382,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type QuestionPaperUpsertWithoutQuestionsInput = {
@@ -37436,30 +37436,30 @@ export namespace Prisma {
   }
 
   export type QuizAssignmentCreateWithoutQuizAttemptsInput = {
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
     program?: ProgramCreateNestedOneWithoutQuizzesInput
     questionPaper: QuestionPaperCreateNestedOneWithoutQuizAssignmentsInput
   }
 
   export type QuizAssignmentUncheckedCreateWithoutQuizAttemptsInput = {
     id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    programId?: number | null
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    programId?: number | null
+    description: string
+    title: string
+    questionPaperId: number
   }
 
   export type QuizAssignmentCreateOrConnectWithoutQuizAttemptsInput = {
@@ -37474,10 +37474,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -37496,12 +37495,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutQuizAttemptsInput = {
@@ -37512,10 +37512,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -37535,11 +37534,12 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutQuizAttemptsInput = {
@@ -37586,30 +37586,30 @@ export namespace Prisma {
   }
 
   export type QuizAssignmentUpdateWithoutQuizAttemptsInput = {
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     program?: ProgramUpdateOneWithoutQuizzesNestedInput
     questionPaper?: QuestionPaperUpdateOneRequiredWithoutQuizAssignmentsNestedInput
   }
 
   export type QuizAssignmentUncheckedUpdateWithoutQuizAttemptsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    questionPaperId?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    programId?: NullableIntFieldUpdateOperationsInput | number | null
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    programId?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaperId?: IntFieldUpdateOperationsInput | number
   }
 
   export type LearnerUpsertWithoutQuizAttemptsInput = {
@@ -37630,10 +37630,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37652,12 +37651,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutQuizAttemptsInput = {
@@ -37668,10 +37668,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37691,22 +37690,23 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type QuizAttemptCreateWithoutQuestionAttemptsInput = {
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
     assignment: QuizAssignmentCreateNestedOneWithoutQuizAttemptsInput
     learner: LearnerCreateNestedOneWithoutQuizAttemptsInput
   }
@@ -37716,13 +37716,13 @@ export namespace Prisma {
     assignmentId: number
     learnerId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
   }
 
   export type QuizAttemptCreateOrConnectWithoutQuestionAttemptsInput = {
@@ -37743,13 +37743,13 @@ export namespace Prisma {
 
   export type QuizAttemptUpdateWithoutQuestionAttemptsInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     assignment?: QuizAssignmentUpdateOneRequiredWithoutQuizAttemptsNestedInput
     learner?: LearnerUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
@@ -37759,13 +37759,13 @@ export namespace Prisma {
     assignmentId?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type LearnerCreateWithoutMeasureProgressInput = {
@@ -37775,10 +37775,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -37797,12 +37796,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutMeasureProgressInput = {
@@ -37813,10 +37813,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -37836,11 +37835,12 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutMeasureProgressInput = {
@@ -37910,11 +37910,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleCreateNestedManyWithoutProgramInput
     author: AdminCreateNestedOneWithoutProgramsInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutMeasureProgressInput = {
@@ -37947,10 +37947,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutProgramInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutMeasureProgressInput = {
@@ -38040,10 +38040,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38062,12 +38061,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutMeasureProgressInput = {
@@ -38078,10 +38078,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38101,11 +38100,12 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type ModuleUpsertWithoutMeasureProgressInput = {
@@ -38187,11 +38187,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUpdateManyWithoutProgramNestedInput
     author?: AdminUpdateOneRequiredWithoutProgramsNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutMeasureProgressInput = {
@@ -38224,10 +38224,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ResourceUpsertWithoutMeasureProgressInput = {
@@ -38313,10 +38313,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -38335,12 +38334,13 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
     createdLearners?: LearnerCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerUncheckedCreateWithoutLeaderboardsInput = {
@@ -38351,10 +38351,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -38374,11 +38373,12 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
+    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutLearnerInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutLearnerInput
-    passwordResets?: PasswordResetUncheckedCreateNestedManyWithoutLearnerInput
   }
 
   export type LearnerCreateOrConnectWithoutLeaderboardsInput = {
@@ -38414,11 +38414,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleCreateNestedManyWithoutProgramInput
     author: AdminCreateNestedOneWithoutProgramsInput
+    quizzes?: QuizAssignmentCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramUncheckedCreateWithoutLeaderboardsInput = {
@@ -38451,10 +38451,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     maxParticipants?: number | null
-    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutProgramInput
     measureProgress?: MeasureProgressUncheckedCreateNestedManyWithoutProgramInput
     programModules?: ProgramModuleUncheckedCreateNestedManyWithoutProgramInput
+    quizzes?: QuizAssignmentUncheckedCreateNestedManyWithoutProgramInput
   }
 
   export type ProgramCreateOrConnectWithoutLeaderboardsInput = {
@@ -38480,10 +38480,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38502,12 +38501,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutLeaderboardsInput = {
@@ -38518,10 +38518,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38541,11 +38540,12 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type ProgramUpsertWithoutLeaderboardsInput = {
@@ -38587,11 +38587,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUpdateManyWithoutProgramNestedInput
     author?: AdminUpdateOneRequiredWithoutProgramsNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutLeaderboardsInput = {
@@ -38624,10 +38624,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type LearnerCreateWithoutPasswordResetsInput = {
@@ -38637,10 +38637,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -38659,6 +38658,7 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardCreateNestedManyWithoutLearnerInput
     creator?: LearnerCreateNestedOneWithoutCreatedLearnersInput
@@ -38675,10 +38675,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -38698,6 +38697,7 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutLearnerInput
     leaderboards?: LeaderboardUncheckedCreateNestedManyWithoutLearnerInput
     createdLearners?: LearnerUncheckedCreateNestedManyWithoutCreatorInput
@@ -38728,10 +38728,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38750,6 +38749,7 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     creator?: LearnerUpdateOneWithoutCreatedLearnersNestedInput
@@ -38766,10 +38766,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38789,6 +38788,7 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
@@ -38857,9 +38857,9 @@ export namespace Prisma {
     option4?: string | null
     option5?: string | null
     option6?: string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: string | null
     createdAt?: Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AdminUpdateWithoutCreatorInput = {
@@ -38952,11 +38952,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateWithoutAuthorInput = {
@@ -38988,11 +38988,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
-    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutProgramNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutProgramNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutProgramNestedInput
     programModules?: ProgramModuleUncheckedUpdateManyWithoutProgramNestedInput
+    quizzes?: QuizAssignmentUncheckedUpdateManyWithoutProgramNestedInput
   }
 
   export type ProgramUncheckedUpdateManyWithoutAuthorInput = {
@@ -39036,9 +39036,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUpdateManyWithoutQuestionNestedInput
   }
 
@@ -39053,9 +39053,9 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
     questionPapers?: QuestionPaperQuestionUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
@@ -39070,9 +39070,16 @@ export namespace Prisma {
     option4?: NullableStringFieldUpdateOperationsInput | string | null
     option5?: NullableStringFieldUpdateOperationsInput | string | null
     option6?: NullableStringFieldUpdateOperationsInput | string | null
-    config?: NullableJsonNullValueInput | InputJsonValue
     answer?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    config?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type PasswordResetCreateManyLearnerInput = {
+    id?: string
+    token: string
+    expires: Date | string
+    createdAt?: Date | string
   }
 
   export type EnrollmentCreateManyLearnerInput = {
@@ -39095,10 +39102,9 @@ export namespace Prisma {
     dob?: Date | string | null
     email: string
     phone?: Uint8Array | null
-    communicationEmail?: Uint8Array | null
+    communication_email?: Uint8Array | null
     password?: string | null
     profile_image?: string | null
-    image_id?: string | null
     organisation?: string | null
     designation?: string | null
     department?: string | null
@@ -39117,38 +39123,53 @@ export namespace Prisma {
     extraConfig?: string | null
     metaData?: string | null
     role: string
+    image_id?: string | null
   }
 
   export type MeasureProgressCreateManyLearnerInput = {
-    id?: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type QuizAttemptCreateManyLearnerInput = {
     id?: number
     assignmentId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
   }
 
-  export type PasswordResetCreateManyLearnerInput = {
-    id?: string
-    token: string
-    expires: Date | string
-    createdAt?: Date | string
+  export type PasswordResetUpdateWithoutLearnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PasswordResetUncheckedUpdateWithoutLearnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PasswordResetUncheckedUpdateManyWithoutLearnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EnrollmentUpdateWithoutLearnerInput = {
@@ -39193,10 +39214,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39215,12 +39235,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateWithoutCreatorInput = {
@@ -39231,10 +39252,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39253,12 +39273,13 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutLearnerNestedInput
     leaderboards?: LeaderboardUncheckedUpdateManyWithoutLearnerNestedInput
     createdLearners?: LearnerUncheckedUpdateManyWithoutCreatorNestedInput
     measureProgress?: MeasureProgressUncheckedUpdateManyWithoutLearnerNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutLearnerNestedInput
-    passwordResets?: PasswordResetUncheckedUpdateManyWithoutLearnerNestedInput
   }
 
   export type LearnerUncheckedUpdateManyWithoutCreatorInput = {
@@ -39269,10 +39290,9 @@ export namespace Prisma {
     dob?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     email?: StringFieldUpdateOperationsInput | string
     phone?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
-    communicationEmail?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    communication_email?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     password?: NullableStringFieldUpdateOperationsInput | string | null
     profile_image?: NullableStringFieldUpdateOperationsInput | string | null
-    image_id?: NullableStringFieldUpdateOperationsInput | string | null
     organisation?: NullableStringFieldUpdateOperationsInput | string | null
     designation?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39291,6 +39311,7 @@ export namespace Prisma {
     extraConfig?: NullableStringFieldUpdateOperationsInput | string | null
     metaData?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    image_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MeasureProgressUpdateWithoutLearnerInput = {
@@ -39305,38 +39326,38 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateWithoutLearnerInput = {
-    id?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressUncheckedUpdateManyWithoutLearnerInput = {
-    id?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type QuizAttemptUpdateWithoutLearnerInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUpdateManyWithoutAttemptNestedInput
     assignment?: QuizAssignmentUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
@@ -39345,13 +39366,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     assignmentId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUncheckedUpdateManyWithoutAttemptNestedInput
   }
 
@@ -39359,47 +39380,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     assignmentId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordResetUpdateWithoutLearnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordResetUncheckedUpdateWithoutLearnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordResetUncheckedUpdateManyWithoutLearnerInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizAssignmentCreateManyProgramInput = {
-    id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    questionPaperId: number
-    title: string
-    description: string
-    uniqueLinkToken?: string
-    enabled?: boolean
-    isDeleted?: boolean
-    deletedAt?: Date | string | null
-    createdAt?: Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type EnrollmentCreateManyProgramInput = {
@@ -39415,15 +39402,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressCreateManyProgramInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type ProgramModuleCreateManyProgramInput = {
@@ -39431,44 +39418,17 @@ export namespace Prisma {
     position: number
   }
 
-  export type QuizAssignmentUpdateWithoutProgramInput = {
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
-    enabled?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionPaper?: QuestionPaperUpdateOneRequiredWithoutQuizAssignmentsNestedInput
-    quizAttempts?: QuizAttemptUpdateManyWithoutAssignmentNestedInput
-  }
-
-  export type QuizAssignmentUncheckedUpdateWithoutProgramInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    questionPaperId?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
-    enabled?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutAssignmentNestedInput
-  }
-
-  export type QuizAssignmentUncheckedUpdateManyWithoutProgramInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    questionPaperId?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
-    enabled?: BoolFieldUpdateOperationsInput | boolean
-    isDeleted?: BoolFieldUpdateOperationsInput | boolean
-    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type QuizAssignmentCreateManyProgramInput = {
+    id?: number
+    uniqueLinkToken?: string
+    enabled?: boolean
+    isDeleted?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    description: string
+    title: string
+    questionPaperId: number
   }
 
   export type EnrollmentUpdateWithoutProgramInput = {
@@ -39518,27 +39478,27 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateWithoutProgramInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressUncheckedUpdateManyWithoutProgramInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ProgramModuleUpdateWithoutProgramInput = {
@@ -39556,16 +39516,56 @@ export namespace Prisma {
     position?: IntFieldUpdateOperationsInput | number
   }
 
+  export type QuizAssignmentUpdateWithoutProgramInput = {
+    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaper?: QuestionPaperUpdateOneRequiredWithoutQuizAssignmentsNestedInput
+    quizAttempts?: QuizAttemptUpdateManyWithoutAssignmentNestedInput
+  }
+
+  export type QuizAssignmentUncheckedUpdateWithoutProgramInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaperId?: IntFieldUpdateOperationsInput | number
+    quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutAssignmentNestedInput
+  }
+
+  export type QuizAssignmentUncheckedUpdateManyWithoutProgramInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    uniqueLinkToken?: StringFieldUpdateOperationsInput | string
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    questionPaperId?: IntFieldUpdateOperationsInput | number
+  }
+
   export type MeasureProgressCreateManyModuleInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type ModuleTopicCreateManyModuleInput = {
@@ -39601,27 +39601,27 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateWithoutModuleInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressUncheckedUpdateManyWithoutModuleInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ModuleTopicUpdateWithoutModuleInput = {
@@ -39695,15 +39695,15 @@ export namespace Prisma {
   }
 
   export type MeasureProgressCreateManyTopicInput = {
-    id?: number
     learnerId: number
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
-    quizId?: number | null
     resourceId?: number | null
+    progressType: string
+    id?: number
+    quizId?: number | null
   }
 
   export type ModuleTopicCreateManyTopicInput = {
@@ -39739,27 +39739,27 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateWithoutTopicInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressUncheckedUpdateManyWithoutTopicInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     resourceId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ModuleTopicUpdateWithoutTopicInput = {
@@ -39833,14 +39833,14 @@ export namespace Prisma {
   }
 
   export type MeasureProgressCreateManyResourceInput = {
-    id?: number
     learnerId: number
     topicId?: number | null
     completedAt?: Date | string
     status: string
-    progressType: string
     programId?: number | null
     moduleId?: number | null
+    progressType: string
+    id?: number
     quizId?: number | null
   }
 
@@ -39861,26 +39861,26 @@ export namespace Prisma {
   }
 
   export type MeasureProgressUncheckedUpdateWithoutResourceInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MeasureProgressUncheckedUpdateManyWithoutResourceInput = {
-    id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     topicId?: NullableIntFieldUpdateOperationsInput | number | null
     completedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
-    progressType?: StringFieldUpdateOperationsInput | string
     programId?: NullableIntFieldUpdateOperationsInput | number | null
     moduleId?: NullableIntFieldUpdateOperationsInput | number | null
+    progressType?: StringFieldUpdateOperationsInput | string
+    id?: IntFieldUpdateOperationsInput | number
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -39923,24 +39923,24 @@ export namespace Prisma {
     id?: number
     learnerId: number
     startedAt?: Date | string
-    endedAt?: Date | string | null
     submittedAt?: Date | string | null
     totalTimeSpent?: number | null
     score?: Decimal | DecimalJsLike | number | string | null
     passed?: boolean | null
     status: string
     createdAt?: Date | string
+    endedAt?: Date | string | null
   }
 
   export type QuizAttemptUpdateWithoutAssignmentInput = {
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUpdateManyWithoutAttemptNestedInput
     learner?: LearnerUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
@@ -39949,13 +39949,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     questionAttempts?: QuestionAttemptUncheckedUpdateManyWithoutAttemptNestedInput
   }
 
@@ -39963,13 +39963,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     learnerId?: IntFieldUpdateOperationsInput | number
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     totalTimeSpent?: NullableIntFieldUpdateOperationsInput | number | null
     score?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     passed?: NullableBoolFieldUpdateOperationsInput | boolean | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type QuestionPaperQuestionCreateManyQuestionPaperInput = {
@@ -39979,15 +39979,15 @@ export namespace Prisma {
 
   export type QuizAssignmentCreateManyQuestionPaperInput = {
     id?: number
-    rules: JsonNullValueInput | InputJsonValue
-    title: string
-    description: string
-    programId?: number | null
     uniqueLinkToken?: string
     enabled?: boolean
     isDeleted?: boolean
     deletedAt?: Date | string | null
     createdAt?: Date | string
+    rules: JsonNullValueInput | InputJsonValue
+    programId?: number | null
+    description: string
+    title: string
   }
 
   export type QuestionPaperQuestionUpdateWithoutQuestionPaperInput = {
@@ -40006,43 +40006,43 @@ export namespace Prisma {
   }
 
   export type QuizAssignmentUpdateWithoutQuestionPaperInput = {
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     program?: ProgramUpdateOneWithoutQuizzesNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutAssignmentNestedInput
   }
 
   export type QuizAssignmentUncheckedUpdateWithoutQuestionPaperInput = {
     id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    programId?: NullableIntFieldUpdateOperationsInput | number | null
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    programId?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutAssignmentNestedInput
   }
 
   export type QuizAssignmentUncheckedUpdateManyWithoutQuestionPaperInput = {
     id?: IntFieldUpdateOperationsInput | number
-    rules?: JsonNullValueInput | InputJsonValue
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    programId?: NullableIntFieldUpdateOperationsInput | number | null
     uniqueLinkToken?: StringFieldUpdateOperationsInput | string
     enabled?: BoolFieldUpdateOperationsInput | boolean
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rules?: JsonNullValueInput | InputJsonValue
+    programId?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuestionAttemptCreateManyAttemptInput = {

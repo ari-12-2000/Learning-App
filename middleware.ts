@@ -9,14 +9,14 @@ console.log('middleware request',request.url)
 
   const token = await getToken({ req: request })
 
-  if (token) {
-    // If already logged in → redirect away from /login
-    if (url.pathname.startsWith("/login")) {
-      const referer = request.headers.get('referer');
-      const redirectUrl = referer ? new URL(referer) : new URL("/", request.url);
-      return NextResponse.redirect(redirectUrl);
-    }
-  } else {
+   if (!token) {
+  //   // If already logged in → redirect away from /login
+  //   if (url.pathname.startsWith("/login")) {
+  //     const referer = request.headers.get('referer');
+  //     const redirectUrl = referer ? new URL(referer) : new URL("/", request.url);
+  //     return NextResponse.redirect(redirectUrl);
+  //   }
+  // } 
     // Not logged in → block protected routes
     if (
       url.pathname.startsWith("/student") ||

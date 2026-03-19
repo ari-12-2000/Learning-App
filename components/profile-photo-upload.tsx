@@ -133,6 +133,7 @@ export function ProfilePhotoUpload({ isOpen, onClose, onPhotoUpdate }: ProfilePh
   if (!isOpen) return null
 
   const handleFileSelect = (file: File) => {
+    if (file.size > 10 * 1024 * 1024) return
     if (file && file.type.startsWith("image/")) {
       const previewUrl = URL.createObjectURL(file)
       setSelectedPhoto(previewUrl)

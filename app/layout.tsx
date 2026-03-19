@@ -6,7 +6,8 @@ import { Toaster } from "@/components/ui/toaster";
 import CourseProviderWrapper from "@/contexts/CourseProviderWrapper";
 import LayoutClient from "@/components/layout-client"; // new name
 import SessionProviderWrapper from "@/contexts/SessionProviderWrapper";
-
+import Providers from "./providers";
+import RouteChangeHandler from "@/components/RouteChangeHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,16 +23,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-         <SessionProviderWrapper>
-          <AuthProvider>
-            <CourseProviderWrapper>
-
-              <LayoutClient>{children}</LayoutClient>
-
-            </CourseProviderWrapper>
-          </AuthProvider>
-        </SessionProviderWrapper>
         <Toaster />
+        
+        <SessionProviderWrapper>
+          <Providers>
+            <AuthProvider>
+              <CourseProviderWrapper>
+                 <RouteChangeHandler />
+                <LayoutClient>{children}</LayoutClient>
+
+              </CourseProviderWrapper>
+            </AuthProvider>
+          </Providers>
+        </SessionProviderWrapper>
+
       </body>
     </html>
   );

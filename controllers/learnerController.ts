@@ -4,55 +4,10 @@ import { cloudinary } from '@/lib/config';
 import { CloudinaryUploadResult } from '@/types/cloudinary';
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
+import { ProfilePhotoUpload } from '@/components/profile-photo-upload';
 
 export class LearnerController {
-  // 1. Get all enrolled courses for a learner
-  static async getEnrolledCourses({ params }: { params: { learnerId: string } }) {
-    try {
-      const learnerId = Number(params.learnerId);
-
-      if (isNaN(learnerId)) {
-        return NextResponse.json({ error: 'Invalid learner ID' }, { status: 400 });
-      }
-
-      const enrollment = await prisma.enrollment.findMany({
-        where: { id: Number(learnerId) },
-        include: {
-          program: {
-            include: {
-              programModules: {
-                include: {
-                  module: {
-                    include: {
-                      moduleTopics: {
-                        select: { topicId: true }
-                      }
-                    }
-                  }
-                }
-              },
-              enrollments: {
-                select: { learnerId: true }
-              },
-
-              quizzes: {
-                select: {
-                  id: true
-                }
-              }
-            }
-          }
-        }
-      });
-
-      return NextResponse.json({ success: true, data: enrollment }, { status: 200 });
-    } catch (error) {
-      console.error("Get enrolled courses error:", error);
-      return NextResponse.json({ error: 'Failed to fetch the learner enrolled courses' }, { status: 500 });
-    }
-  }
-
-  // 2. Enroll a learner in a course
+  // 1. Enroll a learner in a course
   static async enrolInCourses(req: NextRequest) {
     try {
       const { programId, learnerId } = await req.json();
@@ -77,7 +32,7 @@ export class LearnerController {
       return NextResponse.json({ success: true, data: enrollment }, { status: 201 });
     } catch (error) {
       console.error("Enroll in course error:", error);
-      return NextResponse.json({ error: 'Failed to enroll in course' }, { status: 500 });
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
   }
 
@@ -189,7 +144,7 @@ export class LearnerController {
         where: { learnerId: Number(session.user.id), programId },
       });
 
-      return NextResponse.json({ success:true, enrolled: !!enrollment },{ status: 200 });
+      return NextResponse.json({ success: true, enrolled: !!enrollment }, { status: 200 });
     } catch (error) {
       console.error("Check enrollment failed", error);
       return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
@@ -486,4 +441,121 @@ export class LearnerController {
     }
   }
 
+  static async getProfileImage(){
+    const session = await getServerSession(authOptions)
+    if (!session || session?.user.id)
+      return NextResponse.json({ error: 'You have no authentication. Please log in.' }, { status: 401 })
+    const learner = await prisma.learner.findUnique({
+      where: { id: Number(session?.user.id) },
+      select:{
+        profile_image:true
+      }
+    })
+
+    if (!learner)
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+
+    return NextResponse.json({ success: true, profile_image: learner.profile_image }, { status: 200 })
+  }
+
+  static async getEnrolledCourses() {
+    const session = await getServerSession(authOptions)
+    if (!session || session?.user.id)
+      return NextResponse.json({ error: 'You have no authentication. Please log in.' }, { status: 401 })
+    const learner = await prisma.learner.findUnique({
+      where: { id: Number(session?.user.id) },
+      include: {
+        enrollments: {
+
+          select: { programId: true }
+        },
+
+
+      }
+    })
+
+    if (!learner)
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+
+    return NextResponse.json({ success: true, enrolledCourseIDs: learner.enrollments }, { status: 200 })
+
+  }
+  static async getLearnerProgress() {
+
+    const session = await getServerSession(authOptions)
+    if (!session || session?.user.id)
+      return NextResponse.json({ error: 'You have no authentication. Please log in.' }, { status: 401 })
+    const learner = await prisma.learner.findUnique({
+      where: { id: Number(session?.user.id) },
+      include: {
+        measureProgress: {
+          select: {
+            programId: true,
+            moduleId: true,
+            topicId: true,
+            resourceId: true
+          }
+        },
+
+        quizAttempts: {
+          include: {
+            assignment: {
+              select: { rules: true }
+            }
+          }
+        }
+      }
+    })
+
+    let completedPrograms: { [key: number]: boolean } = {}
+    let completedModules: { [key: number]: boolean } = {}
+    let completedResources: { [key: number]: boolean } = {}
+    let completedTopics: { [key: number]: boolean } = {}
+    let completedQuizzes: { [key: number]: number } = {}
+    let attemptedQuizzes: { [key: number]: { start: Date, score: number } } = {}
+
+    if (!learner)
+      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+
+
+    learner.measureProgress.forEach((progress) => {
+      if (progress.programId) {
+        completedPrograms[progress.programId] = true
+      }
+      if (progress.moduleId) {
+        completedModules[progress.moduleId] = true
+      }
+      if (progress.resourceId) {
+        completedResources[progress.resourceId] = true
+      }
+      if (progress.topicId) {
+        completedTopics[progress.topicId] = true
+      }
+    })
+
+    learner.quizAttempts.forEach((attempt) => {
+      let score = attempt.score !== null && typeof attempt.score === 'object' && 'toNumber' in attempt.score
+        ? attempt.score.toNumber()
+        : attempt.score ?? 0
+
+      if (attempt.status === 'Completed')
+        completedQuizzes[attempt.assignmentId] = score
+      else if (attempt.status === 'In progress') {
+        attemptedQuizzes[attempt.assignmentId] = {
+          start: attempt.startedAt,
+          score,
+        }
+        let rules: any = attempt.assignment.rules
+        if (rules.time_limit_seconds) {
+          let timeLimit = rules.time_limit_seconds
+          if (attempt.startedAt < new Date(Date.now() - timeLimit * 1000))
+            completedQuizzes[attempt.assignmentId] = score
+        }
+      }
+    })
+
+    return NextResponse.json({ success: true, user: { completedPrograms, completedModules, completedResources, completedTopics, completedQuizzes, attemptedQuizzes} }, { status: 200 })
+
+  }
 }
+

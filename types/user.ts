@@ -4,12 +4,8 @@ export interface User {
   last_name: string
   email: string
   role: string
-  profile_image?: string
   adminType?: string
-  // qsnAttempts?: Record<number, { answer: string; isCorrect: boolean }>
-  // quizId?:number,
-  // score?: number
-  //  enrolledCourses: Course[],
+  profile_image?: string
   enrolledCourseIDs: { [key: number]:boolean}
   completedTopics: { [key: number]:boolean}
   completedModules: { [key: number]:boolean}

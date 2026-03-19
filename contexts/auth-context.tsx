@@ -1,22 +1,15 @@
 "use client"
 
-import { GlobalVariables } from "@/globalVariables"
 import { User } from "@/types/user"
 import { createContext, useContext, useState, useEffect, type ReactNode, SetStateAction, Dispatch } from "react"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { toast } from "@/components/ui/use-toast"
 
 interface AuthContextType {
   user: User | null
   setUser: Dispatch<SetStateAction<User | null>>
-  login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>
-  signup: (
-    first_name: string, last_name: string, email: string, password: string,
-    role?: string,
-  ) => Promise<{ success: boolean; message?: string }>
   logout: () => void
   isLoading: boolean
-  //refreshUser: () => Promise<User| null>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -54,81 +47,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     fetchData();
   }, [session?.user?.email])
 
-  const login = async (email: string, password: string) => {
-    setIsLoading(true);
-
-    try {
-      const response = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      // response er structure
-      // { error: string | null, status: number, ok: boolean, url: string | null }
-
-      if (response?.error) {
-        let message = ""
-        
-        switch (response.error) {
-          case "CredentialsSignin":
-            message = "Invalid credentials"
-            break
-          case "AccessDenied":
-            message = "You are not authorized to login"
-            break
-          case "Configuration":
-            message = "Internal Server Error"
-            break
-          default:
-            message = "Unexpected error. Please try again"
-        }
-        setIsLoading(false);
-        return { success: false, message };
-      }
-      // success
-      return { success: true, message: "Login Successful" };
-
-    } catch (error) {
-      setIsLoading(false);
-      return { success: false, message: "Network error occurred" };
-    }
-  };
-
-  const signup = async (first_name: string, last_name: string, email: string, password: string, role = `${GlobalVariables.non_admin.role1}`) => {
-    setIsLoading(true)
-
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ first_name, last_name, email, password, role }),
-      })
-
-      const data = await response.json()
-
-      if (data.success) {
-        const response2 = await login(email, password)
-        return response2
-      } else {
-        setIsLoading(false)
-        return { success: false, message: data.error.message }
-      }
-    } catch (error) {
-      setIsLoading(false)
-      return { success: false, message: "Network error occurred" }
-    }
-  }
-
   const logout = () => {
     signOut({ redirect: false })
     setUser(null)
 
   }
 
-  return <AuthContext.Provider value={{ user, setUser, login, signup, logout, isLoading }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, setUser, logout, isLoading }}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
