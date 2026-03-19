@@ -1,7 +1,33 @@
-Steps to run:-
-i) npm install 
-ii) npm run dev
+## EduPortal — AI-Powered Learning Platform
+
+🔗 Live Demo: https://learning-app-ww1w.vercel.app  
+
+### Key Features
+- Self-paced courses, quizzes, and learner dashboards  
+- Role-based authentication (Admin & Learner)  
+- Secure payment integration using Razorpay  
+- Profile management and media uploads via Cloudinary  
+- AI-powered course discovery chatbot (Gemini 2.0 Flash)  
+
+### Technical Highlights
+- JWT authentication with bcrypt password hashing  
+- Redux Toolkit + RTK Query for global state & API caching  
+- Natural-language course search using AI  
+- Optimized database queries with Prisma ORM  
+- Responsive UI with modern component libraries  
+
+### Tech Stack
+Frontend: Next.js, React, Tailwind CSS, shadcn/ui  
+Backend: Node.js, PostgreSQL, Prisma  
+AI: Google Gemini 2.0 Flash  
+
+### How to run locally
+
+- npm install
+- npm run dev
 
 
-EduPortal 
-Developed a complete learning platform featuring self-paced courses, quizzes, learner dashboards, and Razorpay payments. Implemented secure JWT authentication, role-based access, and Cloudinary media uploads. Built an AI-powered course discovery assistant using Google Gemini 2.0 Flash with natural-language search and Prisma integration. The UI is crafted with Next.js 15, Tailwind CSS, shadcn/ui, lucide-react, and includes animations, accordions, skeletons, and an AI chat interface. 
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/4542bbee-1761-468f-aae5-ce8d049e8cca" />
+
+<img width="1902" height="1049" alt="image" src="https://github.com/user-attachments/assets/ed4879f0-e63e-4ae0-bb55-06c0f17923e6" />
+
