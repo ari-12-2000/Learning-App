@@ -19,7 +19,7 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
   const { user, logout, setUser, isLoading } = useAuth()
-  const { status } = useSession();
+  const { data: session, status } = useSession()
   const pathname = usePathname()
   const router = useRouter()
   // Add state for client-side rendering
@@ -86,7 +86,6 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     }
   }
 
-  const { data: session } = useSession()
   return (
     <>
       <aside
@@ -154,7 +153,7 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                     {user?.first_name} {user?.last_name}
                   </p>
                   <p className={`mt-1 ${session?.user ? "text-xs" : "text-sm"} text-gray-500 font-medium capitalize`}>
-                    {session?.user?.role}
+                    {!session?.user ? GlobalVariables.non_admin.role1 : session.user.role}
                   </p>
                 </div>
               </div>)}
