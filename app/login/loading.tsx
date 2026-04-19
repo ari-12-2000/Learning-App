@@ -38,6 +38,19 @@ export default function Loading() {
           {/* Button */}
           <div className="h-10 w-full bg-gray-300 rounded" />
 
+          {/* OR Divider */}
+          <div className="flex items-center gap-2">
+            <div className="flex-1 h-[1px] bg-gray-200" />
+            <div className="h-3 w-10 bg-gray-200 rounded" />
+            <div className="flex-1 h-[1px] bg-gray-200" />
+          </div>
+
+          {/* Google Button Skeleton */}
+          <div className="h-10 w-full bg-gray-200 rounded flex items-center justify-center gap-2">
+            <div className="h-4 w-4 bg-gray-300 rounded-full" />
+            <div className="h-4 w-24 bg-gray-300 rounded" />
+          </div>
+
           {/* Footer */}
           <div className="h-4 w-32 mx-auto bg-gray-200 rounded" />
         </div>
