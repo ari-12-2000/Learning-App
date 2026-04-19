@@ -131,7 +131,7 @@ export const authOptions: NextAuthOptions = {
 
       session.accessToken = token.accessToken as string
       session.refreshToken = token.refreshToken as string
-
+      console.log(session)
       return session
     },
 

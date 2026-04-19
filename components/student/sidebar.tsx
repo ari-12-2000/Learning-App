@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, type SetStateAction, type Dispatch } from "react"
+import { useState } from "react"
 import { Home, LayoutDashboard, BookOpen, LogOut, X, LogIn } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -85,7 +85,7 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       router.push("/login")
     }
   }
-
+  console.log('Session user',session?.user)
   return (
     <>
       <aside
