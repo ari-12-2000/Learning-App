@@ -38,6 +38,9 @@ AI: Google Gemini 2.0 Flash
 
 <img width="964" height="526" alt="image" src="https://github.com/user-attachments/assets/654ab49d-e76f-4855-ad89-7c7df66e7880" />
 
+<img width="979" height="569" alt="image" src="https://github.com/user-attachments/assets/6e54f8a7-9fd7-4391-843f-b4f18779644c" />
+
+
 
 
 
