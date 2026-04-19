@@ -106,7 +106,7 @@ export default function HomePage() {
             return (
               <div
                 key={i}
-                className="min-w-full w-full shrink-0 relative h-96 md:h-screen max-h-[600px] md:max-h-[700px] flex items-center justify-center overflow-hidden"
+                className="w-full shrink-0 relative h-[70vh] sm:h-[80vh] md:h-screen max-h-[700px] flex items-center justify-center overflow-hidden"
               >
                 {/* Background Image */}
                 {slide.bgImg && isActive && (
