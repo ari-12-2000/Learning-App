@@ -26,8 +26,20 @@ AI: Google Gemini 2.0 Flash
 - npm install
 - npm run dev
 
+<img width="940" height="613" alt="image" src="https://github.com/user-attachments/assets/a056718b-8b93-45b1-acde-0befe138e074" />
+<img width="940" height="575" alt="image" src="https://github.com/user-attachments/assets/16865749-e259-4341-887a-6e4f61033d24" />
+<img width="940" height="418" alt="image" src="https://github.com/user-attachments/assets/770db7b5-e6fa-4f37-8d87-2369de65586a" />
+<img width="801" height="501" alt="image" src="https://github.com/user-attachments/assets/7991e2b0-99fe-4702-ae48-f93c1738b9f9" />
+<img width="855" height="569" alt="image" src="https://github.com/user-attachments/assets/39e604c2-45d1-4b76-9bd7-68f403e75cc1" />
+<img width="964" height="526" alt="image" src="https://github.com/user-attachments/assets/654ab49d-e76f-4855-ad89-7c7df66e7880" />
 
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/4542bbee-1761-468f-aae5-ce8d049e8cca" />
 
-<img width="1902" height="1049" alt="image" src="https://github.com/user-attachments/assets/ed4879f0-e63e-4ae0-bb55-06c0f17923e6" />
+
+
+
+
+
+
+
+
 
