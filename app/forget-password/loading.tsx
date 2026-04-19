@@ -23,16 +23,12 @@ export default function Loading() {
             <div className="h-4 w-48 mx-auto bg-gray-200 rounded" />
           </div>
 
-          {/* Tabs */}
-          <div className="flex gap-4 justify-center">
-            <div className="h-8 w-20 bg-gray-200 rounded" />
-            <div className="h-8 w-20 bg-gray-200 rounded" />
-          </div>
+
 
           {/* Inputs */}
           <div className="space-y-4">
             <div className="h-10 w-full bg-gray-200 rounded" />
-            <div className="h-10 w-full bg-gray-200 rounded" />
+
           </div>
 
           {/* Button */}

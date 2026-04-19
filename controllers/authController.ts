@@ -219,7 +219,8 @@ export class AuthController {
     try {
       const { email } = await req.json();
       const learner = await prisma.learner.findUnique({ where: { email } });
-      if (!learner) return NextResponse.json({ error: "Invalid Credentials" }, { status: 404 });
+
+      if (!learner) { return NextResponse.json({ error: "Invalid credentials" }, { status: 401 }); }
       const rawToken = crypto.randomBytes(32).toString("hex");
       const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
       const expires = new Date(Date.now() + 3600_000); // 1 hour

@@ -91,23 +91,23 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
     <>
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r transform transition-transform duration-300 ease-in-out -translate-x-full xl:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-slate-50 to-gray-50 border-r border-gray-200/60 shadow-lg transform transition-transform duration-300 ease-in-out -translate-x-full xl:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
           pathname === "/" || pathname.startsWith("/student") ? "fixed" : "hidden",
         )}
       >
-        <div className="flex items-center justify-between h-16 px-4 border-b">
-          <div className="flex items-center">
-            <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
-              <span className="text-white font-bold">E</span>
+        <div className="flex items-center justify-between h-16 px-5 border-b border-gray-200/60 bg-white/50 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">E</span>
             </div>
-            <span className="ml-2 text-xl font-semibold text-gray-800">Eduportal</span>
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Eduportal</span>
           </div>
           {toggleSidebar && (
             <Button
               variant="ghost"
               size="icon"
-              className="xl:hidden"
+              className="xl:hidden hover:bg-gray-200/40"
               onClick={toggleSidebar}
               aria-label="Close sidebar"
             >
@@ -115,25 +115,25 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
             </Button>
           )}
         </div>
-        <div className="pt-5 pb-4 overflow-y-auto">
-          <div className="px-4 mb-6  flex justify-center">
-            {isLoading || status === 'loading' ? (<div className="inline-flex flex-col items-center animate-pulse p-2 rounded-lg">
+        <div className="pt-6 pb-4 overflow-y-auto flex flex-col">
+          <div className="px-4 mb-8 flex justify-center">
+            {isLoading || status === 'loading' ? (<div className="inline-flex flex-col items-center animate-pulse p-4 rounded-2xl bg-gray-100 w-full">
               {/* Profile photo skeleton */}
-              <div className="h-14 w-14 rounded-full bg-gray-200 mb-2" />
+              <div className="h-16 w-16 rounded-full bg-gray-300 mb-3" />
 
               {/* Name skeleton */}
-              <div className="h-4 w-24 bg-gray-200 rounded mb-1" />
+              <div className="h-4 w-24 bg-gray-300 rounded mb-2" />
 
               {/* Role skeleton */}
-              <div className="h-3 w-16 bg-gray-200 rounded" />
+              <div className="h-3 w-20 bg-gray-300 rounded" />
             </div>) :
-              (<div className="inline-flex flex-col items-center">
+              (<div className="inline-flex flex-col items-center w-full">
                 <button
                   onClick={handleProfilePhotoClick}
-                  className="relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-full"
+                  className="relative group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-full transition-transform hover:scale-105"
                 >
                   {profilePhoto ? (
-                    <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-gray-200 group-hover:border-blue-300 transition-colors">
+                    <div className="h-16 w-16 rounded-full overflow-hidden border-3 border-blue-500/40 group-hover:border-blue-500 transition-all shadow-md">
                       <img
                         src={profilePhoto || "/placeholder.svg"}
                         alt="Profile"
@@ -141,25 +141,26 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                       />
                     </div>
                   ) : (
-                    <div className="h-14 w-14 rounded-full overflow-hidden border-2 border-gray-200 group-hover:border-blue-300 transition-colors bg-transparent">
+                    <div className="h-16 w-16 rounded-full overflow-hidden border-3 border-blue-500/40 group-hover:border-blue-500 transition-all shadow-md bg-gray-100">
                       <FallbackAvatar />
                     </div>
                   )}
-                  <div className="absolute inset-0 rounded-full bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="text-white text-xs font-medium">Edit</span>
+                  <div className="absolute inset-0 rounded-full bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-white text-xs font-semibold">Edit</span>
                   </div>
                 </button>
-                <div className="mt-1">
-                  <p className="text-sm font-medium text-gray-900">
+                <div className="mt-3 text-center">
+                  <p className="text-sm font-semibold text-gray-900">
                     {user?.first_name} {user?.last_name}
                   </p>
-                  <p className={`mt-1 ${user ? "text-xs" : "text-sm"} text-center text-gray-500`}>
-                    {GlobalVariables.non_admin.role1}
+                  <p className={`mt-1 ${session?.user ? "text-xs" : "text-sm"} text-gray-500 font-medium capitalize`}>
+                    {session?.user?.role}
                   </p>
                 </div>
               </div>)}
           </div>
-          <nav className="mt-2 px-2 space-y-1">
+          <nav className="flex-1 mt-4 px-3 space-y-2">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 py-3">Navigation</div>
             <SidebarItem href="/" icon={Home} text="Home" active={isActive("/")} />
             <SidebarItem
               href="/student/dashboard"
@@ -173,25 +174,27 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
               text="My Courses"
               active={isActive("/student/courses")}
             />
-
           </nav>
-          <div className="px-2 mt-6">
+
+          <div className="px-3 py-4 border-t border-gray-200/60">
             {session?.user ? (
               <Button
-                variant="ghost"
-                className="w-full justify-start text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                className="w-full justify-start bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 rounded-lg font-medium"
                 onClick={handleLogout}
               >
-                <LogOut className="mr-3 h-5 w-5 text-gray-400" />
+                <LogOut className="mr-3 h-5 w-5" />
                 Logout
               </Button>
+            ) : status === "loading" ? (
+              <div
+                className="w-full rounded-lg h-10 mr-3 bg-gray-300"
+              />
             ) : (
               <Button
-                variant="ghost"
-                className="w-full justify-start text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                className="w-full justify-start bg-gray-600 text-white hover:bg-gray-700 rounded-lg font-medium"
                 onClick={() => router.push("/login")}
               >
-                <LogIn className="mr-3 h-5 w-5 text-gray-400" />
+                <LogIn className="mr-3 h-5 w-5" />
                 Login
               </Button>
             )}

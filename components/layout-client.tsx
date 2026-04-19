@@ -16,11 +16,11 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   const toggleSidebar = () => setSidebarOpen(prev => !prev);
   const toggleChatBot = ()=> setChatOpen(prev => !prev);
   return (
-    <div className='bg-gray-50 flex'>
+    <div className='bg-gray-50'>
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className={cn("flex-1", (pathname === "/" || pathname.startsWith("/student")) ? "xl:ml-64" :"")}>
+      <div className={cn("w-auto", (pathname === "/" || pathname.startsWith("/student")) && "xl:ml-64")}>
         <Header toggleSidebar={toggleSidebar} toggleChatBot={toggleChatBot}/>
-        <main className="p-4 md:p-6">
+        <main>
           {children}
         </main>
         <Footer />

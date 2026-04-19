@@ -14,27 +14,27 @@ export function SidebarItem({ href, icon: Icon, text, active }: SidebarItemProps
     <Link
       href={href}
       className={cn(
-        "group relative flex items-center px-3 pl-4 py-2.5 text-sm rounded-lg transition-all duration-200",
+        "group relative flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-250 ease-out",
         active
-          ? "bg-blue-50 text-blue-500 font-semibold shadow-sm"
+          ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30"
           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
       )}
     >
-      {/* 🔥 Left active indicator */}
-      {active && (
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 bg-blue-500 rounded-r-md" />
-      )}
-
-      {/* 🔥 Icon */}
+      {/* Icon */}
       <Icon
         className={cn(
-          "mr-3 h-5 w-5 transition-colors",
-          active ? "text-blue-500" : "text-gray-400 group-hover:text-gray-700"
+          "mr-3 h-5 w-5 transition-all duration-250",
+          active ? "text-white" : "text-gray-400 group-hover:text-blue-500"
         )}
       />
 
-      {/* 🔥 Text */}
-      <span className="transition-all">{text}</span>
+      {/* Text */}
+      <span className="transition-all duration-250">{text}</span>
+      
+      {/* Subtle glow effect on hover for inactive */}
+      {!active && (
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 to-indigo-600/0 group-hover:from-blue-500/5 group-hover:to-indigo-600/5 transition-colors duration-250" />
+      )}
     </Link>
   )
 }

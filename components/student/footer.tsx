@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import CopyRightMessage from "../CopyRightMessage";
 
 export function Footer() {
   const pathname = usePathname()
   return (
     <footer className={cn("bg-white border-t py-3 px-4 text-center text-xs text-gray-500", (pathname === "/" || pathname.startsWith("/student")) ? "flex" : "hidden",)}>
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <div>© 2025 EduPortal. All rights reserved.</div>
+        <CopyRightMessage/>
         <div className="flex space-x-4">
           <a href="#" className="hover:text-gray-700">
             <span className="sr-only">Twitter</span>
