@@ -74,51 +74,55 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, profile }) {
 
       // Google login
       if (account?.provider === "google") {
+
         token.accessToken = account.access_token
         token.refreshToken = account.refresh_token
 
-        // ensure user exists in DB
+        const email = profile?.email || token.email
+
+        if (!email) {
+          throw new Error("Google account has no email")
+        }
+
         const existingUser = await prisma.learner.findUnique({
-          where: { email: token.email! },
+          where: { email },
         })
 
         if (!existingUser) {
-          const fullName = token.name?.trim() || "Google User"
-
+          const fullName = profile?.name || "Google User"
           const parts = fullName.split(" ")
 
-          const first_name = parts[0] || "User"
-          const last_name = parts.slice(1).join(" ") || "User"
-
-          if (!token.email) {
-            throw new Error("Google account has no email")
-          }
           const newUser = await prisma.learner.create({
             data: {
-              email: token.email,
-              first_name,
-              last_name,
+              email,
+              first_name: parts[0] || "User",
+              last_name: parts.slice(1).join(" ") || "User",
               role: GlobalVariables.non_admin.role1,
             },
           })
 
           token.id = newUser.id
           token.role = GlobalVariables.non_admin.role1
+          token.email = email
         } else {
           token.id = existingUser.id
           token.role = GlobalVariables.non_admin.role1
+          token.email = email
         }
       }
+
+      // Credentials login
       if (user) {
         token.id = Number(user.id)
         token.role = user.role
         token.adminType = user.adminType
         token.email = user.email
       }
+
       return token
     },
     async session({ session, token }) {
@@ -131,7 +135,6 @@ export const authOptions: NextAuthOptions = {
 
       session.accessToken = token.accessToken as string
       session.refreshToken = token.refreshToken as string
-      console.log(session)
       return session
     },
 

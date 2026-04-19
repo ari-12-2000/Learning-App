@@ -85,7 +85,6 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
       router.push("/login")
     }
   }
-  console.log('Session user',session?.user)
   return (
     <>
       <aside
