@@ -152,7 +152,7 @@ export function Sidebar({ isOpen, toggleSidebar }: SidebarProps) {
                     {user?.first_name} {user?.last_name}
                   </p>
                   <p className={`mt-1 ${user ? "text-xs" : "text-sm"} text-gray-500 font-medium capitalize`}>
-                    {user ? GlobalVariables.non_admin.role1 : user.role}
+                    {user ? user.role : GlobalVariables.non_admin.role1}
                   </p>
                 </div>
               </div>)}
