@@ -47,7 +47,7 @@ export default function DashboardPage() {
   if(!courses)
     return <NotFound resource="Courses"/>
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 ">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 md:py-24 ">
       {enrolled.length > 0 ? (
         <>
           <section className="mb-6">
