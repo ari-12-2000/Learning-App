@@ -7,21 +7,28 @@ import { Progress } from "@/components/ui/progress"
 import { Star, Clock, Users, BookOpen, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import type { Course, ModuleTopic, ProgramModule } from "@/types/course"
+import type { CourseMinimal, ModuleTopic} from "@/types/course"
 import { useAuth } from "@/contexts/auth-context"
-import { GlobalVariables } from "@/globalVariables"
 import { usePathname } from "next/navigation"
 
-export function CoursesList({ courses }: { courses: Course[] | null }) {
-  const { user, isLoading } = useAuth()
+export function CoursesList({ courses }: { courses: CourseMinimal[] | null }) {
+  const { user} = useAuth()
   const pathname = usePathname()
   const enrolledCourseIDs = user?.enrolledCourseIDs || {}
   const learnerCompletedTopics = user?.completedTopics || {}
+  
+  type Module_Prop={
+    module: {
+            moduleTopics: {
+                topicId: number;
+            }[];
+        };
+  }
 
-  function CourseDetail(totalModules: ProgramModule[]) {
+  function CourseDetail(totalModules: Module_Prop[]) {
     let topics = 0,
       completedTopics = 0
-    totalModules.forEach((prop: ProgramModule) => {
+    totalModules.forEach((prop: Module_Prop) => {
       topics += prop.module.moduleTopics.length
       completedTopics += prop.module.moduleTopics.filter((prop: ModuleTopic) =>
         learnerCompletedTopics[Number(prop.topicId)],
@@ -30,10 +37,12 @@ export function CoursesList({ courses }: { courses: Course[] | null }) {
     return { modules: totalModules.length, topics, progress: Math.round((completedTopics / topics) * 100) }
   }
 
+
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {courses!.map((course) => {
-        const { modules, topics, progress } = CourseDetail(course.programModules)
+        const modules = course._count.programModules
+        const {topics, progress} = CourseDetail(course.programModules)
         if (!(pathname?.startsWith("/dashboard") && progress == 100) && !(pathname?.startsWith("/student/courses") && !enrolledCourseIDs[Number(course.id)]))
           return (
             <Card
@@ -70,7 +79,7 @@ export function CoursesList({ courses }: { courses: Course[] | null }) {
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
                       <span className="font-medium">{course.rating}</span>
                       <Users className="h-4 w-4 mx-1" />
-                      <span className="ml-1">({course.enrollments.length})</span>
+                      <span className="ml-1">({course._count.enrollments})</span>
                     </div>
                   ) : null}
                 </div>
@@ -119,7 +128,7 @@ export function CoursesList({ courses }: { courses: Course[] | null }) {
                   )}
                   <div className="flex items-center justify-between">
                     <div className="text-2xl font-bold text-gray-900">
-                      {!enrolledCourseIDs[Number(course.id)] && <span>₹ {course.price!}</span>}
+                      {!enrolledCourseIDs[Number(course.id)] && <span>₹ {String(course.price)!}</span>}
                     </div>
 
                     {enrolledCourseIDs[Number(course.id)] ? (

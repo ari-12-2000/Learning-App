@@ -1,3 +1,4 @@
+import { Course, CourseMinimal } from "@/types/course";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -11,4 +12,11 @@ export function cleanJSON(raw: string) {
     .replace(/```json/i, "") // remove ```json
     .replace(/```/g, "")     // remove ```
     .trim();
+}
+
+export function serializeCourse(course: any) {
+  return {
+    ...course,
+    price: course.price?.toNumber()
+  }
 }

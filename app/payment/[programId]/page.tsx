@@ -218,10 +218,10 @@ const PaymentPage = ({ params }: { params: Promise<{ programId: string }> }) => 
                   )}
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <Users className="h-5 w-5 mx-auto mb-2 text-blue-600" />
-                    <p className="font-bold text-gray-900">{course!.enrollments.length}</p>
+                    <p className="font-bold text-gray-900">{course!._count.enrollments}</p>
                     <p className="text-sm text-gray-600">Students</p>
                   </div>
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                  {/* <div className="text-center p-4 bg-green-50 rounded-lg">
                     <BookOpen className="h-5 w-5 mx-auto mb-2 text-green-600" />
                     <p className="font-bold text-gray-900">{course!.programModules.length}</p>
                     <p className="text-sm text-gray-600">Modules</p>
@@ -235,7 +235,7 @@ const PaymentPage = ({ params }: { params: Promise<{ programId: string }> }) => 
                       )}
                     </p>
                     <p className="text-sm text-gray-600">Topics</p>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* What You'll Get */}

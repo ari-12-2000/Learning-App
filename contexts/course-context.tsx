@@ -1,9 +1,6 @@
 "use client";
-
-import { usePathname } from "next/navigation";
-import { useEffect, useState, createContext, useContext, type ReactNode, Dispatch, SetStateAction } from "react";
+import { useState, createContext, useContext, type ReactNode, Dispatch, SetStateAction } from "react";
 import { Course } from "@/types/course";
-import usePrevious from "@/hooks/usePrevious";
 
 interface CourseContextType {
   courses: Course[] | null;
@@ -28,18 +25,6 @@ export function CourseProvider({
   const [courses] = useState<Course[] | null>(initialCourses || null);
   const [loading, setLoading] = useState<boolean>(false);
   const [filterCategory, setFilterCategory] = useState("");
-//   const pathname = usePathname();
-
-//   const previousPath = usePrevious(pathname);
-// // Track previous path and reset filters / loading if needed
-//    useEffect(() => {
-//     if (previousPath?.startsWith("/courses/search") && filterCategory) {
-//       setFilterCategory("");
-//     }
-//     if (previousPath?.startsWith("/payment/") && loading) {
-//       setLoading(false);
-//     }
-//   }, [pathname, previousPath, filterCategory, loading]);
 
   return (
     <CourseContext.Provider

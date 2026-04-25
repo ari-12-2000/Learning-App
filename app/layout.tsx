@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Toaster } from "@/components/ui/toaster";
-import CourseProviderWrapper from "@/contexts/CourseProviderWrapper";
 import LayoutClient from "@/components/layout-client"; // new name
 import SessionProviderWrapper from "@/contexts/SessionProviderWrapper";
 import Providers from "./providers";
@@ -28,11 +27,11 @@ export default function RootLayout({
         <SessionProviderWrapper>
           <Providers>
             <AuthProvider>
-              <CourseProviderWrapper>
+               {/*context api server fetching + save in client state in the context api -----<CourseProviderWrapper></CourseProviderWrapper>*/}
                  <RouteChangeHandler />
                 <LayoutClient>{children}</LayoutClient>
 
-              </CourseProviderWrapper>
+              
             </AuthProvider>
           </Providers>
         </SessionProviderWrapper>

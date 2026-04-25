@@ -179,10 +179,10 @@ const CourseClientWrapper = ({ courseData, enrolled }: { courseData: Course | nu
                                         <div className="text-3xl font-bold text-purple-600 mb-2">{courseModules.length}</div>
                                         <div className="text-sm font-medium text-purple-800">Modules</div>
                                     </div>
-                                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 text-center border border-green-100">
-                                        <div className="text-3xl font-bold text-green-600 mb-2">{courseData.enrollments?.length || 0}</div>
+                                    { courseData._count.enrollments >0 && <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 text-center border border-green-100">
+                                        <div className="text-3xl font-bold text-green-600 mb-2">{courseData._count.enrollments || 0}</div>
                                         <div className="text-sm font-medium text-green-800">Students</div>
-                                    </div>
+                                    </div>}
                                 </div>
                             </CardContent>
                         </Card>
@@ -469,13 +469,13 @@ const CourseClientWrapper = ({ courseData, enrolled }: { courseData: Course | nu
                                     <h3 className="text-lg font-bold text-gray-900">Course Stats</h3>
                                 </div>
                                 <div className="space-y-6">
-                                    {courseData.enrollments?.length > 0 && (
+                                    {courseData._count.enrollments > 0 && (
                                         <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
                                             <div className="flex items-center">
                                                 <Users className="h-5 w-5 text-blue-600 mr-2" />
                                                 <span className="text-gray-700 font-medium">Students Enrolled</span>
                                             </div>
-                                            <span className="font-bold text-blue-600 text-lg">{courseData.enrollments.length}</span>
+                                            <span className="font-bold text-blue-600 text-lg">{courseData._count.enrollments}</span>
                                         </div>
                                     )}
                                     {courseData.totalTimeLimit && (

@@ -1,4 +1,4 @@
-import { JsonValue } from "@/lib/generated/prisma/runtime/library";
+import { Decimal, JsonValue } from "@/lib/generated/prisma/runtime/library";
 
 export interface Course {
   id: number;
@@ -11,7 +11,7 @@ export interface Course {
   image: string | null;
   rating: number | null;
   level: string | null;
-  price: string | null; // Changed from number to string to match Prisma schema
+  price: number | null; // Changed from number to string to match Prisma schema
   type: string | null;
   totalTimeLimit: number | null;
   status: number | null;
@@ -31,7 +31,6 @@ export interface Course {
   updatedAt: Date;
   deletedAt: Date | null;
   programModules: ProgramModule[];
-  enrollments: Enrollment[];
   quizzes: {
 
     id: number,
@@ -41,6 +40,32 @@ export interface Course {
 
   }[]
 }
+
+export type CourseMinimal= {
+  id: number;
+  title: string;
+  description: string;
+  instructor: string;
+  instructorAvatar: string | null;
+  image: string | null;
+  price: number | null;
+  rating:number | null;
+  totalTimeLimit:number | null;
+  level:string | null;
+  _count: {
+    enrollments: number;
+    programModules: number;
+  };
+  category:string;
+  programModules: {
+    module: {
+            moduleTopics: {
+                topicId: number;
+            }[];
+        };
+  }[]
+};
+
 
 export interface Enrollment {
   learnerId: number;

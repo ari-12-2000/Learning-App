@@ -1,38 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { CourseService } from '@/services/courseService';
+import { serializeCourse } from '@/lib/utils';
 
 export class CourseController {
   // 1. Get all courses
   static async getAllCourses() {
     try {
-      const courses = await prisma.program.findMany({
-        include: {
-          programModules: {
-            include: {
-              module: {
-                include: {
-                  moduleTopics: {
-                    select: { topicId: true }
-                  }
-                }
-              }
-            }
-          },
-          quizzes: {
-            select: {
-              id: true,
-              title: true,
-              uniqueLinkToken: true,
-              rules: true // Include rules for quizzes
-            }
-          },
-          enrollments: {
-            select: { learnerId: true }
-          }
-        },
-        orderBy: { createdAt: 'asc' }
-      });
-      return NextResponse.json({ success: true, data: courses }, { status: 200 });
+      const courses = await CourseService.fetchAllCourses();
+      const formatted= courses.map(serializeCourse)
+      return NextResponse.json({ success: true, data: formatted }, { status: 200 });
     } catch (error) {
       console.error("Get all courses error:", error);
       return NextResponse.json({ error: 'Failed to fetch courses' }, { status: 500 });
@@ -91,8 +68,8 @@ export class CourseController {
       if (!program) {
         return NextResponse.json({ error: 'Program not found' }, { status: 404 });
       }
-
-      return NextResponse.json({ success: true, data: program }, { status: 200 });
+      const course= serializeCourse(program)
+      return NextResponse.json({ success: true, data: course }, { status: 200 });
     } catch (error) {
       console.error("Get program error:", error);
       return NextResponse.json({ error: 'Failed to fetch program' }, { status: 500 });
@@ -186,10 +163,7 @@ export class CourseController {
   // 7. Get all unique categories
   static async getCourseCategories() {
     try {
-      const categories = await prisma.program.findMany({
-        select: { category: true },
-        distinct: ['category'],
-      });
+      const categories = await CourseService.fetchAllCategories()
       return NextResponse.json({ success: true, data: categories }, { status: 200 });
     } catch (error) {
       console.error("Get categories error:", error);
