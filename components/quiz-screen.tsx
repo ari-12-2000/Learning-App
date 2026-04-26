@@ -33,7 +33,8 @@ import { toast } from "./ui/use-toast"
 interface QuizScreenProps {
   quizData: QuizAssignmentUI
   onComplete: (length: number) => void | Promise<void>
-  timeRemaining: number | null
+  totalTime:number,
+  timeRemaining: number | null,
   totalPoints: RefObject<number>
   setUserAttempt: Dispatch<SetStateAction<{quizId: number , qsnAttempts: Record<number,{ answer: string; isCorrect: boolean }>}| null| undefined>>
   userAttempt:
@@ -52,6 +53,7 @@ export default function QuizScreen({
   quizData,
   onComplete,
   totalPoints,
+  totalTime,
   timeRemaining,
   userAttempt,
   setUserAttempt,
@@ -120,12 +122,11 @@ export default function QuizScreen({
     const isUrgent = timeRemaining < 300
     const isCritical = timeRemaining < 60
 
-    const totalDuration = 1800
     const progress = Math.max(
       0,
       Math.min(
         100,
-        ((totalDuration - timeRemaining) / totalDuration) * 100
+        ((totalTime - timeRemaining) / totalTime) * 100
       )
     )
 

@@ -7,9 +7,14 @@ declare module 'next-auth' {
 
     interface Session {
         user: User & DefaultSession['user']
+        accessToken?: string
+        refreshToken?: string
     }
 }
 
-declare module 'next-auth/jwt'{
-    interface JWT extends AppUser { }
+declare module 'next-auth/jwt' {
+    interface JWT extends AppUser {
+        accessToken?: string
+        refreshToken?: string
+    }
 }

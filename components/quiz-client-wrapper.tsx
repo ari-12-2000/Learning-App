@@ -53,7 +53,7 @@ export default function QuizClientWrapper({ quizData }: QuizAppProps) {
       const timer = setInterval(() => {
         setTimeRemaining((prev) => {
           if (prev !== null && prev <= 1) {
-            handleQuizComplete(numberOfQsns)
+            handleQuizComplete()
             return 0
           }
           return prev !== null ? prev - 1 : null
@@ -135,7 +135,7 @@ export default function QuizClientWrapper({ quizData }: QuizAppProps) {
     setCurrentScreen("quiz")
   }
 
-  const handleQuizComplete = async (totalQsns: number) => {
+  const handleQuizComplete = async () => {
     const enabledScreens = rules.settings.enable_screens || []
     if (enabledScreens.includes("thank_you")) {
       setCurrentScreen("thank_you")
@@ -207,6 +207,7 @@ export default function QuizClientWrapper({ quizData }: QuizAppProps) {
         <QuizScreen
           quizData={quizData}
           onComplete={handleQuizComplete}
+          totalTime={rules.settings.time_limit_seconds as number}
           timeRemaining={timeRemaining}
           totalPoints={totalScore}
           setUserAttempt={setUserAttempt}

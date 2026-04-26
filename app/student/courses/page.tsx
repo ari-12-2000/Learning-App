@@ -12,7 +12,7 @@ export default function CoursesPage() {
   const {courses} = useCourses()
   const hasCourses = Object.keys(user!.enrolledCourseIDs).length> 0
 
-  return (<div className="max-w-7xl mx-auto text-center">
+  return (<div className="max-w-7xl mx-auto text-center px-4 sm:px-6 md:px-8 py-16 md:py-24">
      <div className="mb-10">
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
             My Enrolled Courses
