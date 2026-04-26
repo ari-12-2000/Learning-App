@@ -1,4 +1,3 @@
-import { Course, CourseMinimal } from "@/types/course";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 

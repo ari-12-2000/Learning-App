@@ -5,7 +5,7 @@ export const studentApi = createApi({
     reducerPath: "studentApi",
     baseQuery: fetchBaseQuery({ baseUrl: "/api/student" }),
     endpoints: (builder) => ({
-        getStudentProgress: builder.query({
+        getProgress: builder.query({
             query: () => `progress`,
             transformResponse: (res: any) => res.data
         }),
@@ -23,7 +23,7 @@ export const studentApi = createApi({
 })
 
 export const {
-    useGetStudentProgressQuery,
+    useGetProgressQuery,
     useGetEnrolledCoursesProgressQuery,
     useGetProfileImageQuery
 } = studentApi

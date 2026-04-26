@@ -85,7 +85,7 @@ export function CoursesList({ courses }: { courses: CourseMinimal[] | null }) {
                       ))}
                     </div>
                     <span className="font-semibold text-gray-900">{course.rating}</span>
-                    <span className="text-gray-500">({course.enrollments.length} students)</span>
+                    <span className="text-gray-500">({course._count.enrollments} students)</span>
                   </div>
                 )}
                 <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 leading-tight">{course.title}</h3>

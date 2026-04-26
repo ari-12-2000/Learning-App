@@ -1,11 +1,14 @@
+import { CourseMinimal } from "@/types/course"
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react"
 
 
 export const courseApi = createApi({
     reducerPath: "courseApi",
     baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
     endpoints: (builder) => ({
-        getCourses: builder.query({
+        getCourses: builder.query<{ data: CourseMinimal[] }, void>({
             query: () => "/courses"
         }),
 
@@ -21,16 +24,16 @@ export const courseApi = createApi({
             query: (id: number) => `/topics/${id}`
         }),
 
-        getCourseCategories: builder.query({
-            query: ()=> "/courses/categories"
+        getCourseCategories: builder.query<{ data: { category: string }[] }, void>({
+            query: () => "/courses/categories"
         })
     })
 })
 
 export const {
-  useGetCoursesQuery,
-  useGetCourseQuery,
-  useGetModuleQuery,
-  useGetTopicQuery,
-  useGetCourseCategoriesQuery
+    useGetCoursesQuery,
+    useGetCourseQuery,
+    useGetModuleQuery,
+    useGetTopicQuery,
+    useGetCourseCategoriesQuery
 } = courseApi

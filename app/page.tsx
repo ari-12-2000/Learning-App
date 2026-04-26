@@ -5,7 +5,6 @@ import { CourseService } from '@/services/courseService';
 import { CourseMinimal } from '@/types/course';
 import React from 'react'
 
-export const revalidate = 60;
 
 const HomePage = async () => {
 
@@ -25,16 +24,15 @@ const HomePage = async () => {
 
   } catch (error: unknown) {
 
-
+    console.log(error);
     message = "Internal Server Error"
-
-    if (error instanceof Error) {
-      message = error.message
-    }
 
   }
 
   if (!coursesData || !categoriesData)
-    return <NotFound resource="courses" message={message} />
+   return <div className="min-h-screen flex items-center justify-center"><NotFound resource="courses" message={message} /></div>
   else return <HomeClientWrapper courses={coursesData} categories={categoriesData} />
 }
+
+
+export default HomePage;

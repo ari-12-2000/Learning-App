@@ -15,6 +15,7 @@ import { useSelector } from "react-redux"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { cn, slides } from "@/lib/utils"
 import Image from "next/image"
+import { useGetCoursesQuery } from "@/features/course/courseApi"
 const categoryIcons = {
   "web development": { icon: Code, color: "bg-blue-500" },
   "ui/ux design": { icon: Palette, color: "bg-purple-500" },
@@ -40,6 +41,11 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
 
   const [index, setIndex] = useState(0);
 
+  const { data } = useGetCoursesQuery(undefined, {
+    skip: !!courses
+  })
+
+  const finalCourses = courses || data
   const startAutoSlide = useCallback(() => {
     if (intervalRef.current)
       clearInterval(intervalRef.current)
@@ -83,6 +89,7 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
     if (diff > 50) next();       // swipe left
     if (diff < -50) prev();      // swipe right
   }, [startX, next, prev]);
+
   const handleCategoryClick = (categoryName: string) => {
     dispatch(setFilterCategory(categoryName))
     router.push("/courses/search/");
@@ -93,6 +100,8 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
       dispatch(clearFilterCategory());
     router.push("/courses/search/")
   }
+
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">
       {/* Hero Carousel Section */}
@@ -342,7 +351,7 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
               ))}
             </div>
           ) : (<>
-            <CoursesList courses={courses!.slice(0, 3)} />
+            <CoursesList courses={finalCourses!.slice(0, 3)} />
             <Link href="/courses/search" className="text-lg text-blue-600 hover:underline flex items-center justify-center md:hidden mt-4">
               View all courses →
             </Link>
