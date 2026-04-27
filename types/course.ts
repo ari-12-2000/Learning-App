@@ -38,6 +38,9 @@ export interface Course {
     uniqueLinkToken: string; // Include unique link token for quizzes
     rules: JsonValue
 
+  }[];
+  enrollments:{
+    learnerId: number
   }[]
 }
 

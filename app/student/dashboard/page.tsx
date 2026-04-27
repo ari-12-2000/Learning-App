@@ -52,82 +52,80 @@ export default function DashboardPage() {
   if(!finalCourses || isError)
     return <NotFound resource="Courses"/>
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 md:py-24 ">
-      {enrolled.length > 0 ? (
-        <>
-          <section className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Welcome back, {user!.first_name}!</h1>
-            <p className="text-gray-600">Continue your learning journey. You've been making great progress!</p>
-          </section>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-20">
+        {enrolled.length > 0 ? (
+          <>
+            {/* Header Section */}
+            <section className="mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">Welcome back, {user!.first_name}!</h1>
+              <p className="text-lg text-slate-600">Continue your learning journey. You're making excellent progress!</p>
+            </section>
 
-          <ProgressCards courseProgress={courseProgress} moduleProgress={moduleProgress} topicProgress={topicProgress} quizProgress={quizProgress} />
+            {/* Progress Cards */}
+            <div className="mb-16">
+              <ProgressCards courseProgress={courseProgress} moduleProgress={moduleProgress} topicProgress={topicProgress} quizProgress={quizProgress} />
+            </div>
 
-          <section className="mt-8">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-800">Active Courses</h2>
-              <Link href="/student/courses" className="text-sm text-blue-600 hover:underline flex items-center">
-                View all courses →
+            {/* Active Courses Section */}
+            <section>
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Active Courses</h2>
+                  <p className="text-slate-600 mt-1">Continue learning from where you left off</p>
+                </div>
+                <Link href="/student/courses" className="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-2 transition-colors">
+                  View All →
+                </Link>
+              </div>
+
+              {activeCourses.length > 0 ? (
+                <CoursesList courses={activeCourses} />
+              ) : (
+                <div className="bg-white border border-slate-200 rounded-xl p-12 text-center shadow-sm">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-full mb-6">
+                    <TrendingUp className="h-8 w-8 text-emerald-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3">All caught up!</h3>
+                  <p className="text-slate-600 max-w-md mx-auto mb-8 leading-relaxed">
+                    Congratulations! You&apos;ve completed all your enrolled courses. Check back later for new content or explore additional courses.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Link href="/student/courses">
+                      <Button variant="outline" className="w-full sm:w-auto border-slate-300 text-slate-900 hover:bg-slate-50">
+                        View Completed Courses
+                      </Button>
+                    </Link>
+                    <Link href="/">
+                      <Button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white">
+                        Explore New Courses
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </section>
+          </>
+        ) : (
+          <section className="flex flex-col items-center justify-center min-h-[60vh]">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full mb-8">
+                <Sparkles className="h-10 w-10 text-blue-600" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">Welcome, {user!.first_name}!</h1>
+              <h2 className="text-2xl font-semibold text-slate-700 mb-4">No courses enrolled yet</h2>
+              <p className="text-slate-600 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+                Discover our comprehensive range of expertly designed courses. Learn at your own pace, develop new skills, and unlock opportunities for growth.
+              </p>
+              <Link href="/">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white text-base px-8 py-3">
+                  Explore Courses
+                </Button>
               </Link>
             </div>
-
-            {activeCourses.length > 0 ? (
-              <CoursesList courses={activeCourses} />
-            ) : (
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
-                <div className="inline-block bg-gradient-to-br from-green-500 to-blue-600 p-3 rounded-full shadow-md mb-4">
-                  <TrendingUp className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">All caught up!</h3>
-                <p className="text-gray-600 max-w-md mx-auto mb-4">
-                  Congratulations! You've completed all your enrolled courses. Check back later for
-                  new content or explore more courses.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Link href="/student/courses">
-                    <Button variant="outline" className="w-full sm:w-auto bg-transparent">
-                      View All Completed Courses
-                    </Button>
-                  </Link>
-                  <Link href="/">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto">
-                      Browse New Courses
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            )}
           </section>
-
-          {/* Uncomment when ready to use
-          <div className="mt-8 grid md:grid-cols-2 gap-6">
-            <Achievements />
-            <Leaderboard />
-          </div>
-          */}
-        </>
-      ) : (
-        <section>
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Welcome {user!.first_name}!</h1>
-            <p className="text-gray-600">Start your learning journey.</p>
-          </div>
-          <div className="text-center mt-20">
-            <div className="inline-block bg-gradient-to-br from-blue-500 to-purple-600 p-4 rounded-full shadow-md mb-6">
-              <Sparkles className="h-10 w-10 text-white" />
-            </div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">You haven't enrolled in any courses yet</h2>
-            <p className="text-gray-600 max-w-xl mx-auto mb-6">
-              Discover a wide range of expertly designed courses. Learn at your own pace, grow your skills, and unlock
-              new opportunities.
-            </p>
-            <Link href="/">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                Browse Courses
-              </Button>
-            </Link>
-          </div>
-        </section>
-      )}
+        )}
+      </div>
     </div>
   )
 }
