@@ -42,16 +42,16 @@ export function Header({ toggleSidebar, toggleChatBot }: HeaderProps) {
         </Button>
 
         <div className={`lg:hidden ${searchOpen ? "hidden" : "block"}`}>
-          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold">E</span>
-          </div>
+        <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">E</span>
+            </div>
         </div>
 
         <div className="hidden ml-2 lg:flex items-center xl:hidden">
-          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold">E</span>
-          </div>
-          <span className="ml-2 text-xl font-semibold text-gray-800">Eduportal</span>
+        <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm">E</span>
+            </div>
+            <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Eduportal</span>
         </div>
       </div>
 
@@ -113,7 +113,7 @@ export function Header({ toggleSidebar, toggleChatBot }: HeaderProps) {
            hover:bg-blue-500 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/40
            transition-all duration-300"
         >
-          
+
           <div className="relative w-10 h-10">
             <Image
               src="/images/chatbot.png"
