@@ -64,6 +64,9 @@ export type CourseMinimal= {
             }[];
         };
   }[]
+  quizzes: {
+    id: number;
+  }[]
 };
 
 

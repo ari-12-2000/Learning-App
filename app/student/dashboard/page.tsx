@@ -6,43 +6,50 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useAuth } from "@/contexts/auth-context"
 import { CoursesList } from "@/components/courses-list"
-import type { Course} from "@/types/course"
+import type { CourseMinimal } from "@/types/course"
 import NotFound from "@/components/not-found"
-import { useCourses } from "@/contexts/course-context"
+import { useGetCoursesQuery } from "@/features/course/courseApi"
+import DashboardSkeleton from "./loading"
 
 export default function DashboardPage() {
   const { user } = useAuth()
-  const {courses} = useCourses()
+  const { data: courses, isLoading: coursesLoading, isFetching, isError } = useGetCoursesQuery(undefined)
+  const finalCourses = courses?.data as CourseMinimal[] || null
   const completedTopics = user!.completedTopics
-  const completedQuizzes= user!.completedQuizzes
-  let totalModules= 0, totalTopics=0, totalQuizzes=0;
-  const enrolled:Course[]= courses!.filter((course:Course)=>user!.enrolledCourseIDs[course.id])
+  const completedQuizzes = user!.completedQuizzes
+  let totalModules = 0, totalTopics = 0, totalQuizzes = 0;
+  const enrolled = finalCourses?.filter((course: CourseMinimal) => user!.enrolledCourseIDs[course.id]) ||[]
   // Fix the filtering logic for active courses
   const activeCourses = (enrolled || []).filter((course) => {
-  totalModules += course.programModules.length;
+    totalModules += course.programModules.length;
 
-  // Check incomplete topics
-  const hasIncompleteTopic = course.programModules.some((programModule) => {
-    const topics = programModule.module.moduleTopics;
-    totalTopics += topics.length;
-    return topics.some((topic) => !completedTopics[Number(topic.topicId)]);
+    // Check incomplete topics
+    const hasIncompleteTopic = course.programModules.some((programModule) => {
+      const topics = programModule.module.moduleTopics;
+      totalTopics += topics.length;
+      return topics.some((topic) => !completedTopics[Number(topic.topicId)]);
+    });
+
+    // Check incomplete quizzes
+    const hasIncompleteQuiz = course.quizzes.some((quiz) => {
+      totalQuizzes++
+      return !completedQuizzes[quiz.id];
+    });
+
+    return hasIncompleteTopic || hasIncompleteQuiz;
   });
 
-  // Check incomplete quizzes
-  const hasIncompleteQuiz = course.quizzes.some((quiz) => {
-    totalQuizzes++
-    return !completedQuizzes[quiz.id];
-  });
 
-  return hasIncompleteTopic || hasIncompleteQuiz;
-});
+  let moduleProgress = { modules: totalModules, completed: Object.keys(user!.completedModules).length || 0 }
+  let topicProgress = { topics: totalTopics, completed: Object.keys(user!.completedTopics).length || 0 }
+  let courseProgress = { courses: enrolled.length, completed: Object.keys(user!.enrolledCourseIDs).length - activeCourses.length }
+  let quizProgress = { quizzes: totalQuizzes, completed: Object.keys(user!.completedQuizzes).length || 0 }
 
 
-  let moduleProgress={modules:totalModules, completed:Object.keys(user!.completedModules).length||0}
-  let topicProgress={topics:totalTopics, completed:Object.keys(user!.completedTopics).length||0}
-  let courseProgress={courses:enrolled.length, completed:Object.keys(user!.enrolledCourseIDs).length-activeCourses.length}
-  let quizProgress={quizzes:totalQuizzes, completed:Object.keys(user!.completedQuizzes).length||0}
-  if(!courses)
+  if(coursesLoading || isFetching) // it is rtk client side api calling . isFetching means client side refetching on focus or reconnect etc.
+    return <DashboardSkeleton/>
+
+  if(!finalCourses || isError)
     return <NotFound resource="Courses"/>
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 md:py-24 ">
@@ -53,7 +60,7 @@ export default function DashboardPage() {
             <p className="text-gray-600">Continue your learning journey. You've been making great progress!</p>
           </section>
 
-          <ProgressCards courseProgress={courseProgress} moduleProgress={moduleProgress} topicProgress={topicProgress} quizProgress={quizProgress}/>
+          <ProgressCards courseProgress={courseProgress} moduleProgress={moduleProgress} topicProgress={topicProgress} quizProgress={quizProgress} />
 
           <section className="mt-8">
             <div className="flex items-center justify-between mb-4">
@@ -91,7 +98,7 @@ export default function DashboardPage() {
             )}
           </section>
 
-         {/* Uncomment when ready to use
+          {/* Uncomment when ready to use
           <div className="mt-8 grid md:grid-cols-2 gap-6">
             <Achievements />
             <Leaderboard />

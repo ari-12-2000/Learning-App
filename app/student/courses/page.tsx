@@ -3,14 +3,23 @@
 import { CoursesList } from "@/components/courses-list"
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/auth-context";
-import { useCourses } from "@/contexts/course-context";
+import { useGetCoursesQuery } from "@/features/course/courseApi";
+import { CourseMinimal } from "@/types/course";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
+import Loading from "./loading";
+import NotFound from "@/components/not-found";
 
 export default function CoursesPage() {
   const { user } = useAuth()
-  const {courses} = useCourses()
   const hasCourses = Object.keys(user!.enrolledCourseIDs).length> 0
+  const { data:courses, isLoading:coursesLoading, isFetching, isError } = useGetCoursesQuery(undefined)
+  const finalCourses = courses?.data as CourseMinimal[] || null
+  if(coursesLoading || isFetching) // it is rtk client side api calling . isFetching means client side refetching on focus or reconnect etc.
+    return <Loading/>
+
+  if(!finalCourses || isError)
+      return <NotFound resource="Courses"/>
 
   return (<div className="max-w-7xl mx-auto text-center px-4 sm:px-6 md:px-8 py-16 md:py-24">
      <div className="mb-10">
@@ -25,7 +34,7 @@ export default function CoursesPage() {
         </div>
 
     {hasCourses ? (
-        <CoursesList courses={courses} />
+        <CoursesList courses={finalCourses} />
     ) : (<div className="mt-20 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-6">
               <Sparkles className="w-8 h-8" />

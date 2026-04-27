@@ -16,6 +16,8 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { cn, slides } from "@/lib/utils"
 import Image from "next/image"
 import { useGetCoursesQuery } from "@/features/course/courseApi"
+import Loading from "@/app/loading"
+import NotFound from "./not-found"
 const categoryIcons = {
   "web development": { icon: Code, color: "bg-blue-500" },
   "ui/ux design": { icon: Palette, color: "bg-purple-500" },
@@ -41,11 +43,11 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
 
   const [index, setIndex] = useState(0);
 
-  const { data } = useGetCoursesQuery(undefined, {
+  const { data, isLoading:coursesLoading, isFetching, isError } = useGetCoursesQuery(undefined, {
     skip: !!courses
   })
 
-  const finalCourses = courses || data
+  const finalCourses = courses || data?.data
   const startAutoSlide = useCallback(() => {
     if (intervalRef.current)
       clearInterval(intervalRef.current)
@@ -101,6 +103,11 @@ export default function HomeClientWrapper({ courses, categories }: Prop) {
     router.push("/courses/search/")
   }
 
+  if(coursesLoading || isFetching) // it is rtk client side api calling . isFetching means client side refetching on focus or reconnect etc.
+    return <Loading/>
+
+  if(isError)
+    return <NotFound resource="Courses"/>
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50">

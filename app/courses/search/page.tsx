@@ -19,6 +19,7 @@ import { RootState } from "@/store"
 import { CourseMinimal } from "@/types/course"
 import { useGetCourseCategoriesQuery, useGetCoursesQuery } from "@/features/course/courseApi"
 import Loading from "./loading"
+import NotFound from "@/components/not-found"
 
 interface FilterState {
     priceRange: [number, number]
@@ -51,13 +52,11 @@ const SearchPage = () => {
     const router = useRouter();
     useEffect(() => setMounted(true), [])
 
-    const { data: courses } = useGetCoursesQuery(undefined)
-    const { data: categories } = useGetCourseCategoriesQuery(undefined)
-
+    const { data: courses, isLoading, isFetching, isError } = useGetCoursesQuery(undefined)
+    const { data: categories, isLoading:loadingCategory, isFetching:fetchingCategory, isError: categoryError } = useGetCourseCategoriesQuery(undefined)
+    
     const finalCourses = courses?.data as CourseMinimal[] || null
     const finalCategories = categories?.data || null
-
-    console.log("finalCategories", finalCategories, "finalCourses", finalCourses)
 
     useEffect(() => {
         const query = searchParams.get("q") || ""
@@ -148,8 +147,11 @@ const SearchPage = () => {
         })
     }
 
-    if (!finalCourses || !finalCategories) 
+    if (isLoading|| isFetching|| loadingCategory || fetchingCategory) 
       return <Loading />
+
+    if( isError || categoryError || !finalCategories || !finalCourses)
+        return <NotFound resource="Courses"/>
 
     return (
         <div className="flex min-h-screen bg-gray-50">

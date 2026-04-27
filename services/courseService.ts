@@ -34,6 +34,11 @@ export class CourseService {
                             }
                         }
                     }
+                },
+                quizzes: {
+                    select: {
+                        id: true
+                    }
                 }
             },
             orderBy: {
